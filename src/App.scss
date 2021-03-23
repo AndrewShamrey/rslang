@@ -1,0 +1,42 @@
+@import './sass/breakpoints.scss';
+@import './sass/colors.scss';
+
+body {
+  margin: 0;
+  position: relative;
+}
+
+li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.App {
+  background-color: $white;
+  min-width: 100%;
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: 63px 1fr 50px;
+
+  @media (max-width: $size-md) {
+    grid-template-rows: 63px 1fr 200px;
+  }
+}

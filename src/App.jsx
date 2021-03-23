@@ -1,6 +1,9 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import { setPrevState, doSmth } from './actions/control';
+import Header from './components/header/Header';
+import './App.scss';
 
 function App() {
   const dispatch = useDispatch();
@@ -32,7 +35,11 @@ function App() {
 
   return (
     <div className="App">
-      <button type="button" onClick={handleSmth}>{state.smth}</button>
+      {/* <button type="button" onClick={handleSmth}>{state.smth}</button> */}
+      <Router>
+        <Header />
+        <Switch />
+      </Router>
     </div>
   );
 }
