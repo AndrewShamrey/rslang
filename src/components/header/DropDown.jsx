@@ -20,7 +20,7 @@ const DropDown = () => {
         Учебник
       </span>
       {isOpen && (
-      <div className="Header__dropdown-content">
+      <div className="Header__dropdown-content" onMouseLeave={handleOnClick}>
         <NavLink to="/textbook/1" className="Header__dropdown-item" onClick={handleOnClick} activeClassName="active">Раздел 1</NavLink>
         <NavLink to="/textbook/2" className="Header__dropdown-item" onClick={handleOnClick} activeClassName="active">Раздел 2</NavLink>
         <NavLink to="/textbook/3" className="Header__dropdown-item" onClick={handleOnClick} activeClassName="active">Раздел 3</NavLink>

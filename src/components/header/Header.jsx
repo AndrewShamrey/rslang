@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useLocation, NavLink } from 'react-router-dom';
 import AuthorizationButton from '../authirizationButton/authorizationButton';
 import DropDown from './DropDown';
@@ -13,20 +13,22 @@ export default function Header() {
 
   return (
     <header className="Header">
-      <NavLink to="/" className="Header__logo">
+      <NavLink exact to="/" className="Header__logo" activeClassName="Header__logo_active">
         <h1>RS Lang logo</h1>
       </NavLink>
 
-      <ul className="Header__list">
-        <li className={`Header__dropdown${isTextbookPage ? ' active' : ''}`}>
-          <DropDown />
-        </li>
-        <li><NavLink to="/savannah" className="Header__item" activeClassName="active">Саванна</NavLink></li>
-        <li><NavLink to="/audiocall" className="Header__item" activeClassName="active">Аудиовызов</NavLink></li>
-        <li><NavLink to="/sprint" className="Header__item" activeClassName="active">Спринт</NavLink></li>
-        <li><NavLink to="/wordconstructor" className="Header__item" activeClassName="active">Конструктор слов</NavLink></li>
-        <li><NavLink to="/statistics" className="Header__item" activeClassName="active">Статистика</NavLink></li>
-      </ul>
+      <nav className="Header__nav">
+        <ul className="Header__list">
+          <li className={`Header__dropdown${isTextbookPage ? ' Header__dropdown_active' : ''}`}>
+            <DropDown />
+          </li>
+          <li><NavLink to="/savannah" className="Header__item" activeClassName="active">Саванна</NavLink></li>
+          <li><NavLink to="/audiocall" className="Header__item" activeClassName="active">Аудиовызов</NavLink></li>
+          <li><NavLink to="/sprint" className="Header__item" activeClassName="active">Спринт</NavLink></li>
+          <li><NavLink to="/wordconstructor" className="Header__item" activeClassName="active">Конструктор слов</NavLink></li>
+          <li><NavLink to="/statistics" className="Header__item" activeClassName="active">Статистика</NavLink></li>
+        </ul>
+      </nav>
 
       <AuthorizationButton />
     </header>
