@@ -1,5 +1,6 @@
 @import './sass/breakpoints.scss';
 @import './sass/colors.scss';
+@import './sass/fonts.scss';
 
 body {
   margin: 0;
@@ -30,6 +31,7 @@ a {
 }
 
 .App {
+  font-family: 'Roboto', sans-serif;
   background-color: $white;
   min-width: 100%;
   min-height: 100vh;
