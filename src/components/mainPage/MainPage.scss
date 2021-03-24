@@ -1,0 +1,16 @@
+@import '../../sass/colors.scss';
+
+.Main-page {
+  &__capability {
+    min-height: 275px;
+    background-color: $bgLightGrey;
+  }
+  &__video {
+    min-height: 275px;
+    background-color: $white;
+  }
+  &__about {
+    min-height: 275px;
+    background-color: $bgLightGrey;
+  }
+}
