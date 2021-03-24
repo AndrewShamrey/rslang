@@ -8,16 +8,16 @@ const authors = [
     href: 'https://github.com/Angoulema',
   },
   {
+    value: 'snegurova',
+    href: 'https://github.com/snegurova',
+  },
+  {
     value: 'ssamvelk',
     href: 'https://github.com/ssamvelk',
   },
   {
     value: 'yrevtovich',
     href: 'https://github.com/yrevtovich',
-  },
-  {
-    "name": "snegurova",
-    "url": "https://github.com/snegurova"
   },
 ];
 

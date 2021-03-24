@@ -1,0 +1,130 @@
+@import '../../sass/colors.scss';
+@import '../../sass/transitions.scss';
+
+.Header {
+  min-height: 63px;
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 34px;
+  position: relative;
+  color: $grey;
+
+  &__logo {
+    cursor: pointer;
+
+    &:hover {
+      color: $blue;
+      transition: $color-transition;
+    }
+
+    h1 {
+      font-size: 26px;
+      margin: 0;
+    }
+
+    &_active {
+      background-color: none;
+    }
+  }
+
+  &__nav {
+    min-height: 40px;
+  }
+
+  &__list {
+    display: flex;
+    vertical-align: middle;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  &__item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    min-height: 40px;
+    padding: 0 9px;
+    // margin-right: 15px;
+    font-size: 14px;
+    cursor: pointer;
+
+    &:hover {
+      color: $blue;
+      transition: $color-transition;
+    }
+  }
+
+  &__dropdown {
+    position: relative;
+    border-radius: 10px;
+
+    &_active {
+      .Header__item {
+        color: $white;
+        background-color: $blue;
+      }
+    }
+
+    &-content {
+      position: absolute;
+      top: 45px;
+      width: 110px;
+      border: solid 1px $borderGrey;
+      border-radius: 4px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    &-item {
+      width: 100%;
+      height: 36px;
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 400;
+      text-align: center;
+      border-bottom: solid 1px $bgGrey;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+
+      &:hover {
+        color: $white;
+        background-color: $blue;
+      }
+    }
+  }
+
+  // Временная заглушка кнопки авторизации
+  &__authorization-btn {
+    width: 147px;
+    height: 39px;
+    border: 1px solid #c4c4c4;
+    border-radius: 5px;
+    background-color: $white;
+    padding: 0 5px;
+    text-align: center;
+    color: $darkGrey;
+    font-size: 12px;
+    font-weight: 500;
+    font-family: Roboto;
+    user-select: none;
+    outline: none;
+    cursor: pointer;
+  }
+}
+
+.active {
+  color: $white;
+  background-color: $blue;
+
+  &:hover {
+    color: $white;
+  }
+}
