@@ -1,0 +1,33 @@
+@import '../../sass/colors.scss';
+
+.CapabilityCard {
+  width: 300px;
+  min-height: 200px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  border: 1px solid $grey2;
+  border-radius: 6px;
+  box-shadow: 4px 6px 10px -3px $shadowGrey;
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: 4px 6px 10px 5px $shadowGrey;
+  }
+
+  &__image {
+    width: 40px;
+    height: 40px;
+  }
+
+  &__title {
+    margin-top: 20px;
+    font-size: 20px;
+  }
+
+  &__info {
+    font-size: 14px;
+    margin-top: 20px;
+  }
+}
