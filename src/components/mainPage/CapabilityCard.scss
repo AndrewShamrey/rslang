@@ -3,6 +3,7 @@
 .CapabilityCard {
   width: 300px;
   min-height: 200px;
+  height: 100%;
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -11,19 +12,30 @@
   border-radius: 6px;
   box-shadow: 4px 6px 10px -3px $shadowGrey;
   cursor: pointer;
+  position: relative;
 
   &:hover {
     box-shadow: 4px 6px 10px 5px $shadowGrey;
   }
 
   &__image {
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    top: 5px;
+    right: 5px;
   }
 
   &__title {
     margin-top: 20px;
     font-size: 20px;
+  }
+
+  &__subtitle {
+    margin-top: 10px;
+    font-size: 14px;
+    font-style: italic;
+    font-weight: 400;
   }
 
   &__info {

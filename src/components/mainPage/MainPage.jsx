@@ -5,38 +5,41 @@ import './MainPage.scss';
 import { mainPageText, videoURL } from '../../utils/constants';
 import gamesIcon from '../../assets/images/games.png';
 import statisticIcon from '../../assets/images/statistic.png';
-import packIcon from '../../assets/images/pack.png';
+import dictionaryIcon from '../../assets/images/dictionary.png';
 import AndreyFoto from '../../assets/images/Andrey.jpg';
 import SamvelFoto from '../../assets/images/Samvel.jpg';
 import InnaFoto from '../../assets/images/Inna.jpg';
 
 const MainPage = () => {
-  const { capability: { games, pack, statistic }, about: { ...about } } = mainPageText;
+  const { capability: { games, dictionary, statistic }, about: { ...about } } = mainPageText;
 
   return (
     <main className="Main-page">
       <section className="Main-page__capability">
-        <h2 className="Main-page__capability-title">Возможности</h2>
+        <h2 className="Main-page__capability-title">RS-Lang - открой глубины английского языка!</h2>
         <ul className="Main-page__capability-list">
           <li className="Main-page__capability-item">
             <CapabilityCard
-              title="Игры"
+              title={games.title}
+              subtitle={games.subTitle}
               img={gamesIcon}
-              info={games}
+              info={games.info}
             />
           </li>
           <li className="Main-page__capability-item">
             <CapabilityCard
-              title="Наборы слов"
-              img={packIcon}
-              info={pack}
+              title={dictionary.title}
+              subtitle={dictionary.subTitle}
+              img={dictionaryIcon}
+              info={dictionary.info}
             />
           </li>
           <li className="Main-page__capability-item">
             <CapabilityCard
-              title="Статистика"
+              title={statistic.title}
+              subtitle={statistic.subTitle}
               img={statisticIcon}
-              info={statistic}
+              info={statistic.info}
             />
           </li>
         </ul>
