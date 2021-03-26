@@ -1,5 +1,6 @@
 @import '../../sass/colors.scss';
 @import '../../sass/transitions.scss';
+@import '../../sass/breakpoints.scss';
 
 .Header {
   min-height: 63px;
@@ -7,11 +8,19 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 34px;
+  padding: 0 32px;
   position: relative;
   color: $grey;
 
+  @media screen and (max-width: $size-xl) {
+    flex-wrap: wrap;
+  }
+  @media screen and (max-width: 991px) {
+    padding: 10px 16px;
+  }
+
   &__logo {
+    min-width: max-content;
     cursor: pointer;
 
     &:hover {
@@ -22,6 +31,10 @@
     h1 {
       font-size: 26px;
       margin: 0;
+
+      @media screen and (max-width: $size-xl) {
+        font-size: 24px;
+      }
     }
 
     &_active {
@@ -30,7 +43,13 @@
   }
 
   &__nav {
+    min-width: 450px;
     min-height: 40px;
+
+    @media screen and (max-width: 955px) {
+      order: 3;
+      margin: 5px auto;
+    }
   }
 
   &__list {
@@ -49,24 +68,53 @@
     border-radius: 10px;
     min-height: 40px;
     padding: 0 9px;
-    // margin-right: 15px;
     font-size: 14px;
+    text-align: center;
     cursor: pointer;
+
+    @media screen and (max-width: $size-xl) {
+      font-size: 12px;
+    }
+
+    @media screen and (max-width: 620px) {
+      flex-direction: column;
+      font-size: 10px;
+    }
 
     &:hover {
       color: $blue;
       transition: $color-transition;
+
+      .Header__item-icon {
+        fill: $blue;
+      }
+    }
+
+    &-icon {
+      margin-right: 5px;
+      margin-top: -4px;
+      fill: $grey;
+
+      @media screen and (max-width: 620px) {
+        width: 14px;
+        height: 14px;
+      }
     }
   }
 
   &__dropdown {
     position: relative;
     border-radius: 10px;
+    display: flex;
 
     &_active {
       .Header__item {
         color: $white;
         background-color: $blue;
+
+        .Header__item-icon {
+          fill: $white;
+        }
       }
     }
 
@@ -126,5 +174,13 @@
 
   &:hover {
     color: $white;
+
+    .Header__item-icon {
+      fill: $white;
+    }
+  }
+
+  .Header__item-icon {
+    fill: $white;
   }
 }
