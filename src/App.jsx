@@ -9,6 +9,7 @@ import Header from './components/header/Header';
 import Footer from './components/footer/footer';
 import MainPage from './components/mainPage/MainPage';
 import ErrorPage from './components/errorPage/errorPage';
+import WordConstructor from './components/wordConstructor/WordConstructor';
 import './App.scss';
 
 function App() {
@@ -62,7 +63,7 @@ function App() {
             <h1>Спринт</h1>
           </Route>
           <Route exact path="/wordconstructor">
-            <h1>Конструктор слов</h1>
+            <WordConstructor />
           </Route>
           <Route exact path="/statistics">
             <h1>Статистика</h1>
