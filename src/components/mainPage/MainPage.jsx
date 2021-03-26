@@ -1,5 +1,5 @@
 import Video from '../video/Video';
-import CapabilityCard from './CapabilityCard';
+import CapabilityCard from '../CapabilityCard/CapabilityCard';
 import DeveloperCard from './DeveloperCard';
 import './MainPage.scss';
 import { mainPageText, videoURL } from '../../utils/constants';

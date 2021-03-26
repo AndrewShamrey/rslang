@@ -10,13 +10,7 @@
   justify-content: start;
   border: 1px solid $grey2;
   border-radius: 6px;
-  box-shadow: 4px 6px 10px -3px $shadowGrey;
-  cursor: pointer;
   position: relative;
-
-  &:hover {
-    box-shadow: 4px 6px 10px 5px $shadowGrey;
-  }
 
   &__image {
     width: 50px;
