@@ -1,61 +1,93 @@
 import Video from '../video/Video';
+import CapabilityCard from '../CapabilityCard/CapabilityCard';
+import DeveloperCard from './DeveloperCard';
 import './MainPage.scss';
+import { mainPageText, videoURL } from '../../utils/constants';
+import gamesIcon from '../../assets/images/games.png';
+import statisticIcon from '../../assets/images/statistic.png';
+import dictionaryIcon from '../../assets/images/dictionary.png';
+import AndreyFoto from '../../assets/images/Andrey.jpg';
+import SamvelFoto from '../../assets/images/Samvel.jpg';
+import InnaFoto from '../../assets/images/Inna.jpg';
 
-const MainPage = () => (
-  <main className="Main-page">
-    <section className="Main-page__capability">
-      <h2>Возможности</h2>
-      <ul>
-        <li>
-          <h3>Игры</h3>
-          <p>
-            Изучать новые слова интереснее в игровой форме.
-            Поэтому мы подготовили 4 увлекательных игр,
-            чтобы учить английский было веселее.
-          </p>
-        </li>
-        <li>
-          <h3>Статистика</h3>
-          <p>
-            Статистика - позволяет анализировать свой прогресс.
-          </p>
-        </li>
-        <li>
-          <h3>Наборы слов</h3>
-          <p>
-            Если слов больше 20, создаётся новая страница. Единственное отличие в списке
-          </p>
-        </li>
-      </ul>
-    </section>
-    <section className="Main-page__video">
-      <Video />
-    </section>
-    <section className="Main-page__about">
-      <h2>О Команде</h2>
-      <ul>
-        <li>
-          <h3>Андрей</h3>
-          <p>Бэкенд, мини-игра &quot;Саванна&quot;</p>
-        </li>
-        <li>
-          <h3>Евгения</h3>
-          <p>Мини-игра &quot;Спринт&quot;</p>
-        </li>
-        <li>
-          <h3>Самвел</h3>
-          <p>главная страница, мини-игра &quot;Конструктор слов&quot;</p>
-        </li>
-        <li>
-          <h3>Инна</h3>
-          <p>Дизайн, учебник</p>
-        </li>
-        <li>
-          <h3>Юлия</h3>
-          <p>Авторизация, мини-игра &quot;Аудиовызов&quot;</p>
-        </li>
-      </ul>
-    </section>
-  </main>
-);
+const MainPage = () => {
+  const { capability: { games, dictionary, statistic }, about: { ...about } } = mainPageText;
+
+  return (
+    <main className="Main-page">
+      <section className="Main-page__capability">
+        <h2 className="Main-page__capability-title">RS-Lang - открой глубины английского языка!</h2>
+        <ul className="Main-page__capability-list">
+          <li className="Main-page__capability-item">
+            <CapabilityCard
+              title={games.title}
+              subtitle={games.subTitle}
+              img={gamesIcon}
+              info={games.info}
+            />
+          </li>
+          <li className="Main-page__capability-item">
+            <CapabilityCard
+              title={dictionary.title}
+              subtitle={dictionary.subTitle}
+              img={dictionaryIcon}
+              info={dictionary.info}
+            />
+          </li>
+          <li className="Main-page__capability-item">
+            <CapabilityCard
+              title={statistic.title}
+              subtitle={statistic.subTitle}
+              img={statisticIcon}
+              info={statistic.info}
+            />
+          </li>
+        </ul>
+      </section>
+      <section className="Main-page__video">
+        <Video src={videoURL} />
+      </section>
+      <section className="Main-page__about">
+        <h2 className="Main-page__about-title">О Команде</h2>
+        <ul className="Main-page__about-list">
+          <li className="Main-page__about-item">
+            <DeveloperCard
+              name="Андрей"
+              img={AndreyFoto}
+              info={about.Andrey}
+            />
+          </li>
+          <li className="Main-page__about-item">
+            <DeveloperCard
+              name="Евгения"
+              // img={}
+              info={about.Eugenia}
+            />
+          </li>
+          <li className="Main-page__about-item">
+            <DeveloperCard
+              name="Самвел"
+              img={SamvelFoto}
+              info={about.Samvel}
+            />
+          </li>
+          <li className="Main-page__about-item">
+            <DeveloperCard
+              name="Инна"
+              img={InnaFoto}
+              info={about.Inna}
+            />
+          </li>
+          <li className="Main-page__about-item">
+            <DeveloperCard
+              name="Юлия"
+              // img={}
+              info={about.Julia}
+            />
+          </li>
+        </ul>
+      </section>
+    </main>
+  );
+};
 export default MainPage;
