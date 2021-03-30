@@ -8,7 +8,7 @@
 .page {  
   padding: 10vh 0 0;
   width: 100vw;
-  height: 100vh;
+  height: 100%;
   background: linear-gradient(0,hsl(273, 100%, 71%), hsl(213, 100%, 71%) );
 }
 
@@ -59,37 +59,10 @@
   text-transform: uppercase;
 }
 
-.answersList {
-  padding: 0 20px;
-}
-
 .answersBlock {
   border-radius: 5px;
   display: flex;
   flex-direction: column;
-}
-
-.wordBlock {
-  padding: 5px;
-  border: 1px solid transparent;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  list-style: none;
-}
-
-.wordBlock:hover {
-  border: 1px solid #616161;
-  border-radius: 5px;
-}
-
-.wordBlockItem {
-  margin: 0;
-  width: 40%;
-  font-size: 16px;
-  line-height: 1;
-  display: flex;
-  align-items: center;
 }
 
 .soundBtn {
@@ -129,18 +102,20 @@
 }
 
 .buttons {
+  width: 200px;
   display: flex;
   justify-content: center;
-  width: 200px;
 }
 
 .btn {
-  width: 100px;
-  color: #fff;
   margin-left: 5px;
   padding: 5px;
+  width: 100px;
+  color: #fff;
+  text-align: center;
   background-color: #5183e7;
   border-radius: 5px;
+  border: none;
 }
 .btn:hover {
   background-color: #82a0db;
@@ -158,9 +133,5 @@
 
   .results {
     padding: 15px 0 30px;
-  }
-
-  .statistics-page_answers__2_mU8 {
-    width: 100%;
   }
 }

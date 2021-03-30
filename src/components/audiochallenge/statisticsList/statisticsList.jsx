@@ -1,0 +1,25 @@
+import WordSoundButton from '../wordSoundButton/wordSoundButton';
+import playSound from '../utils/playSound';
+import { MEDIA_URI } from '../constants';
+
+import './statisticsList.scss';
+
+const StatisticsList = ({ words }) => (
+  <ul className="answers-list">
+    {words.map((item) => {
+      const {
+        id, word, wordTranslate, audio,
+      } = item;
+
+      return (
+        <li className="answers-list__item" key={id}>
+          <p className="answers-list__item-content">{word}</p>
+          <p className="answers-list__item-content">{wordTranslate}</p>
+          <WordSoundButton onClick={() => playSound(`${MEDIA_URI}${audio}`)} />
+        </li>
+      );
+    })}
+  </ul>
+);
+
+export default StatisticsList;

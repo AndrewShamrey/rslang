@@ -1,31 +1,10 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
+import { Link } from 'react-router-dom';
+import StatisticsList from '../statisticsList/statisticsList';
+
 import s from './statistics-page.module.css';
-// import { Link } from 'react-router-dom';
-import playSound from '../utils/playSound';
-
-const List = ({ words, playAudio }) => {
-  const wordList = words.map((item) => (
-    <li className={s.wordBlock} key={item.id} id={item.id}>
-      <p className={s.wordBlockItem}>{item.word}</p>
-      <p className={s.wordBlockItem}>{item.wordTranslate}</p>
-      <button
-        className={s.soundBtn}
-        data-audio={item.audio}
-        onClick={playAudio}
-        type="button"
-      />
-    </li>
-  ));
-
-  return <ul className={s.answersList}>{wordList}</ul>;
-};
 
 const StatisticsPage = ({ gameResult, level, showStartPage }) => {
-  const playAudio = ({ target }) => {
-    const { audio } = target.dataset;
-    playSound(`https://raw.githubusercontent.com/yrevtovich/rslang-data/master/${audio}`);
-  };
-
   const { correctAnswers, incorrectAnswers, longestSeries } = gameResult;
 
   return (
@@ -47,7 +26,7 @@ const StatisticsPage = ({ gameResult, level, showStartPage }) => {
               Correct:
               {correctAnswers.length}
             </p>
-            <List words={correctAnswers} playAudio={playAudio} />
+            <StatisticsList words={correctAnswers} />
           </div>
 
           <div className={s.answersBlock}>
@@ -55,15 +34,15 @@ const StatisticsPage = ({ gameResult, level, showStartPage }) => {
               Incorrect:
               {incorrectAnswers.length}
             </p>
-            <List words={incorrectAnswers} playAudio={playAudio} />
+            <StatisticsList words={incorrectAnswers} />
           </div>
         </div>
 
         <div className={s.buttons}>
           <button className={s.btn} onClick={showStartPage} type="button">Play again</button>
-          {/* <Link to="/">
-              <button className={s.btn} >Return</button>
-            </Link> */}
+          <Link to="/" className={s.btn}>
+            Return
+          </Link>
         </div>
       </div>
 

@@ -40,7 +40,7 @@ export default function Header() {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/audiocall" className="Header__item" activeClassName="active">
+            <NavLink to="/audiochallenge" className="Header__item" activeClassName="active">
               <svg className="Header__item-icon" height="20" viewBox="0 0 60 60" width="20">
                 <g>
                   <g>

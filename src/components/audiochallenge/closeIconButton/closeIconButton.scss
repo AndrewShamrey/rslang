@@ -1,0 +1,23 @@
+.close-icon-btn {
+  margin: 0 auto;
+  width: fit-content;
+  height: fit-content;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  color: inherit;
+  background: inherit;
+  border: none;
+  cursor: pointer;
+
+  // &:focus {
+  //   outline: none;
+  // }
+  
+  i {
+    &:hover {
+      filter: opacity(0.9);
+      transform: scale(1.1);
+    }
+  }
+}

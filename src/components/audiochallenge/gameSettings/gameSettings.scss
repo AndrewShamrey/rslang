@@ -1,0 +1,40 @@
+.game-settings {
+  padding: 35px 20px;
+  width: 100%;
+  max-width: 720px;
+  pointer-events: auto;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid rgba(0,0,0,.2);
+  border-radius: .3rem;
+  // outline: 0;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+
+  &__item {
+    margin: 10px;
+    padding: 0 15px;
+    // display: flex;
+    // align-items: center;
+  }
+
+  &__input {
+    margin: 0 5px;
+    vertical-align: middle;
+    cursor: pointer;
+  }
+
+  &__close-btn {
+    font-size: 20px;
+    color: darkgrey; ///
+    line-height: 1;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+}

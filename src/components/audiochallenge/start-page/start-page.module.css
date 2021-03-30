@@ -1,6 +1,6 @@
 .page {  
   width: 100vw;
-  height: 100vh;
+  height: 100%;
   background: linear-gradient(0,hsl(213, 100%, 71%), hsl(273, 100%, 71%));
   display: flex;
 }

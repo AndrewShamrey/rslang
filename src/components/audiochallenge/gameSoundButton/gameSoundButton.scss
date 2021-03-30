@@ -1,0 +1,31 @@
+.sound {
+  width: 30px;
+  height: 30px;
+  font-size: 30px;
+  color:  #ffffff;
+  text-align: center;
+  border: none;
+  background-color: transparent;
+  position: absolute;
+  top: 30px;
+  left: 60px;
+  cursor: pointer;
+
+  &__off:after {
+    content: '';
+    display: block;
+    width: 36px;
+    height: 2px;
+    border-radius: 1px;
+    background-color: #d1f1ff;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: rotate(40deg);
+  }
+
+  @media (max-width: 768px) {
+    top: 10px;
+    left: 30px;
+  }
+}

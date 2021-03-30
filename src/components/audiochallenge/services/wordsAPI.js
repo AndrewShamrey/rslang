@@ -1,5 +1,5 @@
 class WordsAPI {
-  baseURI = 'https://afternoon-falls-25894.herokuapp.com/';
+  baseURI = 'https://react-learnwords-example.herokuapp.com/';
 
   getCollectionWords = async (group, page) => {
     const response = await fetch(`${this.baseURI}words?page=${page}&group=${group}`);

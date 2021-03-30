@@ -1,26 +1,26 @@
-/* eslint-disable jsx-a11y/control-has-associated-label */
-/* eslint-disable no-shadow */
-import React, { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import { useSelector } from 'react-redux';
 import WordList from '../word-list/word-list';
 import Preloader from '../preloader/preloader';
+import WordSoundButton from '../wordSoundButton/wordSoundButton';
 import playSound from '../utils/playSound';
 import shuffleArray from '../utils/shuffleArray';
 import WordsAPI from '../services/wordsAPI';
 import getRandomNumber from '../utils/getRandomNumber';
 import error from '../assets/audio/error.mp3';
 import correct from '../assets/audio/correct.mp3';
+import { MEDIA_URI } from '../constants';
 
-import s from './game-page.module.css';
+import './game-page.scss';
 
 const wordsAPI = new WordsAPI();
 
-const GamePage = ({
-  level, page, showStatistics, closeGame,
-}) => {
+const GamePage = ({ level, page, showStatistics }) => {
+  const isSound = useSelector((state) => state.control.audiochallenge.isSound);
+
   const [isQuestion, setIsQuestion] = useState(true);
   const [isCorrectAnswer, setIsCorrectAnswer] = useState(true);
   const [isPreloader, setIsPreloader] = useState(true);
-  const [isSound, setIsSound] = useState(true);
   const [gameData, setGameData] = useState({
     words: [],
     currentWord: '',
@@ -38,12 +38,8 @@ const GamePage = ({
 
   const playWordSound = useCallback(() => {
     const { audio } = gameData?.currentWord;
-    playSound(`https://raw.githubusercontent.com/yrevtovich/rslang-data/master/${audio}`);
+    playSound(`${MEDIA_URI}${audio}`);
   }, [gameData.currentWord]);
-
-  const switchSound = () => {
-    setIsSound((state) => !state);
-  };
 
   const playGameSound = useCallback((sound) => {
     if (!isSound) {
@@ -119,20 +115,20 @@ const GamePage = ({
 
   const generateWrongAnswersArray = (wordsArr) => {
     let i = 0;
-    const answers = [];
+    const answersArr = [];
     const usedNumbers = [];
 
     while (i < 4) { // magic numbers
       const randomNumber = getRandomNumber(wordsArr.length);
 
       if (!usedNumbers.includes(randomNumber)) {
-        answers.push(wordsArr[randomNumber]);
+        answersArr.push(wordsArr[randomNumber]);
         usedNumbers.push(randomNumber);
         i += 1;
       }
     }
 
-    return answers;
+    return answersArr;
   };
 
   const nextWord = useCallback(() => {
@@ -160,7 +156,7 @@ const GamePage = ({
     }));
     setIsQuestion(true);
     setIsPreloader(false);
-    playSound(`https://raw.githubusercontent.com/yrevtovich/rslang-data/master/${newCurrentWord.audio}`);
+    playSound(`${MEDIA_URI}${newCurrentWord.audio}`);
   }, [gameData, showStatistics]);
 
   const getAnswer = ({ target }) => {
@@ -180,8 +176,8 @@ const GamePage = ({
   const getAnswerByKeyboard = useCallback(({ key }) => {
     if (!isQuestion) return;
 
-    const { answers } = gameData;
-    const { id } = answers[+key - 1]; // refactor ?
+    const { answers: answersData } = gameData;
+    const { id } = answersData[+key - 1]; // refactor ?
     const answer = id === gameData.currentWord.id;
 
     if (answer) {
@@ -214,18 +210,18 @@ const GamePage = ({
       const words = await wordsAPI.getCollectionWords(level, page + 1);
       shuffleArray(words);
 
-      const currentWord = words[0];
+      const newCurrentWord = words[0];
 
       const wrongAnswersData = await getWrongAnswersData();
       const wrongAnswersArr = generateWrongAnswersArray(wrongAnswersData);
-      const answers = [...wrongAnswersArr, currentWord];
+      const answersData = [...wrongAnswersArr, newCurrentWord];
       shuffleArray(answers);
 
       setGameData(() => ({
         words: words.slice(1),
         wrongAnswersData,
-        currentWord,
-        answers,
+        currentWord: newCurrentWord,
+        answers: answersData,
         correctAnswers: [],
         incorrectAnswers: [],
         longestSeries: 0,
@@ -233,7 +229,7 @@ const GamePage = ({
         answerId: undefined,
       }));
       setIsPreloader(false);
-      playSound(`https://raw.githubusercontent.com/yrevtovich/rslang-data/master/${currentWord.audio}`);
+      playSound(`${MEDIA_URI}${newCurrentWord.audio}`);
     };
 
     startGame();
@@ -248,35 +244,23 @@ const GamePage = ({
   }, [gameData, isQuestion, keyboardEvents]);
 
   if (isPreloader) {
-    return (
-      <div className={s.page}>
-        <Preloader />
-      </div>
-    );
+    return <Preloader />;
   }
 
   return (
-    <div className={s.page}>
-      <button className={s.cancel} onClick={closeGame} type="button" />
-      <button
-        className={isSound ? s.sound : `${s.sound} ${s.soundOff}`}
-        onClick={switchSound}
-        type="button"
-      />
-      <div className={s.gameWrapper}>
-        <div className={s.questionBoard}>
-          <img
-            className={isQuestion ? s.hidden : s.wordImg}
-            src={`https://raw.githubusercontent.com/yrevtovich/rslang-data/master/${image}`}
-            alt="word illustration"
-          />
-          <div className={s.wordData}>
-            <button
-              className={isQuestion ? `${s.wordSound} ${s.wordSoundQuestion}` : s.wordSound}
-              onClick={playWordSound}
-              type="button"
+    <>
+      <div className="gameWrapper">
+        <div className="questionBoard">
+          {!isQuestion && (
+            <img
+              className="wordImg"
+              src={`${MEDIA_URI}${image}`}
+              alt="word illustration"
             />
-            <p className={isQuestion ? s.hidden : s.translation}>{wordTranslate}</p>
+          )}
+          <div className={isQuestion ? 'word-data word-data__question' : 'word-data'}>
+            <WordSoundButton onClick={playWordSound} />
+            {!isQuestion && <p className="translation">{wordTranslate}</p>}
           </div>
         </div>
 
@@ -292,14 +276,14 @@ const GamePage = ({
         )}
 
         <button
-          className={isQuestion ? s.pass : s.next}
+          className={isQuestion ? 'pass' : 'next'}
           onClick={isQuestion ? pass : nextWord}
           type="button"
         >
           {isQuestion ? 'Pass' : 'Next word'}
         </button>
       </div>
-    </div>
+    </>
   );
 };
 
