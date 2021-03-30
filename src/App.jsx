@@ -9,6 +9,7 @@ import Header from './components/header/Header';
 import Footer from './components/footer/footer';
 import MainPage from './components/mainPage/MainPage';
 import ErrorPage from './components/errorPage/errorPage';
+import GameSprint from './components/gameSprint/gameSprint';
 import './App.scss';
 
 function App() {
@@ -59,7 +60,7 @@ function App() {
             <h1>Аудиовызов</h1>
           </Route>
           <Route exact path="/sprint">
-            <h1>Спринт</h1>
+            <GameSprint />
           </Route>
           <Route exact path="/wordconstructor">
             <h1>Конструктор слов</h1>
