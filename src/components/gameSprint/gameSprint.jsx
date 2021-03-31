@@ -13,7 +13,7 @@ const GameSprint = ({ page = getRandomNumber(), level = 0, cleanStart = true }) 
   const [workingWords, setWorkingWords] = useState([]);
 
   console.log(page, gameLevel);
-  /*
+
   useEffect(() => {
     if (isGameStarted) {
       getWords(gameLevel, page)
@@ -39,10 +39,12 @@ const GameSprint = ({ page = getRandomNumber(), level = 0, cleanStart = true }) 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isGameStarted, allWords]);
   console.log(workingWords);
-  */
+
   return (
     <div className="game-sprint">
-      {isGameStarted && !isGameFinished && <GameTimer />}
+      {isGameStarted && !isGameFinished && (
+        <GameTimer setGameFinished={setGameFinished} />
+      )}
       {!isGameStarted && !isGameFinished && (
         <StartScreen
           setGameStarted={setGameStarted}

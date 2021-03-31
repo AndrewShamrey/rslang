@@ -1,3 +1,56 @@
+@import '../../../sass/transitions.scss';
+
 .game-play {
-  
+  margin: 5px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+  border-radius: 4px;
+  width: 400px;
+  height: 400px;
+  background-color: #b69fb9;
+  box-shadow: 0 0 5px 2px #3e2c41;
+
+  &__upper {
+    height: 30px;
+    padding: 10px;
+    align-self: center;
+
+    .circle {
+      border-radius: 50%;
+      background-color: green;
+      width: 30px;
+      height: 30px;
+    }
+  }
+  &__birds {
+    align-self: center;
+    height: 40px;
+    background-color: yellow;
+  }
+  &__word, &__translation {
+    font-size: 20px;
+    align-self: center;
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: space-between;
+
+    >button {
+      width: 100px;
+      height: 40px;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: $color-transition;
+    }
+
+    .right {
+      background-color: green;
+    }
+    .wrong {
+      background-color: red;
+    }
+  }
 }
