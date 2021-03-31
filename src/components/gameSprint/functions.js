@@ -6,7 +6,7 @@ const MAX_PAGE = 29;
 // eslint-disable-next-line max-len
 const getRandomNumber = (min = MIN_PAGE, max = MAX_PAGE) => Math.floor(Math.random() * (max - min + 1)) + min;
 
-const getWords = async (group = 0, page = getRandomNumber()) => {
+const getWords = async (group = 0, page) => {
   const page1 = page < MAX_PAGE ? page + 1 : page - 1;
   const page2 = page < (MAX_PAGE - 1) ? page + 2
     : (page < MAX_PAGE ? page - 1 : page - 2);
@@ -19,7 +19,14 @@ const getWords = async (group = 0, page = getRandomNumber()) => {
     `${URL}?page=${page2}&group=${group}`,
   ];
 
-  const requests = urls.map((url) => fetch(url));
+  const requests = urls.map((url) => fetch(url, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': 'http://localhost:3000',
+      'Access-Control-Allow-Credentials': 'true',
+    },
+  }));
 
   const content = Promise.all(requests)
     .then((responses) => Promise.all(responses.map((resp) => resp.json())))

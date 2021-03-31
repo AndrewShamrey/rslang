@@ -1,0 +1,12 @@
+.game-sprint {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-image: url('../../assets/images/sprint/intro.jpg');
+  background-position: center;
+  background-size: cover;
+}
