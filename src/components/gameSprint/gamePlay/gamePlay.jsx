@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import './gamePlay.scss';
 
 const GamePlay = () => {
+  const [stringOfRights, setStringOfRights] = useState(0);
   console.log('start game');
 
   return (
@@ -9,7 +11,19 @@ const GamePlay = () => {
         <div className="circle" />
       </div>
       <div className="game-play__birds">
-        тут как-то должны быть птички
+        <div className="line" />
+        {stringOfRights >= 0 && (
+          <div className="bird bird-1" />
+        )}
+        {stringOfRights >= 3 && (
+          <div className="bird bird-2" />
+        )}
+        {stringOfRights >= 6 && (
+          <div className="bird bird-3" />
+        )}
+        {stringOfRights >= 9 && (
+          <div className="bird bird-4" />
+        )}
       </div>
       <div className="game-play__word">
         слово

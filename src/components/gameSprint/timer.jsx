@@ -5,7 +5,7 @@ const GameTimer = ({ setGameFinished }) => {
 
   useEffect(() => {
     if (counter <= 0) {
-      setGameFinished(true);
+      // setGameFinished(true);
     } else {
       setTimeout(() => setCounter(counter - 1), 1000);
     }
