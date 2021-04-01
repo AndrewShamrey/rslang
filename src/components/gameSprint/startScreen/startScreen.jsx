@@ -1,13 +1,19 @@
 import { useState } from 'react';
+import { getWords } from '../functions';
 import './startScreen.scss';
 
-const StartScreen = ({ setGameStarted, setGameLevel }) => {
+const StartScreen = ({
+  setGameStarted, setGameLevel, setAllWords, page,
+}) => {
   const [selectValue, setSelectValue] = useState(0);
   console.log(selectValue);
 
   const submitHandler = (e) => {
     e.preventDefault();
     setGameLevel(selectValue);
+    getWords(selectValue, page)
+      .then((data) => setAllWords(data))
+      .catch((error) => console.log(error));
     setGameStarted(true);
   };
 
@@ -32,7 +38,7 @@ const StartScreen = ({ setGameStarted, setGameLevel }) => {
             </select>
           </label>
           <button className="button-submit" type="submit" onSubmit={submitHandler}>
-            Отправить
+            Начать игру
           </button>
         </form>
       </div>

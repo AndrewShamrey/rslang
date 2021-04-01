@@ -27,9 +27,10 @@
   &__birds {
     align-self: center;
     display: flex;
+    justify-content: left;
     height: 80px;
     position: relative;
-    width: 240px;
+    width: 320px;
 
     .line {
       position: absolute;
@@ -53,21 +54,25 @@
         background-image: url('../../../assets/images/sprint/bird-1.png');
         background-position: bottom;
         background-size: contain;
+        background-repeat: no-repeat;
       }
       &.bird-2 {
         background-image: url('../../../assets/images/sprint/bird-2.png');
         background-position: bottom;
         background-size: contain;
+        background-repeat: no-repeat;
       }
       &.bird-3 {
         background-image: url('../../../assets/images/sprint/bird-3.png');
         background-position: bottom;
         background-size: contain;
+        background-repeat: no-repeat;
       }
       &.bird-4 {
         background-image: url('../../../assets/images/sprint/bird-4.png');
         background-position: bottom;
         background-size: contain;
+        background-repeat: no-repeat;
       }
     }
   }

@@ -13,24 +13,13 @@ const GameSprint = ({ page = getRandomNumber(), level = 0, cleanStart = true }) 
   const [workingWords, setWorkingWords] = useState([]);
 
   console.log(page, gameLevel);
-
-  useEffect(() => {
-    if (isGameStarted) {
-      getWords(gameLevel, page)
-        .then((data) => setAllWords(data))
-        .catch((error) => console.log(error));
-    }
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isGameStarted]);
-
   console.log(allWords);
 
   useEffect(() => {
-    // для создания рабочего массива слов. если не перезагружать страницу, 
+    // для создания рабочего массива слов. если не перезагружать страницу,
     // при внесении изменений массив рабочих слов множится
     // слово, перевод, верный ли сет
-    if (isGameStarted && allWords) {
+    if (isGameStarted && allWords.length) {
       // Берем половину для верных
       allWords.filter((word, ind) => ind < (allWords.length / 2))
         .forEach((wordSet) => {
@@ -49,7 +38,7 @@ const GameSprint = ({ page = getRandomNumber(), level = 0, cleanStart = true }) 
       setWorkingWords((words) => shuffleArray(words));
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isGameStarted, allWords]);
+  }, [allWords]);
   console.log('workingWords: ', workingWords);
 
   return (
@@ -61,9 +50,18 @@ const GameSprint = ({ page = getRandomNumber(), level = 0, cleanStart = true }) 
         <StartScreen
           setGameStarted={setGameStarted}
           setGameLevel={setGameLevel}
+          setAllWords={setAllWords}
+          page={page}
         />
       )}
-      {isGameStarted && !isGameFinished && <GamePlay />}
+      {isGameStarted && !isGameFinished && (
+        <GamePlay
+          workingWords={workingWords}
+          setWorkingWords={setWorkingWords}
+          setGameFinished={setGameFinished}
+          isGameStarted={isGameStarted}
+        />
+      )}
       {isGameFinished && <div>Finish screen</div>}
     </div>
   );
