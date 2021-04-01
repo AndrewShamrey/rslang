@@ -120,13 +120,15 @@
 
     &-content {
       position: absolute;
-      top: 45px;
+      top: 40px;
       width: 110px;
       border: solid 1px $borderGrey;
       border-radius: 4px;
       display: flex;
       flex-direction: column;
       align-items: center;
+      background-color: #fff;
+      z-index: 1;
     }
 
     &-item {

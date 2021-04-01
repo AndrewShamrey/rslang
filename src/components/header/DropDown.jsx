@@ -13,10 +13,22 @@ const DropDown = () => {
     e.stopPropagation();
     setIsOpen(!isOpen);
   };
+  const handleOnMouseEnter = () => {
+    setIsOpen(true);
+  };
+  const handleOnMouseLeave = () => {
+    setIsOpen(false);
+  };
 
   return (
     <>
-      <span className="Header__item" onClick={handleOnClick} role="menuitem">
+      <span
+        className="Header__item"
+        onClick={handleOnClick}
+        onMouseEnter={handleOnMouseEnter}
+        onMouseLeave={handleOnMouseLeave}
+        role="menuitem"
+      >
         <svg className="Header__item-icon" height="20px" width="20px" viewBox="0 -51 512.001 512">
           <path d="m443.378906 182.136719h-153.9375c-4.144531 0-7.5 3.359375-7.5 7.5 0 4.144531 3.355469 7.5 7.5 7.5h153.9375c4.144532 0 7.5-3.355469 7.5-7.5 0-4.140625-3.359375-7.5-7.5-7.5zm0 0" />
           <path d="m443.378906 222.328125h-153.9375c-4.144531 0-7.5 3.355469-7.5 7.5 0 4.140625 3.355469 7.5 7.5 7.5h153.9375c4.144532 0 7.5-3.359375 7.5-7.5 0-4.144531-3.359375-7.5-7.5-7.5zm0 0" />
@@ -33,7 +45,7 @@ const DropDown = () => {
         Учебник
       </span>
       {isOpen && (
-      <div className="Header__dropdown-content" onMouseLeave={handleOnClick}>
+      <div className="Header__dropdown-content" onMouseEnter={handleOnMouseEnter} onMouseLeave={handleOnMouseLeave}>
         <NavLink to="/textbook/1" className="Header__dropdown-item" onClick={handleOnClick} activeClassName="active">Раздел 1</NavLink>
         <NavLink to="/textbook/2" className="Header__dropdown-item" onClick={handleOnClick} activeClassName="active">Раздел 2</NavLink>
         <NavLink to="/textbook/3" className="Header__dropdown-item" onClick={handleOnClick} activeClassName="active">Раздел 3</NavLink>
