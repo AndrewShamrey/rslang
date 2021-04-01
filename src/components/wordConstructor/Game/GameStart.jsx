@@ -16,12 +16,14 @@ const GameStart = (props) => {
           className="WordConstructor__start-select"
           onChange={(e) => {
             setLevel(e.target.value);
-            // console.log('e.target.value ', e.target.value);
           }}
         >
-          <option value={1}>Легкий</option>
-          <option value={2}>Средний</option>
-          <option value={3}>Сложный</option>
+          <option value={1}>1</option>
+          <option value={2}>2</option>
+          <option value={3}>3</option>
+          <option value={4}>4</option>
+          <option value={5}>5</option>
+          <option value={6}>6</option>
         </select>
       </label>
 
