@@ -2,7 +2,7 @@ import React from 'react';
 import s from './start-page.module.css';
 
 const StartPage = ({ startGame, changeLevel }) => (
-  <div className={s.page}>
+  // <div className={s.page}>
     <div className={s.about}>
       <h1 className={s.header}>Audiochallenge</h1>
       <p className={s.description}>
@@ -24,7 +24,7 @@ const StartPage = ({ startGame, changeLevel }) => (
         Start
       </button>
     </div>
-  </div>
+  // </div>
 );
 
 export default StartPage;

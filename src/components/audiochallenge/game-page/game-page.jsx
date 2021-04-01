@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import WordList from '../word-list/word-list';
 import Preloader from '../preloader/preloader';
-import WordSoundButton from '../wordSoundButton/wordSoundButton';
+import QuestionBlock from '../questionBlock/questionBlock';
 import playSound from '../utils/playSound';
 import shuffleArray from '../utils/shuffleArray';
 import WordsAPI from '../services/wordsAPI';
@@ -17,6 +17,7 @@ const wordsAPI = new WordsAPI();
 
 const GamePage = ({ level, page, showStatistics }) => {
   const isSound = useSelector((state) => state.control.audiochallenge.isSound);
+  const amountOfAnswers = useSelector((state) => state.control.audiochallenge.amountOfAnswers);
 
   const [isQuestion, setIsQuestion] = useState(true);
   const [isCorrectAnswer, setIsCorrectAnswer] = useState(true);
@@ -34,19 +35,11 @@ const GamePage = ({ level, page, showStatistics }) => {
   });
 
   const { answers, answerId, currentWord } = gameData;
-  const { image, wordTranslate } = currentWord || {};
-
-  const playWordSound = useCallback(() => {
-    const { audio } = gameData?.currentWord;
-    playSound(`${MEDIA_URI}${audio}`);
-  }, [gameData.currentWord]);
 
   const playGameSound = useCallback((sound) => {
-    if (!isSound) {
-      return;
+    if (isSound) {
+      playSound(sound);
     }
-
-    playSound(sound);
   }, [isSound]);
 
   const getWrongAnswersData = useCallback(async () => {
@@ -54,11 +47,11 @@ const GamePage = ({ level, page, showStatistics }) => {
     const pages = [];
     const usedPagesNumbers = [page];
 
-    while (i < 2) {
-      const randomPage = getRandomNumber(30) + 1; // magic numbers
+    while (i < 2) { // magic numbers
+      const randomPage = getRandomNumber(30); // magic numbers
 
       if (!usedPagesNumbers.includes(pages)) {
-        pages.push(wordsAPI.getCollectionWords(level, randomPage + 1));
+        pages.push(wordsAPI.getCollectionWords(level, randomPage));
         usedPagesNumbers.push(randomPage);
         i += 1;
       }
@@ -113,12 +106,12 @@ const GamePage = ({ level, page, showStatistics }) => {
     getIncorrectAnswer(null, false);
   }, [getIncorrectAnswer]);
 
-  const generateWrongAnswersArray = (wordsArr) => {
+  const generateWrongAnswersArray = useCallback((wordsArr) => {
     let i = 0;
     const answersArr = [];
     const usedNumbers = [];
 
-    while (i < 4) { // magic numbers
+    while (i < (amountOfAnswers - 1)) {
       const randomNumber = getRandomNumber(wordsArr.length);
 
       if (!usedNumbers.includes(randomNumber)) {
@@ -129,7 +122,7 @@ const GamePage = ({ level, page, showStatistics }) => {
     }
 
     return answersArr;
-  };
+  }, [amountOfAnswers]);
 
   const nextWord = useCallback(() => {
     setIsPreloader(true);
@@ -157,7 +150,7 @@ const GamePage = ({ level, page, showStatistics }) => {
     setIsQuestion(true);
     setIsPreloader(false);
     playSound(`${MEDIA_URI}${newCurrentWord.audio}`);
-  }, [gameData, showStatistics]);
+  }, [gameData, showStatistics, generateWrongAnswersArray]);
 
   const getAnswer = ({ target }) => {
     if (!isQuestion) return;
@@ -215,7 +208,7 @@ const GamePage = ({ level, page, showStatistics }) => {
       const wrongAnswersData = await getWrongAnswersData();
       const wrongAnswersArr = generateWrongAnswersArray(wrongAnswersData);
       const answersData = [...wrongAnswersArr, newCurrentWord];
-      shuffleArray(answers);
+      shuffleArray(answersData);
 
       setGameData(() => ({
         words: words.slice(1),
@@ -250,19 +243,10 @@ const GamePage = ({ level, page, showStatistics }) => {
   return (
     <>
       <div className="gameWrapper">
-        <div className="questionBoard">
-          {!isQuestion && (
-            <img
-              className="wordImg"
-              src={`${MEDIA_URI}${image}`}
-              alt="word illustration"
-            />
-          )}
-          <div className={isQuestion ? 'word-data word-data__question' : 'word-data'}>
-            <WordSoundButton onClick={playWordSound} />
-            {!isQuestion && <p className="translation">{wordTranslate}</p>}
-          </div>
-        </div>
+        <QuestionBlock
+          currentWord={currentWord}
+          isQuestion={isQuestion}
+        />
 
         {currentWord && (
           <WordList

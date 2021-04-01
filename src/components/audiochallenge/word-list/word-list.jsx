@@ -23,7 +23,13 @@ const WordList = ({
 
       return (
         <li key={id}>
-          <button className={classNames} onClick={getAnswer} id={id} type="button">
+          <button
+            className={classNames}
+            onClick={getAnswer}
+            id={id}
+            disabled={!isQuestion}
+            type="button"
+          >
             <span className={s.wordNumber}>{`${index + 1}. `}</span>
             {wordTranslate}
           </button>

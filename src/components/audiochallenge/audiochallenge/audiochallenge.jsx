@@ -13,14 +13,14 @@ import './audiochallenge.scss';
 const Audiocall = () => {
   const [isStartPage, setIsStartPage] = useState(true);
   const [isStatisticsPage, setIsStatisticsPage] = useState(false);
-  const [isSettings, setIsSettings] = useState(true);
+  const [isSettings, setIsSettings] = useState(false);
   const [level, setLevel] = useState(0);
   const [page, setPage] = useState(null);
   const [gameResult, setGameResult] = useState({});
 
   const startGame = () => {
     if (!page) {
-      const randomPage = getRandomNumber(10) + 1;
+      const randomPage = getRandomNumber(10); // refactor ??
       setPage(randomPage);
     }
     setIsStartPage(false);

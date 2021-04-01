@@ -1,2 +1,2 @@
 /* eslint-disable import/prefer-default-export */
-export const MEDIA_URI = 'https://raw.githubusercontent.com/yrevtovich/rslang-data/master/';
+export const MEDIA_URI = 'https://react-learnwords-example.herokuapp.com/';
