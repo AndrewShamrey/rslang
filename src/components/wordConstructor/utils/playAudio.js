@@ -1,9 +1,9 @@
-const playAudio = (sound) => {
+const playAudio = (sound, isStart = false) => {
   const audio = new Audio();
-  audio.currentTime = 0;
+  if (!isStart) audio.currentTime = 0;
   audio.preload = 'auto';
   audio.src = sound;
   audio.play();
-  setTimeout(() => audio.pause(), 4000);
+  if (isStart) setTimeout(() => audio.pause(), 4000);
 };
 export default playAudio;

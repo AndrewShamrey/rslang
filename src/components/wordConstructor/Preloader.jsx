@@ -7,7 +7,7 @@ import spinnerGreen from './assets/spinner-green.svg';
 const Preloader = (props) => {
   const { type } = props;
   return (
-    <div>
+    <div className="WordConstructor__play">
       <img src={type === 'rainbow' ? spinnerRainbow : type === 'green' ? spinnerGreen : spinner} alt="spinner" />
     </div>
   );

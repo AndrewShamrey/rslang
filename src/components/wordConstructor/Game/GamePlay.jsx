@@ -19,7 +19,7 @@ import { wordsUrl, rslangDataUrl, dataFake } from '../utils/constants';
 const GamePlay = (props) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isFinish, setIsFinish] = useState(false);
-  const [timer, setTimer] = useState(64);
+  const [timer, setTimer] = useState(65);
   const [volume, setVolume] = useState(true);
   const [lives, setLives] = useState(5);
   // eslint-disable-next-line react/destructuring-assignment
@@ -47,6 +47,7 @@ const GamePlay = (props) => {
   };
 
   const tick = () => {
+    console.log('timer ', timer);
     if (timer === 61) {
       if (volume) {
         playAudio(startSong);
@@ -80,17 +81,18 @@ const GamePlay = (props) => {
       const data = await response.json();
       console.log('data ', data);
       await setWords(data);
-      setIsLoading(false);
-    }
-    fetchData();
-    // setWords(dataFake);
-    // setIsLoading(false);
-    if (timer === 64) {
-      if (volume) {
-        playAudio(tikTakSong);
+      await setIsLoading(false);
+      if (timer === 65) {
+        if (volume) {
+          playAudio(tikTakSong, true);
+        }
         tick();
       }
     }
+    fetchData();
+    console.log('useEffect[]');
+    // setWords(dataFake);
+    // setIsLoading(false);
   }, []);
 
   useEffect(() => {
@@ -115,7 +117,7 @@ const GamePlay = (props) => {
   }, [currentWord]);
 
   useEffect(() => {
-    const intervalID = setInterval(
+    const intervalID = setTimeout(
       () => tick(),
       1000,
     );
@@ -136,7 +138,7 @@ const GamePlay = (props) => {
   return (
     // eslint-disable-next-line no-nested-ternary
     isLoading ? <Preloader /> : (
-      (isFinish || lives < 1) ? <GameEnd /> : (
+      (isFinish || lives < 1 || timer === 0) ? <GameEnd /> : (
         <div className="WordConstructor__play">
           <header className="WordConstructor__play-header">
             <div className="WordConstructor__play-headerTimer">{timer}</div>
