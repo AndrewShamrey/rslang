@@ -26,20 +26,24 @@ const GamePlay = (props) => {
   const [lives, setLives] = useState(5);
   // eslint-disable-next-line react/destructuring-assignment
   const [level, setLevel] = useState(props.location.aboutProps.level);
-  const [score, setScore] = useState(100);
+  const [score, setScore] = useState(0);
   const [words, setWords] = useState([]);
   const [wordId, setWordId] = useState(0); //
   const [currentWord, setCurrentWord] = useState(null);
   const [currentWordRU, setCurrentWordRU] = useState(null);
   const [currentWordLetters, setCurrentWordLetters] = useState([]);
-  const [wordLetters, setWordLetters] = useState(null);
+  const [wordLetters, setWordLetters] = useState(null); // все буквы для клика
+  const [guessLetters, setGuessLetters] = useState(null); // буквы отгадываемого слова
+  const [guessWordIndex, setGuessWordIndex] = useState(0); // буквы отгадываемого слова
   const [goodWord, setGoodWord] = useState([]);
   const [badWord, setBadWord] = useState([]);
   const [wordErrors, setWordErrors] = useState(0);
   const [success, setSuccess] = useState(0);
   const [answerClass, setAnswerClass] = useState('');
+  const [arrayOfIndices, setArrayOfIndices] = useState([]);
 
   const intervals = [];
+  // eslint-disable-next-line prefer-const
   const width = { width: `${success > 29 ? 100 : ((100 / 5) * (success % 6))}%` };
 
   // --------------------------------------------------------------------
@@ -59,9 +63,9 @@ const GamePlay = (props) => {
   };
 
   const tick = () => {
-    console.log('timer ', timer);
+    // console.log('timer ', timer);
     // console.log('lives ', lives);
-    console.log('intervals ', intervals);
+    // console.log('intervals ', intervals);
 
     if (timer === 61) {
       if (volume) {
@@ -84,22 +88,49 @@ const GamePlay = (props) => {
     if (timer > 0 && !isFinish) setTimer(timer - 1);
   };
 
+  const changeWord = () => {
+    const newID = randomOf(arrayOfIndices.length);
+    setWordId(arrayOfIndices[newID]);
+    setCurrentWord(words[arrayOfIndices[newID]].word);
+    setCurrentWordRU(words[arrayOfIndices[newID]].wordTranslate);
+    setGuessWordIndex(0);
+    setGuessLetters(guessLetters.map(() => ''));
+  };
+
   const checkWord = (letter) => {
     const id = wordId;
-    console.log('const id = wordId ', id);
-    console.log('currentWord ', currentWord);
-    console.log('currentWordLetters ', currentWordLetters);
-    console.log(letter);
+    console.log('id ====== ', id);
+    console.log('arrayOfIndices ====== ', arrayOfIndices);
 
-    if (id === 1) {
+    if (letter === currentWord[guessWordIndex]) {
+      console.dir('currentWordLetters ', currentWordLetters);
+      // console.log('wordLetters ', wordLetters);
       playAudio(goodSong);
+      setGuessLetters(guessLetters.map((el, i) => {
+        if (i === guessWordIndex) return letter;
+        return el;
+      }));
+
       setAnswerClass(' WordConstructor__play-main_good');
       setTimeout(() => setAnswerClass(''), 200);
+
+      setGuessWordIndex(guessWordIndex + 1); // при угадывании увеличиваем индекс
+      if (guessWordIndex + 1 === currentWordLetters.length) {
+        setScore(score + 10);
+        const i = arrayOfIndices.indexOf(id);
+        if (i > -1) {
+          setArrayOfIndices([...arrayOfIndices.slice(0, i), ...arrayOfIndices.slice(i + 1)]);
+        }
+        changeWord();
+      } else {
+        setScore(score + 1);
+      }
     } else {
       if (volume) {
         playAudio(errorSong);
       }
       setLives(lives - 1);
+      // setScore(score - 10);
       setWordErrors(wordErrors + 1);
       setAnswerClass(' WordConstructor__play-main_error');
       setTimeout(() => setAnswerClass(''), 200);
@@ -112,6 +143,7 @@ const GamePlay = (props) => {
       const response = await fetch(`${wordsUrl}?page=${level - 1}`);
       const data = await response.json();
       console.log('data ', data);
+      setArrayOfIndices(data.map((el, i) => i));
       await setWords(data);
       await setIsLoading(false);
       if (timer === 65) {
@@ -133,21 +165,25 @@ const GamePlay = (props) => {
       setWordId(index);
       setCurrentWord(words[index].word);
       setCurrentWordRU(words[index].wordTranslate);
-      console.log('CurrentWord === ', currentWord);
+      console.log('wordId === ', wordId);
     }
   }, [words]);
 
   useEffect(() => {
     if (currentWord) {
       const wordArr = createObj(addRandomLetters([...currentWord], level));
-      // console.log('wordArr ', wordArr);
-      // addRandomLetters(wordLetters, level)
-      // setWordLetters(mix(wordArr));
       setWordLetters(wordArr);
       setCurrentWordLetters([...currentWord]);
       console.log('wordLetters ', wordLetters);
     }
   }, [currentWord]);
+
+  useEffect(() => {
+    if (currentWord) {
+      const letters = new Array(currentWordLetters.length).fill('');
+      setGuessLetters(letters);
+    }
+  }, [currentWordLetters]);
 
   useEffect(() => {
     if (!isFinish) {
@@ -204,7 +240,7 @@ const GamePlay = (props) => {
             <div className="WordConstructor__play-mainWord">{currentWordRU}</div>
             <div className="WordConstructor__play-mainWordArr">
               {
-                currentWord ? [...currentWord].map((el, i) => (
+                currentWord ? guessLetters.map((el, i) => (
                   <div key={i} className="WordConstructor__play-mainWordArrItem">
                     {el || ''}
                   </div>
