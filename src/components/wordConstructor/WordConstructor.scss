@@ -134,6 +134,14 @@
       padding: 20px 10px 0;
       margin: 50px auto 0;
 
+      &_good {
+        animation: show1 0.2s forwards;
+      }
+
+      &_error {
+        animation: show2 0.2s forwards;
+      }
+
       &Lives {
         position: absolute;
         top: 10px;
@@ -251,5 +259,29 @@
         }
       }
     }
+  }
+}
+
+@keyframes show1 {
+  0% {
+    box-shadow: 0 0 0px #41f778;
+  }
+  50% {
+    box-shadow: 0 0 30px #41f778;
+  }
+  100% {
+    box-shadow: 0 0 0px #41f778;
+  }
+}
+
+@keyframes show2 {
+  0% {
+    box-shadow: 0 0 0px #f74150;
+  }
+  50% {
+    box-shadow: 0 0 30px #f74150;
+  }
+  100% {
+    box-shadow: 0 0 0px #f74150;
   }
 }

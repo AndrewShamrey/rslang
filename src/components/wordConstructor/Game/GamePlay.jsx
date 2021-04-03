@@ -14,6 +14,8 @@ import cancel from '../assets/cancel.png';
 import startSong from '../assets/audio/start.mp3';
 import finishSong from '../assets/audio/finish.mp3';
 import tikTakSong from '../assets/audio/tikTak.mp3';
+import errorSong from '../assets/audio/error.mp3';
+import goodSong from '../assets/audio/good.mp3';
 import { wordsUrl, rslangDataUrl, dataFake } from '../utils/constants';
 
 const GamePlay = (props) => {
@@ -25,17 +27,17 @@ const GamePlay = (props) => {
   // eslint-disable-next-line react/destructuring-assignment
   const [level, setLevel] = useState(props.location.aboutProps.level);
   const [score, setScore] = useState(100);
-  // const [intervals, setIntervals] = useState([]); // интервалы для тика 1сек
   const [words, setWords] = useState([]);
-  // const [currentWordObj, setCurrentWordObj] = useState(null);
-  const [wordId, setWordId] = useState(0);
+  const [wordId, setWordId] = useState(0); //
   const [currentWord, setCurrentWord] = useState(null);
   const [currentWordRU, setCurrentWordRU] = useState(null);
   const [currentWordLetters, setCurrentWordLetters] = useState([]);
   const [wordLetters, setWordLetters] = useState(null);
   const [goodWord, setGoodWord] = useState([]);
   const [badWord, setBadWord] = useState([]);
+  const [wordErrors, setWordErrors] = useState(0);
   const [success, setSuccess] = useState(0);
+  const [answerClass, setAnswerClass] = useState('');
 
   const intervals = [];
   const width = { width: `${success > 29 ? 100 : ((100 / 5) * (success % 6))}%` };
@@ -46,32 +48,62 @@ const GamePlay = (props) => {
     if (volume) playAudio(`${rslangDataUrl}${audio}`);
   };
 
+  const stopGame = () => {
+    setIsFinish(true);
+    setTimer(0);
+    if (volume) {
+      playAudio(finishSong);
+    }
+    intervals.forEach(clearInterval);
+    intervals.forEach(clearTimeout);
+  };
+
   const tick = () => {
     console.log('timer ', timer);
+    // console.log('lives ', lives);
+    console.log('intervals ', intervals);
+
     if (timer === 61) {
       if (volume) {
         playAudio(startSong);
       }
     }
     if (timer === 0 || lives === 0 || wordId === 79) {
-      if (volume) {
-        playAudio(finishSong);
-      }
-      intervals.forEach(clearInterval);
+      stopGame();
+      // if (volume) {
+      //   playAudio(finishSong);
+      // }
+      // intervals.forEach(clearInterval);
+      // intervals.forEach((el) => {
+      //   console.log('el ', el);
+      //   clearTimeout(el);
+      // });
       // eslint-disable-next-line max-len
       // updateUserMiniStatistic(wordConstructor, this.state.goodWord.length, this.state.bestGoodWordsScore);
     }
-    if (timer > 0) setTimer(timer - 1);
-  };
-
-  const stopGame = () => {
-    setTimer(0);
-    // setIsFinish(true);
-    intervals.forEach(clearInterval);
+    if (timer > 0 && !isFinish) setTimer(timer - 1);
   };
 
   const checkWord = (letter) => {
+    const id = wordId;
+    console.log('const id = wordId ', id);
+    console.log('currentWord ', currentWord);
+    console.log('currentWordLetters ', currentWordLetters);
     console.log(letter);
+
+    if (id === 1) {
+      playAudio(goodSong);
+      setAnswerClass(' WordConstructor__play-main_good');
+      setTimeout(() => setAnswerClass(''), 200);
+    } else {
+      if (volume) {
+        playAudio(errorSong);
+      }
+      setLives(lives - 1);
+      setWordErrors(wordErrors + 1);
+      setAnswerClass(' WordConstructor__play-main_error');
+      setTimeout(() => setAnswerClass(''), 200);
+    }
   };
 
   // --------------------------------------------------------------------
@@ -97,7 +129,7 @@ const GamePlay = (props) => {
 
   useEffect(() => {
     if (words.length > 0) {
-      const index = randomOf(words.length);
+      const index = randomOf(words.length); // Случайное слово!!!
       setWordId(index);
       setCurrentWord(words[index].word);
       setCurrentWordRU(words[index].wordTranslate);
@@ -112,17 +144,27 @@ const GamePlay = (props) => {
       // addRandomLetters(wordLetters, level)
       // setWordLetters(mix(wordArr));
       setWordLetters(wordArr);
+      setCurrentWordLetters([...currentWord]);
       console.log('wordLetters ', wordLetters);
     }
   }, [currentWord]);
 
   useEffect(() => {
-    const intervalID = setTimeout(
-      () => tick(),
-      1000,
-    );
-    intervals.push(intervalID);
+    if (!isFinish) {
+      const intervalID = setTimeout(
+        () => tick(),
+        1000,
+      );
+      intervals.push(intervalID);
+    }
+    // console.log('intervals ', intervals);
   }, [timer]);
+
+  useEffect(() => {
+    if (lives < 1) {
+      stopGame();
+    }
+  }, [lives]);
 
   if (timer > 60) {
     return (
@@ -153,7 +195,7 @@ const GamePlay = (props) => {
             </div>
           </header>
 
-          <main className="WordConstructor__play-main">
+          <main className={`WordConstructor__play-main${answerClass}`}>
             <div className="WordConstructor__play-mainLives">
               <span>{lives}</span>
               <img src={heart} alt="heart" width="12px" />
