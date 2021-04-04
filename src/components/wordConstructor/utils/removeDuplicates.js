@@ -11,7 +11,7 @@ const removeDuplicates = (originalArray, prop) => {
   for (const i in lookupObject) {
     newArray.push(lookupObject[i]);
   }
-  console.log('lookupObject ', lookupObject);
+
   return newArray;
 };
 

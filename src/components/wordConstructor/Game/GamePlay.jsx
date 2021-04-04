@@ -34,7 +34,7 @@ const GamePlay = (props) => {
   const [currentWordLetters, setCurrentWordLetters] = useState([]);
   const [wordLetters, setWordLetters] = useState(null); // все буквы для клика
   const [guessLetters, setGuessLetters] = useState(null); // буквы отгадываемого слова
-  const [guessWordIndex, setGuessWordIndex] = useState(0); // буквы отгадываемого слова
+  const [guessWordIndex, setGuessWordIndex] = useState(0); // индекс отгадываемого слова
   const [goodWords, setGoodWords] = useState([]);
   const [badWords, setBadWords] = useState([]);
   const [wordErrors, setWordErrors] = useState(0);
@@ -98,6 +98,7 @@ const GamePlay = (props) => {
   };
 
   const checkWord = (letter) => {
+    console.log('wordLetters => ', wordLetters);
     const id = wordId;
 
     if (letter === currentWord[guessWordIndex]) {
@@ -121,6 +122,19 @@ const GamePlay = (props) => {
         changeWord();
       } else {
         setScore(score + 1);
+      }
+      console.log('wordLetters => ', wordLetters.find((el) => el.a === letter), wordLetters.findIndex((el) => el.a === letter));
+      const index = wordLetters.findIndex((el) => el.a === letter);
+      const wordLettersCopy = [...wordLetters];
+
+      if (wordLetters[index].n === 1) {
+        wordLettersCopy.splice(index, 1);
+        setWordLetters(wordLettersCopy);
+      } else if (wordLetters[index].n > 1) {
+        const newElement = wordLetters.find((el) => el.a === letter);
+        newElement.n -= 1;
+        wordLettersCopy.splice(index, 1, newElement);
+        setWordLetters(wordLettersCopy);
       }
     } else {
       if (volume) {
@@ -170,7 +184,7 @@ const GamePlay = (props) => {
       setWordId(index);
       setCurrentWord(words[index].word);
       setCurrentWordRU(words[index].wordTranslate);
-      console.log('wordId === ', wordId);
+      // console.log('wordId === ', wordId);
     }
   }, [words]);
 
@@ -179,7 +193,7 @@ const GamePlay = (props) => {
       const wordArr = createObj(addRandomLetters([...currentWord], level));
       setWordLetters(wordArr);
       setCurrentWordLetters([...currentWord]);
-      console.log('wordLetters ', wordLetters);
+      // console.log('wordLetters ', wordLetters);
     }
   }, [currentWord]);
 

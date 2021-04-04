@@ -43,7 +43,7 @@ const GameEnd = (props) => {
 
             <div className="WordConstructor__resultErrors">
               <div className="WordConstructor__resultErrorsBadName">
-                {`Ошибок: ${badWords.length}`}
+                {`Ошибки: ${badWordsStat.length}`}
               </div>
               {badWordsStat.map((el, i) => {
                 const id = i;
@@ -60,7 +60,7 @@ const GameEnd = (props) => {
             </div>
 
             <div className="WordConstructor__resultGood">
-              <div className="WordConstructor__resultGoodName">{`Правильные: ${goodWords.length}`}</div>
+              <div className="WordConstructor__resultGoodName">{`Знаю: ${goodWords.length}`}</div>
               {goodWordsStat.map((el, i) => {
                 const id = i;
                 return (
@@ -84,8 +84,7 @@ const GameEnd = (props) => {
                 pathname: '/wordConstructor/game',
                 aboutProps: {
                   level,
-                // UserWordList: this.state.UserWordList,
-                // audioStatus: this.state.audioStatus,
+                // userWordList: this.state.UserWordList,
                 },
               }}
               onClick={newGame}
