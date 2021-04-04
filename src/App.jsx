@@ -9,7 +9,7 @@ import Header from './components/header/Header';
 import Footer from './components/footer/footer';
 import MainPage from './components/mainPage/MainPage';
 import ErrorPage from './components/errorPage/errorPage';
-import Audiochallenge from './components/audiochallenge/audiochallenge/audiochallenge';
+import Audiochallenge from './components/audiochallenge/audiochallenge';
 import './App.scss';
 
 function App() {

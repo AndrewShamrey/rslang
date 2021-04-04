@@ -1,0 +1,56 @@
+@import './colors.scss';
+
+@mixin styled__btn {
+  padding: 0.4375rem 1.25rem;
+  font-size: inherit;
+  line-height: 1.5;
+  text-align: center;
+  vertical-align: middle;
+  text-shadow: none;
+  font-weight: normal;
+  white-space: normal;
+  word-wrap: break-word;
+  border: 1px solid transparent;
+  border-radius: .25rem;
+  transition: .2s ease-out;
+  touch-action: manipulation;
+  cursor: pointer;
+  background-color: inherit;
+  box-shadow: 0px 5px 20px 0 rgb(0, 0, 0 / 10%);
+  will-change: opacity, transform;
+  transition: all 0.3s ease-out;
+  -webkit-transition: all 0.3s ease-out;  
+  display: inline-block;
+  user-select: none;
+
+  &:hover {
+    transform: translateY(-3px);
+  }  
+}
+
+@mixin styled__btn_solid($bg, $fontColor) {
+  @include styled__btn();
+  color: $fontColor;
+  background-color: $bg;
+  border-color: $bg;
+  box-shadow: 0 10px 20px -10px $bg;
+
+  &:hover {
+    box-shadow: none;
+  }
+}
+
+@mixin styled__btn_outlined($bg, $fontColor, $bgNotHovered: transparent) {
+  @include styled__btn();
+  color: $bg;
+  background-color: $bgNotHovered;
+  border-color: $bg;
+  box-shadow: none;
+
+
+  &:hover {
+    color: $fontColor;
+    background-color: $bg;
+    box-shadow: 0 10px 20px -10px $bg;
+  }
+}
