@@ -260,6 +260,131 @@
       }
     }
   }
+
+  &__result {
+    position: relative;
+    margin-top: 3%;
+    max-width: 600px;
+    // width: calc(100% - 20px);
+    min-width: 280px;
+    margin: 5%;
+    padding: 10px;
+    width: 100%;
+    min-height: 280px;
+    max-height: 640px;
+    border: 2px solid $white;
+    border-radius: 5px;
+    background-color: rgba($color: $white, $alpha: 0.1);
+    box-shadow: 0 0 1px $white;
+    transition: 0.5s;
+
+    &Statistic {
+      display: block;
+      min-width: 260px;
+      min-height: 100px;
+      max-height: 400px;
+      margin: 0 auto;
+      border: 2px solid $white;
+      border-radius: 5px;
+      background-color: $white;
+      overflow-y: scroll;
+    }
+
+    &Score {
+      font-size: 36px;
+      color: $white;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    &Errors {
+      margin: 5px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid $grey;
+
+      &BadName {
+        font-size: 18px;
+        padding-bottom: 10px;
+        font-weight: 600;
+        color: #f74150;
+      }
+    }
+
+    &Good {
+      margin: 5px;
+      padding-bottom: 10px;
+
+      &Name {
+        font-size: 18px;
+        padding-bottom: 10px;
+        font-weight: 600;
+        color: #33fc01;
+      }
+    }
+
+    &Word {
+      font-size: 16px;
+      font-weight: 700;
+      border: none;
+      background: none;
+      margin-right: 5px;
+
+      &:hover {
+        color: $blue;
+      }
+
+      &Block {
+        display: flex;
+        align-items: center;
+        padding: 2px;
+      }
+
+      &Translate {
+        font-style: italic;
+        font-size: 16px;
+      }
+    }
+
+    &WordAudio {
+      width: 20px;
+      height: 20px;
+      margin-right: 5px;
+      transition: 0.3s;
+      background: none;
+      border: none;
+
+      &:hover {
+        transform: scale(1.2);
+      }
+    }
+
+    &Controls {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      &Continue,
+      &Cancel {
+        width: 260px;
+        height: 32px;
+        color: $white;
+        background: #ffffff42;
+        padding: 5px;
+        font-size: 18px;
+        text-transform: uppercase;
+        margin: 10px auto;
+        text-align: center;
+        text-decoration: none;
+        transition: 0.5s;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+      }
+
+      &Cancel {
+      }
+    }
+  }
 }
 
 @keyframes show1 {

@@ -35,8 +35,8 @@ const GamePlay = (props) => {
   const [wordLetters, setWordLetters] = useState(null); // все буквы для клика
   const [guessLetters, setGuessLetters] = useState(null); // буквы отгадываемого слова
   const [guessWordIndex, setGuessWordIndex] = useState(0); // буквы отгадываемого слова
-  const [goodWord, setGoodWord] = useState([]);
-  const [badWord, setBadWord] = useState([]);
+  const [goodWords, setGoodWords] = useState([]);
+  const [badWords, setBadWords] = useState([]);
   const [wordErrors, setWordErrors] = useState(0);
   const [success, setSuccess] = useState(0);
   const [answerClass, setAnswerClass] = useState('');
@@ -99,12 +99,8 @@ const GamePlay = (props) => {
 
   const checkWord = (letter) => {
     const id = wordId;
-    console.log('id ====== ', id);
-    console.log('arrayOfIndices ====== ', arrayOfIndices);
 
     if (letter === currentWord[guessWordIndex]) {
-      console.dir('currentWordLetters ', currentWordLetters);
-      // console.log('wordLetters ', wordLetters);
       playAudio(goodSong);
       setGuessLetters(guessLetters.map((el, i) => {
         if (i === guessWordIndex) return letter;
@@ -121,6 +117,7 @@ const GamePlay = (props) => {
         if (i > -1) {
           setArrayOfIndices([...arrayOfIndices.slice(0, i), ...arrayOfIndices.slice(i + 1)]);
         }
+        setGoodWords([...goodWords, words[wordId]]);
         changeWord();
       } else {
         setScore(score + 1);
@@ -130,17 +127,26 @@ const GamePlay = (props) => {
         playAudio(errorSong);
       }
       setLives(lives - 1);
-      // setScore(score - 10);
+      setBadWords([...badWords, words[wordId]]);
       setWordErrors(wordErrors + 1);
       setAnswerClass(' WordConstructor__play-main_error');
       setTimeout(() => setAnswerClass(''), 200);
     }
   };
 
+  const newGame = () => {
+    setTimer(65);
+    setIsFinish(false);
+    setLives(5);
+    setGuessWordIndex(0);
+    setGuessLetters(currentWordLetters.map(() => ''));
+    // console.log('words ', words);
+  };
+
   // --------------------------------------------------------------------
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch(`${wordsUrl}?page=${level - 1}`);
+      const response = await fetch(`${wordsUrl}?page=${level - 1}&group=${Math.floor(Math.random() * 5)}`);
       const data = await response.json();
       console.log('data ', data);
       setArrayOfIndices(data.map((el, i) => i));
@@ -154,7 +160,6 @@ const GamePlay = (props) => {
       }
     }
     fetchData();
-    console.log('useEffect[]');
     // setWords(dataFake);
     // setIsLoading(false);
   }, []);
@@ -193,7 +198,6 @@ const GamePlay = (props) => {
       );
       intervals.push(intervalID);
     }
-    // console.log('intervals ', intervals);
   }, [timer]);
 
   useEffect(() => {
@@ -216,39 +220,48 @@ const GamePlay = (props) => {
   return (
     // eslint-disable-next-line no-nested-ternary
     isLoading ? <Preloader /> : (
-      (isFinish || lives < 1 || timer === 0) ? <GameEnd /> : (
-        <div className="WordConstructor__play">
-          <header className="WordConstructor__play-header">
-            <div className="WordConstructor__play-headerTimer">{timer}</div>
-            <div className="WordConstructor__play-headerScore">{`score: ${score}`}</div>
-            <div className="WordConstructor__play-headerControls">
-              <button className="WordConstructor__play-headerControlsVolume" onClick={() => setVolume(!volume)} type="button">
-                {volume ? <img src={audioOn} alt="volume" width="30px" /> : <img src={audioOff} alt="volume" width="30px" /> }
-              </button>
-              <Link className="WordConstructor__play-headerControlsCancel" to={{ pathname: '/wordConstructor/start' }}>
-                <img src={cancel} alt="cancel" width="30px" />
-              </Link>
-            </div>
-          </header>
+      (isFinish || lives < 1 || timer === 0)
+        ? (
+          <GameEnd
+            score={score}
+            level={level}
+            newGame={() => { newGame(); }}
+            badWords={badWords}
+            goodWords={goodWords}
+          />
+        ) : (
+          <div className="WordConstructor__play">
+            <header className="WordConstructor__play-header">
+              <div className="WordConstructor__play-headerTimer">{timer}</div>
+              <div className="WordConstructor__play-headerScore">{`score: ${score}`}</div>
+              <div className="WordConstructor__play-headerControls">
+                <button className="WordConstructor__play-headerControlsVolume" onClick={() => setVolume(!volume)} type="button">
+                  {volume ? <img src={audioOn} alt="volume" width="30px" /> : <img src={audioOff} alt="volume" width="30px" /> }
+                </button>
+                <Link className="WordConstructor__play-headerControlsCancel" to={{ pathname: '/wordConstructor/start' }}>
+                  <img src={cancel} alt="cancel" width="30px" />
+                </Link>
+              </div>
+            </header>
 
-          <main className={`WordConstructor__play-main${answerClass}`}>
-            <div className="WordConstructor__play-mainLives">
-              <span>{lives}</span>
-              <img src={heart} alt="heart" width="12px" />
-            </div>
-            <div className="WordConstructor__play-mainPlayWord" onClick={() => playAudioWord()} />
-            <div className="WordConstructor__play-mainWord">{currentWordRU}</div>
-            <div className="WordConstructor__play-mainWordArr">
-              {
+            <main className={`WordConstructor__play-main${answerClass}`}>
+              <div className="WordConstructor__play-mainLives">
+                <span>{lives}</span>
+                <img src={heart} alt="heart" width="12px" />
+              </div>
+              <div className="WordConstructor__play-mainPlayWord" onClick={() => playAudioWord()} />
+              <div className="WordConstructor__play-mainWord">{currentWordRU}</div>
+              <div className="WordConstructor__play-mainWordArr">
+                {
                 currentWord ? guessLetters.map((el, i) => (
                   <div key={i} className="WordConstructor__play-mainWordArrItem">
                     {el || ''}
                   </div>
                 )) : null
               }
-            </div>
-            <div className="WordConstructor__play-mainWordLetters">
-              {
+              </div>
+              <div className="WordConstructor__play-mainWordLetters">
+                {
                 wordLetters ? wordLetters.map((el, i) => {
                   const letter = el.a;
                   return (
@@ -259,14 +272,14 @@ const GamePlay = (props) => {
                   );
                 }) : ''
               }
-            </div>
-            <div className="WordConstructor__play-mainLevel">{`Уровень ${level}`}</div>
-            <div className="WordConstructor__play-mainSuccess">
-              <div className="WordConstructor__play-mainSuccessWidth" style={width} />
-            </div>
-          </main>
-        </div>
-      )
+              </div>
+              <div className="WordConstructor__play-mainLevel">{`Уровень ${level}`}</div>
+              <div className="WordConstructor__play-mainSuccess">
+                <div className="WordConstructor__play-mainSuccessWidth" style={width} />
+              </div>
+            </main>
+          </div>
+        )
     )
   );
 };
