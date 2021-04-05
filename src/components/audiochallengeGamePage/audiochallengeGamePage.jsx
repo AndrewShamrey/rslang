@@ -1,4 +1,6 @@
-import { useState, useEffect, useCallback } from 'react';
+import {
+  useState, useEffect, useCallback, useMemo,
+} from 'react';
 import { useSelector } from 'react-redux';
 import WordList from '../wordList/wordList';
 import Preloader from '../preloader/preloader';
@@ -9,11 +11,9 @@ import WordsAPI from '../../assets/services/wordsAPI';
 import getRandomNumber from '../../utils/getRandomNumber';
 import error from '../../assets/audio/error.mp3';
 import correct from '../../assets/audio/correct.mp3';
-import { MEDIA_URI } from '../../utils/constants';
+import { MEDIA_URI, AMOUNT_OF_PAGES } from '../../utils/constants';
 
 import './audiochallengeGamePage.scss';
-
-const wordsAPI = new WordsAPI();
 
 const AudiochallengeGamePage = ({ level, page, showStatistics }) => {
   const isSound = useSelector((state) => state.control.audiochallenge.isSound);
@@ -34,6 +34,8 @@ const AudiochallengeGamePage = ({ level, page, showStatistics }) => {
     answerId: null,
   });
 
+  const wordsAPI = useMemo(() => new WordsAPI(), []);
+
   const { answers, answerId, currentWord } = gameData;
 
   const playGameSound = useCallback((sound) => {
@@ -47,8 +49,8 @@ const AudiochallengeGamePage = ({ level, page, showStatistics }) => {
     const pages = [];
     const usedPagesNumbers = [page];
 
-    while (i < 2) { // magic numbers
-      const randomPage = getRandomNumber(30); // magic numbers
+    while (i < 2) {
+      const randomPage = getRandomNumber(AMOUNT_OF_PAGES);
 
       if (!usedPagesNumbers.includes(pages)) {
         pages.push(wordsAPI.getCollectionWords(level, randomPage));
@@ -60,7 +62,7 @@ const AudiochallengeGamePage = ({ level, page, showStatistics }) => {
     const responseArr = await Promise.all(pages);
 
     return responseArr.flat();
-  }, [level, page]);
+  }, [level, page, wordsAPI]);
 
   const getAnswersSeries = useCallback(() => {
     const { currentSeries, longestSeries } = gameData;
@@ -102,7 +104,8 @@ const AudiochallengeGamePage = ({ level, page, showStatistics }) => {
     setIsCorrectAnswer(answer);
   }, [playGameSound]);
 
-  const pass = useCallback(() => {
+  const pass = useCallback((e) => {
+    e?.target?.blur();
     getIncorrectAnswer(null, false);
   }, [getIncorrectAnswer]);
 
@@ -124,7 +127,8 @@ const AudiochallengeGamePage = ({ level, page, showStatistics }) => {
     return answersArr;
   }, [amountOfAnswers]);
 
-  const nextWord = useCallback(() => {
+  const nextWord = useCallback((e) => {
+    e?.target?.blur();
     setIsPreloader(true);
 
     const {
@@ -170,7 +174,7 @@ const AudiochallengeGamePage = ({ level, page, showStatistics }) => {
     if (!isQuestion) return;
 
     const { answers: answersData } = gameData;
-    const { id } = answersData[+key - 1]; // refactor ?
+    const { id } = answersData[+key - 1];
     const answer = id === gameData.currentWord.id;
 
     if (answer) {
@@ -200,7 +204,7 @@ const AudiochallengeGamePage = ({ level, page, showStatistics }) => {
 
   useEffect(() => {
     const startGame = async () => {
-      const words = await wordsAPI.getCollectionWords(level, page + 1);
+      const words = await wordsAPI.getCollectionWords(level, page);
       shuffleArray(words);
 
       const newCurrentWord = words[0];
@@ -226,8 +230,7 @@ const AudiochallengeGamePage = ({ level, page, showStatistics }) => {
     };
 
     startGame();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [generateWrongAnswersArray, getWrongAnswersData, level, page, wordsAPI]);
 
   useEffect(() => {
     document.addEventListener('keydown', keyboardEvents);

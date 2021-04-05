@@ -1,5 +1,8 @@
 import DefaultPhoto from '../assets/images/default-photo.jpg';
 
+export const AMOUNT_OF_PAGES = 30;
+export const AMOUNT_OF_GROUPS = 6;
+
 export const MAX_IMAGE_SIZE = 4000000;
 export const DEFAULT_PHOTO = DefaultPhoto;
 export const BACK_URL = 'https://react-learnwords-113.herokuapp.com/';
