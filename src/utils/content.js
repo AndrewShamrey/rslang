@@ -7,4 +7,17 @@ export const START_PAGE = {
   start: 'Начать',
 };
 
-export const aa = '';
+export const RESULT_PAGE = {
+  title: 'Результат',
+  amountOfWords: 'Количество слов',
+  longestSeries: 'Самая длинная серия',
+  correct: 'Правильные ответы',
+  incorrect: 'Неправильные ответы',
+  playAgain: 'Играть снова',
+  return: 'Перейти на главную страницу',
+};
+
+export const AUDIOCHALLENGE_GAME_PAGE = {
+  pass: 'Пропустить',
+  nextWord: 'Следующее слово',
+};

@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import saveShortTermStatistics from '../../utils/saveShortTermStatistics';
+import { RESULT_PAGE } from '../../utils/content';
 import StatisticsList from '../statisticsList/statisticsList';
 
 import './statisticsPage.scss';
@@ -15,27 +16,25 @@ const StatisticsPage = ({ gameResult, showStartPage, game }) => {
 
   return (
     <div className="statistics-page__results">
-      <p className="statistics-page__header">Results</p>
+      <p className="statistics-page__header">{RESULT_PAGE.title}</p>
       <p className="statistics-page__info">
-        Amount of words:
-        {correctAnswers.length + incorrectAnswers.length}
-        , Longest series:
-        {longestSeries}
+        {`
+          ${RESULT_PAGE.amountOfWords}: ${correctAnswers.length + incorrectAnswers.length},
+          ${RESULT_PAGE.longestSeries}: ${longestSeries}
+        `}
       </p>
 
       <div className="statistics-page__answers">
         <div className="statistics-page__answers-block">
           <p className="statistics-page__answers-title">
-            Correct:
-            {correctAnswers.length}
+            {`${RESULT_PAGE.correct}: ${correctAnswers.length}`}
           </p>
           <StatisticsList words={correctAnswers} />
         </div>
 
         <div className="statistics-page__answersBlock">
           <p className="statistics-page__answers-title">
-            Incorrect:
-            {incorrectAnswers.length}
+            {`${RESULT_PAGE.incorrect}: ${incorrectAnswers.length}`}
           </p>
           <StatisticsList words={incorrectAnswers} />
         </div>
@@ -47,10 +46,10 @@ const StatisticsPage = ({ gameResult, showStartPage, game }) => {
           onClick={showStartPage}
           type="button"
         >
-          Play again
+          {RESULT_PAGE.playAgain}
         </button>
         <Link to="/" className="statistics-page__btn">
-          Return
+          {RESULT_PAGE.return}
         </Link>
       </div>
     </div>

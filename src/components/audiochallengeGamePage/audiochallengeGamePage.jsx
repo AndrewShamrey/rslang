@@ -12,6 +12,7 @@ import getRandomNumber from '../../utils/getRandomNumber';
 import error from '../../assets/audio/error.mp3';
 import correct from '../../assets/audio/correct.mp3';
 import { MEDIA_URI, AMOUNT_OF_PAGES } from '../../utils/constants';
+import { AUDIOCHALLENGE_GAME_PAGE } from '../../utils/content';
 
 import './audiochallengeGamePage.scss';
 
@@ -267,7 +268,7 @@ const AudiochallengeGamePage = ({ level, page, showStatistics }) => {
           onClick={isQuestion ? pass : nextWord}
           type="button"
         >
-          {isQuestion ? 'Pass' : 'Next word'}
+          {isQuestion ? AUDIOCHALLENGE_GAME_PAGE.pass : AUDIOCHALLENGE_GAME_PAGE.nextWord }
         </button>
       </div>
     </>
