@@ -1,8 +1,13 @@
 import DefaultPhoto from '../assets/images/default-photo.jpg';
 
+export const AMOUNT_OF_PAGES = 30;
+export const AMOUNT_OF_GROUPS = 6;
+
 export const MAX_IMAGE_SIZE = 4000000;
 export const DEFAULT_PHOTO = DefaultPhoto;
-export const BACK_URL = '';
+export const BACK_URL = 'https://react-learnwords-113.herokuapp.com/';
+export const MEDIA_URI = 'https://react-learnwords-example.herokuapp.com/';
+export const HTML_TAGS_REGEXP = /(<b>|<\/b>|<i>|<\/i>)/g;
 
 export const videoURL = 'https://media.w3.org/2010/05/sintel/trailer_hd.mp4';
 export const mainPageText = {

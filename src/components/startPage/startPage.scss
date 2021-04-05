@@ -1,0 +1,58 @@
+@import '../../sass/colors.scss';
+@import '../../sass/breakpoints.scss';
+@import '../../sass/defaultComponentsStyles.scss';
+
+.start-page {
+  &__about {
+    margin: 0 auto;
+    max-width: 768px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+
+  &__select {
+    @include styled__btn_outlined($blue, $white, $white);
+    margin-bottom: 30px;
+    padding: 0.4rem 1rem;
+    width: 150px;  
+    font-size: 14px;
+    font-weight: 900;
+    text-transform: uppercase;
+
+    &:hover {
+      transform: none;
+    }
+  }
+
+  &__header {
+    margin: 0 0 50px;
+    font-size: 60px;
+    font-weight: 700;
+    color: #f8f9fa;
+    text-align: center;
+    text-transform: uppercase;
+
+    @media (max-width: 768px) {
+      margin: 25px;
+      font-size: 30px;
+    }
+  }
+
+  &__description {
+    margin: 0 0 50px;
+    font-size: 20px;
+    text-align: center;
+    color: #f8f9fa;
+  }
+  
+  &__start {
+    @include styled__btn_outlined($blue, $white, $white);
+    width: 150px;
+    font-size: 17px;
+    font-weight: 900;
+    text-transform: uppercase;
+  }
+}

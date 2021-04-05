@@ -20,7 +20,7 @@ const GameSprint = ({ page = getRandomNumber(), level = 0, cleanStart = true }) 
     // при внесении изменений массив рабочих слов множится
     // слово, перевод, верный ли сет
     if (isGameStarted && allWords.length) {
-      Берем половину для верных
+      // Берем половину для верных
       allWords.filter((word, ind) => ind < (allWords.length / 2))
         .forEach((wordSet) => {
           const { word } = wordSet;
