@@ -37,7 +37,7 @@ const Audiochallenge = () => {
   };
 
   const changeLevel = ({ target }) => {
-    setLevel({ level: target.value });
+    setLevel(target.value);
   };
 
   const closeGame = () => {
