@@ -53,7 +53,7 @@ const AudiochallengeGamePage = ({ level, page, showStatistics }) => {
     while (i < 2) {
       const randomPage = getRandomNumber(AMOUNT_OF_PAGES);
 
-      if (!usedPagesNumbers.includes(pages)) {
+      if (!usedPagesNumbers.includes(randomPage)) {
         pages.push(wordsAPI.getCollectionWords(level, randomPage));
         usedPagesNumbers.push(randomPage);
         i += 1;

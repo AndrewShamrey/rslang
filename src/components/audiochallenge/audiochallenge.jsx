@@ -19,10 +19,8 @@ const Audiochallenge = () => {
   const [gameResult, setGameResult] = useState({});
 
   const startGame = () => {
-    if (!page) {
-      const randomPage = getRandomNumber(AMOUNT_OF_PAGES);
-      setPage(randomPage);
-    }
+    const randomPage = getRandomNumber(AMOUNT_OF_PAGES);
+    setPage(randomPage);
     setIsStartPage(false);
   };
 
