@@ -45,7 +45,6 @@
       padding: 10px;
       margin-top: 30px;
       background-color: $white;
-      // text-align: center;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -173,7 +172,6 @@
       }
 
       &Word {
-        // width: 100%;
         min-height: 50px;
         margin: 30px;
         font-size: 26px;
@@ -251,11 +249,10 @@
         height: 20px;
         border: 2px solid red;
         border-radius: 5px;
-        // margin-top: 50px;
 
         &Width {
           height: 100%;
-          // width: 50%;
+          transition: all 0.3s;
           background-color: aquamarine;
         }
       }
@@ -306,7 +303,7 @@
         font-size: 18px;
         padding-bottom: 10px;
         font-weight: 600;
-        color: #f74150;
+        color: $red;
       }
     }
 
@@ -318,7 +315,7 @@
         font-size: 18px;
         padding-bottom: 10px;
         font-weight: 600;
-        color: #33fc01;
+        color: $green;
       }
     }
 
@@ -375,10 +372,14 @@
         margin: 10px auto;
         text-align: center;
         text-decoration: none;
-        transition: 0.5s;
+        transition: 0.2s;
         border: none;
         cursor: pointer;
         border-radius: 5px;
+
+        &:hover {
+          box-shadow: 0 0 3px $white;
+        }
       }
 
       &Cancel {

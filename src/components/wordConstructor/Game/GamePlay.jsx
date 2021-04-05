@@ -16,7 +16,7 @@ import finishSong from '../assets/audio/finish.mp3';
 import tikTakSong from '../assets/audio/tikTak.mp3';
 import errorSong from '../assets/audio/error.mp3';
 import goodSong from '../assets/audio/good.mp3';
-import { wordsUrl, rslangDataUrl, dataFake } from '../utils/constants';
+import { wordsUrl, rslangDataUrl } from '../utils/constants';
 
 const GamePlay = (props) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -24,17 +24,17 @@ const GamePlay = (props) => {
   const [timer, setTimer] = useState(65);
   const [volume, setVolume] = useState(true);
   const [lives, setLives] = useState(5);
-  // eslint-disable-next-line react/destructuring-assignment
-  const [level, setLevel] = useState(props.location.aboutProps.level);
+  const { location: { aboutProps: { level: propLevel } } } = props;
+  const [level, setLevel] = useState(propLevel);
   const [score, setScore] = useState(0);
   const [words, setWords] = useState([]);
-  const [wordId, setWordId] = useState(0); //
+  const [wordId, setWordId] = useState(0);
   const [currentWord, setCurrentWord] = useState(null);
   const [currentWordRU, setCurrentWordRU] = useState(null);
   const [currentWordLetters, setCurrentWordLetters] = useState([]);
-  const [wordLetters, setWordLetters] = useState(null); // все буквы для клика
-  const [guessLetters, setGuessLetters] = useState(null); // буквы отгадываемого слова
-  const [guessWordIndex, setGuessWordIndex] = useState(0); // индекс отгадываемого слова
+  const [wordLetters, setWordLetters] = useState(null);
+  const [guessLetters, setGuessLetters] = useState(null);
+  const [guessWordIndex, setGuessWordIndex] = useState(0);
   const [goodWords, setGoodWords] = useState([]);
   const [badWords, setBadWords] = useState([]);
   const [wordErrors, setWordErrors] = useState(0);
@@ -43,10 +43,7 @@ const GamePlay = (props) => {
   const [arrayOfIndices, setArrayOfIndices] = useState([]);
 
   const intervals = [];
-  // eslint-disable-next-line prefer-const
-  const width = { width: `${success > 29 ? 100 : ((100 / 5) * (success % 6))}%` };
-
-  // --------------------------------------------------------------------
+  const width = { width: `${success > 59 ? 100 : ((100 / 5) * (success % 6))}%` };
 
   const playAudioWord = (audio = words[wordId].audio) => {
     if (volume) playAudio(`${rslangDataUrl}${audio}`);
@@ -63,27 +60,13 @@ const GamePlay = (props) => {
   };
 
   const tick = () => {
-    // console.log('timer ', timer);
-    // console.log('lives ', lives);
-    // console.log('intervals ', intervals);
-
     if (timer === 61) {
       if (volume) {
         playAudio(startSong);
       }
     }
-    if (timer === 0 || lives === 0 || wordId === 79) {
+    if (timer === 0 || lives === 0 || wordId === 119) {
       stopGame();
-      // if (volume) {
-      //   playAudio(finishSong);
-      // }
-      // intervals.forEach(clearInterval);
-      // intervals.forEach((el) => {
-      //   console.log('el ', el);
-      //   clearTimeout(el);
-      // });
-      // eslint-disable-next-line max-len
-      // updateUserMiniStatistic(wordConstructor, this.state.goodWord.length, this.state.bestGoodWordsScore);
     }
     if (timer > 0 && !isFinish) setTimer(timer - 1);
   };
@@ -98,7 +81,6 @@ const GamePlay = (props) => {
   };
 
   const checkWord = (letter) => {
-    console.log('wordLetters => ', wordLetters);
     const id = wordId;
 
     if (letter === currentWord[guessWordIndex]) {
@@ -111,7 +93,7 @@ const GamePlay = (props) => {
       setAnswerClass(' WordConstructor__play-main_good');
       setTimeout(() => setAnswerClass(''), 200);
 
-      setGuessWordIndex(guessWordIndex + 1); // при угадывании увеличиваем индекс
+      setGuessWordIndex(guessWordIndex + 1);
       if (guessWordIndex + 1 === currentWordLetters.length) {
         setScore(score + 10);
         const i = arrayOfIndices.indexOf(id);
@@ -120,10 +102,13 @@ const GamePlay = (props) => {
         }
         setGoodWords([...goodWords, words[wordId]]);
         changeWord();
+        setSuccess(success + 1);
+        if (success > 1 && (success % 6) === 5) {
+          if (level < 6) setLevel(level + 1);
+        }
       } else {
         setScore(score + 1);
       }
-      console.log('wordLetters => ', wordLetters.find((el) => el.a === letter), wordLetters.findIndex((el) => el.a === letter));
       const index = wordLetters.findIndex((el) => el.a === letter);
       const wordLettersCopy = [...wordLetters];
 
@@ -149,42 +134,50 @@ const GamePlay = (props) => {
   };
 
   const newGame = () => {
+    if (volume) {
+      playAudio(tikTakSong, true);
+    }
     setTimer(65);
     setIsFinish(false);
     setLives(5);
     setGuessWordIndex(0);
     setGuessLetters(currentWordLetters.map(() => ''));
-    // console.log('words ', words);
+    const wordArr = createObj(addRandomLetters([...currentWord], level));
+    setWordLetters(wordArr);
   };
 
-  // --------------------------------------------------------------------
-  useEffect(() => {
-    async function fetchData() {
-      const response = await fetch(`${wordsUrl}?page=${level - 1}&group=${Math.floor(Math.random() * 5)}`);
-      const data = await response.json();
-      console.log('data ', data);
-      setArrayOfIndices(data.map((el, i) => i));
-      await setWords(data);
-      await setIsLoading(false);
-      if (timer === 65) {
-        if (volume) {
-          playAudio(tikTakSong, true);
-        }
-        tick();
+  async function fetchData() {
+    const url = `${wordsUrl}?page=${Math.floor(Math.random() * 29)}&group=${level - 1}`;
+    const results = await Promise.all([
+      fetch(url).then((d) => d.json()),
+      fetch(url).then((d) => d.json()),
+      fetch(url).then((d) => d.json()),
+    ]);
+    const data = await results.reduce((acc, cur) => {
+      acc = [...acc, ...cur];
+      return acc;
+    });
+    setArrayOfIndices(data.map((el, i) => i));
+    await setWords(data);
+    await setIsLoading(false);
+    if (timer === 65) {
+      if (volume) {
+        playAudio(tikTakSong, true);
       }
+      tick();
     }
+  }
+
+  useEffect(() => {
     fetchData();
-    // setWords(dataFake);
-    // setIsLoading(false);
   }, []);
 
   useEffect(() => {
     if (words.length > 0) {
-      const index = randomOf(words.length); // Случайное слово!!!
+      const index = randomOf(words.length);
       setWordId(index);
       setCurrentWord(words[index].word);
       setCurrentWordRU(words[index].wordTranslate);
-      // console.log('wordId === ', wordId);
     }
   }, [words]);
 
@@ -193,7 +186,6 @@ const GamePlay = (props) => {
       const wordArr = createObj(addRandomLetters([...currentWord], level));
       setWordLetters(wordArr);
       setCurrentWordLetters([...currentWord]);
-      // console.log('wordLetters ', wordLetters);
     }
   }, [currentWord]);
 

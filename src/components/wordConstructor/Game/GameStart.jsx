@@ -34,7 +34,6 @@ const GameStart = (props) => {
           aboutProps: {
             level,
             // UserWordList: this.state.UserWordList,
-            // audioStatus: this.state.audioStatus,
           },
         }}
         role="button"
