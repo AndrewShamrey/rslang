@@ -39,6 +39,10 @@ a {
   grid-template-rows: 63px 1fr 50px;
 
   @media (max-width: $size-lg) {
+    grid-template-rows: auto 1fr 50px;
+  }
+
+  @media (max-width: $size-md) {
     grid-template-rows: auto 1fr 200px;
   }
 }
