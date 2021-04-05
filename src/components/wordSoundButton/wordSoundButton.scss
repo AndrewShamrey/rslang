@@ -1,0 +1,14 @@
+.word-sound-btn {
+  font-size: inherit;
+  color: inherit;
+  background-color: transparent;
+  border: none;
+  border-radius: 50%;
+  transition: transform linear 0.2s;
+  outline-color: #5183e7;
+  outline-offset: 3px;
+
+  &:hover {
+    transform: scale(1.2);
+  }
+}

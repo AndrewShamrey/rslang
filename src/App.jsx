@@ -9,6 +9,7 @@ import Header from './components/header/Header';
 import Footer from './components/footer/footer';
 import MainPage from './components/mainPage/MainPage';
 import ErrorPage from './components/errorPage/errorPage';
+import Audiochallenge from './components/audiochallenge/audiochallenge';
 import './App.scss';
 
 function App() {
@@ -55,8 +56,8 @@ function App() {
           <Route exact path="/savannah">
             <h1>Саванна</h1>
           </Route>
-          <Route exact path="/audiocall">
-            <h1>Аудиовызов</h1>
+          <Route exact path="/audiochallenge">
+            <Audiochallenge />
           </Route>
           <Route exact path="/sprint">
             <h1>Спринт</h1>
