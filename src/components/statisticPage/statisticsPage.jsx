@@ -1,11 +1,17 @@
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import saveShortTermStatistics from '../../utils/saveShortTermStatistics';
 import StatisticsList from '../statisticsList/statisticsList';
 
 import './statisticsPage.scss';
 import '../../sass/defaultComponentsStyles.scss';
 
-const StatisticsPage = ({ gameResult, showStartPage }) => {
+const StatisticsPage = ({ gameResult, showStartPage, game }) => {
   const { correctAnswers, incorrectAnswers, longestSeries } = gameResult;
+
+  useEffect(() => {
+    saveShortTermStatistics(game, gameResult);
+  }, [game, gameResult]);
 
   return (
     <div className="statistics-page__results">

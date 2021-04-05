@@ -70,6 +70,7 @@ const Audiochallenge = () => {
       )}
       {isStatisticsPage && (
         <StatisticsPage
+          game="audiochallenge"
           gameResult={gameResult}
           showStartPage={showStartPage}
         />
