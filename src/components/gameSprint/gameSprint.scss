@@ -9,4 +9,20 @@
   background-image: url('../../assets/images/sprint/intro.jpg');
   background-position: center;
   background-size: cover;
+
+  .timer {
+    position: absolute;
+    left: 15px;
+    top: 10px;
+    font-family: 'Courier New', Courier, monospace;
+    border-radius: 50%;
+    border: 1px solid green;
+    background-color: rgba(214, 214, 213, 0.712);
+    width: 35px;
+    height: 35px;
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }

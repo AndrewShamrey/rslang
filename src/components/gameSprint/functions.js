@@ -53,4 +53,39 @@ function shuffleArray(arr) {
   return arr;
 }
 
-export { getWords, getRandomNumber, shuffleArray };
+const getWordsForGame = (arr) => {
+  const rightHalf = [];
+  const wrongPart = [];
+  arr.filter((item, idx) => idx < (arr.length / 2))
+    .forEach((wordSet) => {
+      const { word } = wordSet;
+      const translation = wordSet.wordTranslate;
+      rightHalf.push({
+        word,
+        translation,
+        rightTranslation: translation,
+        isTrue: true,
+      });
+    });
+  arr.filter((item, idx) => idx >= (arr.length / 2))
+    .forEach((wordSet, ind) => {
+      const { word } = wordSet;
+      const rightTranslation = wordSet.wordTranslate;
+      const translation = arr[ind].wordTranslate;
+      wrongPart.push({
+        word,
+        translation,
+        rightTranslation,
+        isTrue: false,
+      });
+    });
+  const result = shuffleArray([...rightHalf, ...wrongPart]);
+  return result;
+};
+
+export {
+  getWords,
+  getRandomNumber,
+  shuffleArray,
+  getWordsForGame,
+};

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import GameTimer from './timer';
-import { getWords, getRandomNumber, shuffleArray } from './functions';
+import { getWordsForGame, getRandomNumber, shuffleArray } from './functions';
 import StartScreen from './startScreen/startScreen';
 import GamePlay from './gamePlay/gamePlay';
 import './gameSprint.scss';
@@ -20,7 +20,7 @@ const GameSprint = ({ page = getRandomNumber(), level = 0, cleanStart = true }) 
     // при внесении изменений массив рабочих слов множится
     // слово, перевод, верный ли сет
     if (isGameStarted && allWords.length) {
-      // Берем половину для верных
+      Берем половину для верных
       allWords.filter((word, ind) => ind < (allWords.length / 2))
         .forEach((wordSet) => {
           const { word } = wordSet;
@@ -36,6 +36,9 @@ const GameSprint = ({ page = getRandomNumber(), level = 0, cleanStart = true }) 
         });
       // and shuffle
       setWorkingWords((words) => shuffleArray(words));
+      // вот с этим ломается почему-то
+      // const gameWords = getWordsForGame(allWords);
+      // setWorkingWords(gameWords);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [allWords]);

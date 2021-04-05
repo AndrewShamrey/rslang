@@ -49,30 +49,21 @@
       height: inherit;
       overflow: hidden;
       z-index: 2;
+      background-position: bottom;
+        background-size: contain;
+        background-repeat: no-repeat;
 
       &.bird-1 {
         background-image: url('../../../assets/images/sprint/bird-1.png');
-        background-position: bottom;
-        background-size: contain;
-        background-repeat: no-repeat;
       }
       &.bird-2 {
         background-image: url('../../../assets/images/sprint/bird-2.png');
-        background-position: bottom;
-        background-size: contain;
-        background-repeat: no-repeat;
       }
       &.bird-3 {
         background-image: url('../../../assets/images/sprint/bird-3.png');
-        background-position: bottom;
-        background-size: contain;
-        background-repeat: no-repeat;
       }
       &.bird-4 {
         background-image: url('../../../assets/images/sprint/bird-4.png');
-        background-position: bottom;
-        background-size: contain;
-        background-repeat: no-repeat;
       }
     }
   }
@@ -83,7 +74,7 @@
 
   &__buttons {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
 
     >button {
       width: 100px;
