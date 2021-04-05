@@ -1,0 +1,85 @@
+@import '../../sass/colors.scss';
+@import '../../sass/defaultComponentsStyles.scss';
+
+.statistics-page {
+  &__results {
+    margin: auto;
+    padding: 15px 0 30px;
+    width: 90%;
+    max-width: 760px;
+    max-height: 70vh;  
+    background-color: $white;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__header {
+    margin: 0 0 10px;
+    font-size: 24px;
+    font-weight: 700;
+    color: $blue;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  &__info {
+    margin: 0 0 25px;
+    font-size: 16px;
+    font-weight: 700;
+    color: $blue;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  &__answers {
+    margin-bottom: 15px;
+    padding: 0 20px;
+    width: 90%;
+    overflow-y: scroll;
+    box-sizing: border-box;
+
+    &::-webkit-scrollbar {
+      width: 10px;
+      background-color: $lightGrey;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: $lightGrey;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: $grey3;
+      &:hover {
+        background-color: $blue;
+      }
+    }
+  }
+
+  &__answers-title {
+    margin: 0 0 10px;
+    font-size: 16px;
+    font-weight: 700;
+    color: $blue;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  &__answers-block {
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__buttons {
+    font-size: 14px;
+    display: flex;
+    justify-content: center;
+  }
+
+  &__btn {
+    @include styled__btn_solid($blue, $white);
+    margin: 0 5px;
+  }
+}

@@ -15,12 +15,24 @@ $darkGrey: #333333;
 $grey: #3b3f5c;
 $grey2: #e0e6ed;
 $grey3: #828282;
+$green: #33fc01;
 $shadowGrey: #bfc9d4;
 $blue: #4361ee;
 $borderGrey: #c4c4c4;
 $bgGrey: #eaeaea;
 $bgLightGrey: #f5f5f5;
-$red: #ff0000;
-$green: #33fc01;
+$bgStatBtnTransparent: #ffffff42;
 
-$wordConstructor-gradient: linear-gradient(40deg, #6e327a, #075850 70%);
+$wordConstructor-gradient: linear-gradient(40deg, #6e327a, $blue 70%);
+
+$lightBlue: #699bff;
+$coral: #f56b6b;
+$coralTransparent: #f5a3a3ab;
+$blueTransparent: #7fa5f7bb;
+$backdrop: #00000079;
+$orange: #ec9636;
+$lightOrange: #ebe7be;
+$red: #ff0000;
+$lightRed: #fd6464;
+$lightGreen: #51d38a;
+$lightGreenBorder: #3dd47f;

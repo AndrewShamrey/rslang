@@ -8,7 +8,8 @@ const GameStart = (props) => {
 
   return (
     <div className="WordConstructor__start">
-      <h2 className="WordConstructor__start-title">Word Constructor</h2>
+      <h2 className="WordConstructor__start-title">Конструктор слов</h2>
+      <h3 className="WordConstructor__start-slogan">Составление оригинального слова по переводу</h3>
       <LevelSelector setLevel={setLevel} />
       <Link
         className="WordConstructor__start-button"

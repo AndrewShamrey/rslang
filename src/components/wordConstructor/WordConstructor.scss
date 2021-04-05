@@ -19,6 +19,14 @@
     &-title {
       color: $white;
       margin-top: 5%;
+      text-transform: uppercase;
+      font-size: 60px;
+      letter-spacing: 1px;
+    }
+
+    &-slogan {
+      color: $white;
+      margin-top: 50px;
     }
 
     &-select {
@@ -346,6 +354,7 @@
       transition: 0.3s;
       background: none;
       border: none;
+      cursor: pointer;
 
       &:hover {
         transform: scale(1.2);
@@ -362,7 +371,7 @@
         width: 260px;
         height: 32px;
         color: $white;
-        background: #ffffff42;
+        background: $bgStatBtnTransparent;
         padding: 5px;
         font-size: 18px;
         text-transform: uppercase;
@@ -377,9 +386,6 @@
         &:hover {
           box-shadow: 0 0 3px $white;
         }
-      }
-
-      &Cancel {
       }
     }
   }
