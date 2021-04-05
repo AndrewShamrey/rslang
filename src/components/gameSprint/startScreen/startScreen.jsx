@@ -20,9 +20,16 @@ const StartScreen = ({
   return (
     <div className="start-screen">
       <div className="start-screen__form">
+        <h2>спринт</h2>
+        <p>
+          Истинная гонка на проверку знаний!
+        </p>
+        <p>
+          Укажите, верный ли перевод слова.
+        </p>
         <form className="start-screen__form_form" onSubmit={submitHandler}>
           <label htmlFor="form-submit" className="select-label">
-            Выберите уровень сложности
+            Выберите уровень сложности:
             <select
               className="select-form"
               name="form-submit"

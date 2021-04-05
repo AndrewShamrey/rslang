@@ -1,4 +1,7 @@
 import { useEffect, useState } from 'react';
+import playSound from '../../../utils/playSound';
+import error from '../../../assets/audio/error.mp3';
+import correct from '../../../assets/audio/correct.mp3';
 import './gamePlay.scss';
 
 const GamePlay = ({
@@ -26,15 +29,19 @@ const GamePlay = ({
     console.log(value);
     console.log(workingWords[0].isTrue.toString());
     if (value === workingWords[0].isTrue.toString()) {
+      playSound(correct);
       setStringOfRights((answer) => answer + 1);
       setRightAnswers((answers) => [...answers, workingWords[0]]);
     } else {
+      playSound(error);
       setStringOfRights(0);
       setWrongAnswers((answers) => [...answers, workingWords[0]]);
     }
     if (workingWords.length) {
       setWorkingWords((words) => words.slice(1));
       console.log('after slice', workingWords);
+    } else {
+      setGameFinished(true);
     }
   };
 
