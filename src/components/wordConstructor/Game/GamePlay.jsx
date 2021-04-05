@@ -1,16 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import Preloader from '../Preloader';
+import Preloader from './components/Preloader';
+import Header from './components/Header';
 import GameEnd from './GameEnd';
 import createObj from '../utils/createObject';
 import randomOf from '../utils/randomOf';
 import addRandomLetters from '../utils/addRandomLetters';
 import playAudio from '../utils/playAudio';
 import heart from '../assets/heart.png';
-import audioOn from '../assets/audioOn.png';
-import audioOff from '../assets/audioOff.png';
-import cancel from '../assets/cancel.png';
 import startSong from '../assets/audio/start.mp3';
 import finishSong from '../assets/audio/finish.mp3';
 import tikTakSong from '../assets/audio/tikTak.mp3';
@@ -237,18 +234,7 @@ const GamePlay = (props) => {
           />
         ) : (
           <div className="WordConstructor__play">
-            <header className="WordConstructor__play-header">
-              <div className="WordConstructor__play-headerTimer">{timer}</div>
-              <div className="WordConstructor__play-headerScore">{`score: ${score}`}</div>
-              <div className="WordConstructor__play-headerControls">
-                <button className="WordConstructor__play-headerControlsVolume" onClick={() => setVolume(!volume)} type="button">
-                  {volume ? <img src={audioOn} alt="volume" width="30px" /> : <img src={audioOff} alt="volume" width="30px" /> }
-                </button>
-                <Link className="WordConstructor__play-headerControlsCancel" to={{ pathname: '/wordConstructor/start' }}>
-                  <img src={cancel} alt="cancel" width="30px" />
-                </Link>
-              </div>
-            </header>
+            <Header timer={timer} volume={volume} score={score} setVolume={setVolume} />
 
             <main className={`WordConstructor__play-main${answerClass}`}>
               <div className="WordConstructor__play-mainLives">

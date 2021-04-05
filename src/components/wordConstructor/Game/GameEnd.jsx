@@ -1,12 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import playAudio from '../utils/playAudio';
+import WordList from './components/WordList';
 import { rslangDataUrl } from '../utils/constants';
 import removeDuplicates from '../utils/removeDuplicates';
 import imgSound from '../assets/sound.png';
-
-// const badList = 'badList';
-// const goodList = 'goodList';
+import playAudio from '../utils/playAudio';
 
 const GameEnd = (props) => {
   const playAudioWord = (audio) => {
@@ -27,11 +25,6 @@ const GameEnd = (props) => {
     playAudioWord(goodWords[id].audio);
   };
 
-  // const wordCard = (id, list) => {
-  //   const word = list === badList ? props.badWord[id] : props.goodWord[id];
-  //   props.changeWordCardStatus(word);
-  // };
-
   return (
     <>
       <div className="WordConstructor__play">
@@ -40,41 +33,8 @@ const GameEnd = (props) => {
             { `Результат: ${score} очков` }
           </div>
           <div className="WordConstructor__resultStatistic">
-
-            <div className="WordConstructor__resultErrors">
-              <div className="WordConstructor__resultErrorsBadName">
-                {`Ошибки: ${badWordsStat.length}`}
-              </div>
-              {badWordsStat.map((el, i) => {
-                const id = i;
-                return (
-                  <div id={i} key={el.id} className="WordConstructor__resultWordBlock">
-                    <button className="WordConstructor__resultWordAudio" type="button" id={i} onClick={() => bad(id)}>
-                      <img src={imgSound} alt="" width="20px" />
-                    </button>
-                    <button className="WordConstructor__resultWord" type="button">{el.word}</button>
-                    <span className="WordConstructor__resultWordTranslate">{` - ${el.wordTranslate}`}</span>
-                  </div>
-                );
-              })}
-            </div>
-
-            <div className="WordConstructor__resultGood">
-              <div className="WordConstructor__resultGoodName">{`Знаю: ${goodWords.length}`}</div>
-              {goodWordsStat.map((el, i) => {
-                const id = i;
-                return (
-                  <div id={i} key={el.id} className="WordConstructor__resultWordBlock">
-                    <button className="WordConstructor__resultWordAudio" type="button" id={i} onClick={() => good(id)}>
-                      <img src={imgSound} alt="" width="20px" />
-                    </button>
-                    <button className="WordConstructor__resultWord" type="button">{el.word}</button>
-                    <span className="WordConstructor__resultWordTranslate">{` - ${el.wordTranslate}`}</span>
-                  </div>
-                );
-              })}
-            </div>
-
+            <WordList words={badWordsStat} playWord={bad} status="Errors" />
+            <WordList words={goodWordsStat} playWord={good} status="Good" />
           </div>
 
           <div className="WordConstructor__resultControls">
@@ -84,7 +44,6 @@ const GameEnd = (props) => {
                 pathname: '/wordConstructor/game',
                 aboutProps: {
                   level,
-                // userWordList: this.state.UserWordList,
                 },
               }}
               onClick={newGame}
