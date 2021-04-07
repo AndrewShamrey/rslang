@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Video from '../video/Video';
 import CapabilityCard from '../CapabilityCard/CapabilityCard';
 import DeveloperCard from './DeveloperCard';
@@ -9,9 +10,16 @@ import dictionaryIcon from '../../assets/images/dictionary.png';
 import AndreyFoto from '../../assets/images/Andrey.jpg';
 import SamvelFoto from '../../assets/images/Samvel.jpg';
 import InnaFoto from '../../assets/images/Inna.jpg';
+import VocabluarySettings from '../vocabluarySettings/vocabluarySettings';
 
 const MainPage = () => {
   const { capability: { games, dictionary, statistic }, about: { ...about } } = mainPageText;
+
+  const [isSettings, setIsSettings] = useState(false);
+
+  const toggleSettings = () => {
+    setIsSettings((state) => !state);
+  };
 
   return (
     <main className="Main-page">
@@ -86,6 +94,10 @@ const MainPage = () => {
             />
           </li>
         </ul>
+        <button type="button" onClick={toggleSettings}>open settings</button>
+        {isSettings && (
+          <VocabluarySettings close={toggleSettings} />
+        )}
       </section>
     </main>
   );
