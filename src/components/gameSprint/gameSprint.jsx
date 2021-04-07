@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import GameSoundButton from '../gameSoundButton/gameSoundButton';
 import GameTimer from './timer';
 import { getWordsForGame, getRandomNumber, shuffleArray } from './functions';
 import StartScreen from './startScreen/startScreen';
@@ -11,6 +13,7 @@ const GameSprint = ({ page = getRandomNumber(), level = 0, cleanStart = true }) 
   const [gameLevel, setGameLevel] = useState(level);
   const [allWords, setAllWords] = useState([]);
   const [workingWords, setWorkingWords] = useState([]);
+  const isSound = useSelector((state) => state.control.sprint.isSound);
 
   console.log(page, gameLevel);
   console.log(allWords);
@@ -47,6 +50,9 @@ const GameSprint = ({ page = getRandomNumber(), level = 0, cleanStart = true }) 
   return (
     <div className="game-sprint">
       {isGameStarted && !isGameFinished && (
+        <GameSoundButton game="sprint" />
+      )}
+      {isGameStarted && !isGameFinished && (
         <GameTimer setGameFinished={setGameFinished} />
       )}
       {!isGameStarted && !isGameFinished && (
@@ -63,6 +69,7 @@ const GameSprint = ({ page = getRandomNumber(), level = 0, cleanStart = true }) 
           setWorkingWords={setWorkingWords}
           setGameFinished={setGameFinished}
           isGameStarted={isGameStarted}
+          isSound={isSound}
         />
       )}
       {isGameFinished && <div>Finish screen</div>}

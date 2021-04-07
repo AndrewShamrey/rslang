@@ -16,6 +16,9 @@ const initialState = {
     exampleAnswer: false,
     exampleTranslateAnswer: false,
   },
+  sprint: {
+    isSound: true,
+  },
 };
 
 const controlReducer = (state = initialState, action) => {
@@ -36,6 +39,11 @@ const controlReducer = (state = initialState, action) => {
       return produce(state, (draft) => {
         const { audiochallenge } = draft;
         draft.audiochallenge = { ...audiochallenge, ...action.payload };
+      });
+    case ACTION_TYPES.SET_SPRINT_SETTINGS:
+      return produce(state, (draft) => {
+        const { sprint } = draft;
+        draft.sprint = { ...sprint, ...action.payload };
       });
     default:
       return state;

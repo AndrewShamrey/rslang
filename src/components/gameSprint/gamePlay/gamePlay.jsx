@@ -5,7 +5,7 @@ import correct from '../../../assets/audio/correct.mp3';
 import './gamePlay.scss';
 
 const GamePlay = ({
-  workingWords, setWorkingWords, setGameFinished, isGameStarted,
+  workingWords, setWorkingWords, setGameFinished, isGameStarted, isSound,
 }) => {
   const [stringOfRights, setStringOfRights] = useState(0);
   const [rightAnswers, setRightAnswers] = useState([]);
@@ -29,11 +29,11 @@ const GamePlay = ({
     console.log(value);
     console.log(workingWords[0].isTrue.toString());
     if (value === workingWords[0].isTrue.toString()) {
-      playSound(correct);
+      if (isSound) playSound(correct);
       setStringOfRights((answer) => answer + 1);
       setRightAnswers((answers) => [...answers, workingWords[0]]);
     } else {
-      playSound(error);
+      if (isSound) playSound(error);
       setStringOfRights(0);
       setWrongAnswers((answers) => [...answers, workingWords[0]]);
     }
