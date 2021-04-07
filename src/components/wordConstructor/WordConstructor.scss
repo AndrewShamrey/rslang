@@ -7,6 +7,7 @@
   flex-direction: column;
   align-items: center;
   background-image: $wordConstructor-gradient;
+  padding: 0 5px;
 
   &__start {
     width: 100%;
@@ -22,6 +23,7 @@
       text-transform: uppercase;
       font-size: 60px;
       letter-spacing: 1px;
+      text-align: center;
     }
 
     &-slogan {
@@ -69,6 +71,7 @@
     height: 100%;
     align-items: center;
     position: relative;
+    padding-top: 100px;
 
     &-startTimer {
       width: 150px;
@@ -132,15 +135,16 @@
     }
 
     &-main {
-      min-width: 600px;
+      min-width: 480px;
       max-width: 600px;
+      width: 100%;
       min-height: 370px;
       border-radius: 5px;
       border: 2px solid $white;
       color: $white;
       position: relative;
       padding: 20px 10px 0;
-      margin: 50px auto 0;
+      margin: 50px auto 30px;
 
       &_good {
         animation: showTrueAnswer 0.2s forwards;
@@ -275,10 +279,9 @@
 
   &__result {
     position: relative;
-    margin-top: 3%;
     max-width: 600px;
     min-width: 280px;
-    margin: 5%;
+    margin: 0 0 30px;
     padding: 10px;
     width: 100%;
     min-height: 280px;

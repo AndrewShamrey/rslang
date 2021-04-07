@@ -86,6 +86,7 @@ const GamePlay = (props) => {
     setWordId(arrayOfIndices[newID]);
     setCurrentWord(words[arrayOfIndices[newID]].word);
     setCurrentWordRU(words[arrayOfIndices[newID]].wordTranslate);
+    setCurrentWordTranscription(words[arrayOfIndices[newID]].transcription);
     setGuessWordIndex(0);
     setGuessLetters(guessLetters.map(() => ''));
   };
