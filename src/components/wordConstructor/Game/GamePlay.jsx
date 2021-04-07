@@ -20,7 +20,8 @@ const GamePlay = (props) => {
   const [isFinish, setIsFinish] = useState(false);
   const [timer, setTimer] = useState(65);
   const [volume, setVolume] = useState(true);
-  const [lives, setLives] = useState(5);
+  const [livesByDefault, setLivesByDefault] = useState(5);
+  const [lives, setLives] = useState(livesByDefault);
   const { location: { aboutProps: { level: propLevel } } } = props;
   const [level, setLevel] = useState(propLevel);
   const [score, setScore] = useState(0);
@@ -28,6 +29,7 @@ const GamePlay = (props) => {
   const [wordId, setWordId] = useState(0);
   const [currentWord, setCurrentWord] = useState(null);
   const [currentWordRU, setCurrentWordRU] = useState(null);
+  const [currentWordTranscription, setCurrentWordTranscription] = useState(null);
   const [currentWordLetters, setCurrentWordLetters] = useState([]);
   const [wordLetters, setWordLetters] = useState(null);
   const [guessLetters, setGuessLetters] = useState(null);
@@ -38,6 +40,8 @@ const GamePlay = (props) => {
   const [success, setSuccess] = useState(0);
   const [answerClass, setAnswerClass] = useState('');
   const [arrayOfIndices, setArrayOfIndices] = useState([]);
+  const [isAutoPlay, setIsAutoPlay] = useState(true);
+  const [isTranscription, setIsTranscription] = useState(true);
 
   const intervals = [];
   const width = { width: `${success > 59 ? 100 : ((100 / 5) * (success % 6))}%` };
@@ -62,6 +66,15 @@ const GamePlay = (props) => {
         playAudio(startSong);
       }
     }
+    if (timer === 60) {
+      if (volume) {
+        if (isAutoPlay) {
+          setTimeout(() => {
+            playAudioWord();
+          }, 1000);
+        }
+      }
+    }
     if (timer === 0 || lives === 0 || wordId === 119) {
       stopGame();
     }
@@ -81,7 +94,7 @@ const GamePlay = (props) => {
     const id = wordId;
 
     if (letter === currentWord[guessWordIndex]) {
-      playAudio(goodSong);
+      if (volume) playAudio(goodSong);
       setGuessLetters(guessLetters.map((el, i) => {
         if (i === guessWordIndex) return letter;
         return el;
@@ -136,7 +149,7 @@ const GamePlay = (props) => {
     }
     setTimer(65);
     setIsFinish(false);
-    setLives(5);
+    setLives(livesByDefault);
     setGuessWordIndex(0);
     setGuessLetters(currentWordLetters.map(() => ''));
     const wordArr = createObj(addRandomLetters([...currentWord], level));
@@ -175,6 +188,7 @@ const GamePlay = (props) => {
       setWordId(index);
       setCurrentWord(words[index].word);
       setCurrentWordRU(words[index].wordTranslate);
+      setCurrentWordTranscription(words[index].transcription);
     }
   }, [words]);
 
@@ -183,6 +197,11 @@ const GamePlay = (props) => {
       const wordArr = createObj(addRandomLetters([...currentWord], level));
       setWordLetters(wordArr);
       setCurrentWordLetters([...currentWord]);
+    }
+    if (volume && isAutoPlay && timer < 60) {
+      setTimeout(() => {
+        playAudioWord();
+      }, 1000);
     }
   }, [currentWord]);
 
@@ -234,7 +253,18 @@ const GamePlay = (props) => {
           />
         ) : (
           <div className="WordConstructor__play">
-            <Header timer={timer} volume={volume} score={score} setVolume={setVolume} />
+            <Header
+              timer={timer}
+              volume={volume}
+              score={score}
+              setVolume={setVolume}
+              isTranscription={isTranscription}
+              setIsTranscription={setIsTranscription}
+              isAutoPlay={isAutoPlay}
+              setIsAutoPlay={setIsAutoPlay}
+              livesByDefault={livesByDefault}
+              setLivesByDefault={setLivesByDefault}
+            />
 
             <main className={`WordConstructor__play-main${answerClass}`}>
               <div className="WordConstructor__play-mainLives">
@@ -242,7 +272,15 @@ const GamePlay = (props) => {
                 <img src={heart} alt="heart" width="12px" />
               </div>
               <div className="WordConstructor__play-mainPlayWord" onClick={() => playAudioWord()} />
+
               <div className="WordConstructor__play-mainWord">{currentWordRU}</div>
+
+              <div
+                className="WordConstructor__play-mainWordTranscription"
+              >
+                {isTranscription ? currentWordTranscription : ''}
+              </div>
+
               <div className="WordConstructor__play-mainWordArr">
                 {
                 currentWord ? guessLetters.map((el, i) => (
@@ -252,6 +290,7 @@ const GamePlay = (props) => {
                 )) : null
               }
               </div>
+
               <div className="WordConstructor__play-mainWordLetters">
                 {
                 wordLetters ? wordLetters.map((el, i) => {
@@ -265,6 +304,7 @@ const GamePlay = (props) => {
                 }) : ''
               }
               </div>
+
               <div className="WordConstructor__play-mainLevel">{`Уровень ${level}`}</div>
               <div className="WordConstructor__play-mainSuccess">
                 <div className="WordConstructor__play-mainSuccessWidth" style={width} />

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import LevelSelector from './components/LevelSelector';
 
-const GameStart = (props) => {
+const GameStart = () => {
   const [level, setLevel] = useState(1);
 
   return (

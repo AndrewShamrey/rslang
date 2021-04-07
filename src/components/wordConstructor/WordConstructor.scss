@@ -110,7 +110,10 @@
         background: none;
 
         &Volume,
-        &Cancel {
+        &Cancel,
+        &Settings,
+        &Info {
+          position: relative;
           cursor: pointer;
           padding: 5px;
           background: none;
@@ -164,7 +167,7 @@
         width: 30px;
         height: 30px;
         border-radius: 50%;
-        background-image: url('./assets/sound.png');
+        background-image: url('./assets/voice-recognition.png');
         background-repeat: no-repeat;
         background-size: contain;
         background-position: center;
@@ -178,11 +181,17 @@
 
       &Word {
         min-height: 50px;
-        margin: 30px;
+        margin: 30px 0 0;
         font-size: 26px;
         letter-spacing: 1px;
         text-align: center;
         text-transform: uppercase;
+      }
+
+      &WordTranscription {
+        margin-bottom: 15px;
+        text-align: center;
+        min-height: 20px;
       }
 
       &WordArr {
@@ -246,19 +255,19 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        margin: 50px 0 10px;
+        margin: 40px 0 10px;
       }
 
       &Success {
         position: relative;
         height: 20px;
-        border: 2px solid $red;
+        border: 2px solid $green;
         border-radius: 5px;
 
         &Width {
           height: 100%;
           transition: all 0.3s;
-          background-color: $blue;
+          background-color: $blueTransparent;
         }
       }
     }
@@ -386,6 +395,112 @@
         &:hover {
           box-shadow: 0 0 3px $white;
         }
+      }
+    }
+  }
+
+  &__info {
+    position: absolute;
+    z-index: 11;
+    padding: 5px;
+    top: 40px;
+    right: 40px;
+    width: 300px;
+    height: 300px;
+    border: 2px solid $blue;
+    border-radius: 5px;
+    background-color: $white;
+    display: flex;
+    flex-direction: column;
+    // justify-content: center;
+    align-items: center;
+    color: $grey;
+    font-size: 10px;
+    transition: all 0.3s;
+
+    &Slogan {
+      margin: 30px 0 0;
+      font-size: 14px;
+      text-align: justify;
+    }
+
+    &List {
+      font-size: 12px;
+      text-align: start;
+      list-style-type: decimal;
+      padding-left: 20px;
+      margin-top: 20px;
+    }
+
+    &Item {
+      list-style: decimal;
+      margin-top: 5px;
+    }
+  }
+
+  &__options {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 12;
+    width: 100vw;
+    height: 100vh;
+    background-color: $transparentBlack;
+    color: $grey;
+    font-size: 16px;
+    letter-spacing: 1px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    &Close {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      top: -40px;
+      right: -40px;
+      cursor: pointer;
+      padding: 5px;
+      background: none;
+      border: none;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      outline: none;
+
+      &:hover {
+        background-color: rgba($color: $white, $alpha: 0.3);
+      }
+    }
+
+    &Box {
+      display: flex;
+      flex-direction: column;
+      justify-self: start;
+      position: relative;
+      padding: 10px;
+      max-width: 600px;
+      min-width: 480px;
+      width: 100%;
+      min-height: 300px;
+      border: 2px solid black;
+      background-color: $white;
+      border-radius: 5px;
+    }
+
+    &List {
+    }
+
+    &Item {
+      display: flex;
+      text-align: start;
+      margin-top: 20px;
+
+      input {
+        margin-left: 10px;
+        margin-right: 5px;
       }
     }
   }
