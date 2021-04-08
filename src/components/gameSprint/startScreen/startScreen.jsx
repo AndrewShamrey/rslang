@@ -3,14 +3,12 @@ import { getWords } from '../functions';
 import './startScreen.scss';
 
 const StartScreen = ({
-  setGameStarted, setGameLevel, setAllWords, page,
+  setGameStarted, setAllWords, page,
 }) => {
   const [selectValue, setSelectValue] = useState(0);
-  console.log(selectValue);
 
   const submitHandler = (e) => {
     e.preventDefault();
-    setGameLevel(selectValue);
     getWords(selectValue, page)
       .then((data) => setAllWords(data))
       .catch((error) => console.log(error));
@@ -29,7 +27,7 @@ const StartScreen = ({
         </p>
         <form className="start-screen__form_form" onSubmit={submitHandler}>
           <label htmlFor="form-submit" className="select-label">
-            Выберите уровень сложности:
+            Выберите уровень сложности
             <select
               className="select-form"
               name="form-submit"

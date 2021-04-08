@@ -1,89 +1,126 @@
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import GameSoundButton from '../../gameSoundButton/gameSoundButton';
+import CloseIconButton from '../../closeIconButton/closeIconButton';
 import playSound from '../../../utils/playSound';
 import error from '../../../assets/audio/error.mp3';
 import correct from '../../../assets/audio/correct.mp3';
+import { shuffleArray } from '../functions';
 import './gamePlay.scss';
 
 const GamePlay = ({
-  workingWords, setWorkingWords, setGameFinished, isGameStarted, isSound,
+  setGameFinished, isGameStarted, allWords, closeGame,
 }) => {
+  const [workingWords, setWorkingWords] = useState([]);
   const [stringOfRights, setStringOfRights] = useState(0);
+  const [maxStringOfRights, setMaxStringOfRights] = useState(0); // самая длинная серия
   const [rightAnswers, setRightAnswers] = useState([]);
   const [wrongAnswers, setWrongAnswers] = useState([]);
-  console.log('start game');
-  console.log('words for the game', workingWords);
-  console.log('rightAnswers: ', rightAnswers);
-  console.log('wrongAnswers: ', wrongAnswers);
+  const isSound = useSelector((state) => state.control.sprint.isSound);
 
   useEffect(() => {
-    if (!workingWords.length && isGameStarted) {
-      // setGameFinished(true);
-      console.log('in the useEffect gamePlay');
-      // заходит сюда до того, как приходят слова, и все крашится
+    console.log('allWords in the useEffect on gamePlay', allWords);
+    // для создания рабочего массива слов. если не перезагружать страницу,
+    // при внесении изменений массив рабочих слов множится
+    // слово, перевод, верный ли сет
+    if (isGameStarted && allWords.length) {
+      // Берем половину для верных
+      allWords.filter((word, ind) => ind < (allWords.length / 2))
+        .forEach((wordSet) => {
+          const { word } = wordSet;
+          const translation = wordSet.wordTranslate;
+          setWorkingWords((words) => [...words, { word, translation, isTrue: true }]);
+        });
+      // Берем половину для неверных
+      allWords.filter((word, ind) => ind >= (allWords.length / 2))
+        .forEach((wordSet, ind) => {
+          const { word } = wordSet;
+          const translation = allWords[ind].wordTranslate;
+          setWorkingWords((words) => [...words, { word, translation, isTrue: false }]);
+        });
+      // and shuffle
+      setWorkingWords((words) => shuffleArray(words));
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [workingWords]);
+  }, [allWords]);
+
+  useEffect(() => {
+    console.log('start game');
+  }, []);
+  console.log('words for the game', workingWords);
+  // console.log('rightAnswers: ', rightAnswers);
+  // console.log('wrongAnswers: ', wrongAnswers);
 
   const handleAnswer = (e) => {
     const { value } = e.target;
-    console.log(value);
-    console.log(workingWords[0].isTrue.toString());
+    // console.log(value);
+    // console.log(workingWords[0].isTrue.toString());
     if (value === workingWords[0].isTrue.toString()) {
       if (isSound) playSound(correct);
       setStringOfRights((answer) => answer + 1);
+      if (maxStringOfRights < stringOfRights) setMaxStringOfRights(stringOfRights);
       setRightAnswers((answers) => [...answers, workingWords[0]]);
     } else {
       if (isSound) playSound(error);
       setStringOfRights(0);
       setWrongAnswers((answers) => [...answers, workingWords[0]]);
     }
-    if (workingWords.length) {
+    if (workingWords.length > 1) {
       setWorkingWords((words) => words.slice(1));
-      console.log('after slice', workingWords);
     } else {
+      // работает, но надо очистить таймер
       setGameFinished(true);
     }
   };
 
   return (
-    <div className="game-play">
-      <div className="game-play__upper">
-        <div className="circle" />
+    <>
+      <div className="game-controls">
+        <GameSoundButton game="sprint" />
+        <CloseIconButton
+          additionalClassName="sprint__close-btn"
+          onClick={closeGame}
+        />
       </div>
-      <div className="game-play__birds">
-        <div className="line" />
-        {stringOfRights >= 0 && (
-          <div className="bird bird-1" />
-        )}
-        {stringOfRights >= 3 && (
-          <div className="bird bird-2" />
-        )}
-        {stringOfRights >= 6 && (
-          <div className="bird bird-3" />
-        )}
-        {stringOfRights >= 9 && (
-          <div className="bird bird-4" />
-        )}
-      </div>
-      {workingWords.length && (
-        <div className="game-play__word">
-          {workingWords[0].word}
+      <main className="game-play">
+        <div className="game-play__upper">
+          <div className="circle" />
         </div>
-      )}
-      {workingWords.length && (
-        <div className="game-play__translation">
-          {workingWords[0].translation}
+        <div className="game-play__birds">
+          <div className="line" />
+          {stringOfRights >= 0 && (
+            <div className="bird bird-1" />
+          )}
+          {stringOfRights >= 3 && (
+            <div className="bird bird-2" />
+          )}
+          {stringOfRights >= 6 && (
+            <div className="bird bird-3" />
+          )}
+          {stringOfRights >= 9 && (
+            <div className="bird bird-4" />
+          )}
         </div>
-      )}
-      <div className="game-play__buttons">
-        <button value="true" type="button" className="right" onClick={handleAnswer}>
-          Верно
-        </button>
-        <button value="false" type="button" className="wrong" onClick={handleAnswer}>
-          Неверно
-        </button>
-      </div>
-    </div>
+        {workingWords.length && (
+          <div className="game-play__word">
+            {workingWords[0].word}
+          </div>
+        )}
+        {workingWords.length && (
+          <div className="game-play__translation">
+            {workingWords[0].translation}
+          </div>
+        )}
+        <div className="game-play__buttons">
+          <button value="true" type="button" className="right" onClick={handleAnswer}>
+            Верно
+          </button>
+          <button value="false" type="button" className="wrong" onClick={handleAnswer}>
+            Неверно
+          </button>
+        </div>
+      </main>
+    </>
   );
 };
 

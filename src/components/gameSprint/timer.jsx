@@ -4,11 +4,15 @@ const GameTimer = ({ setGameFinished }) => {
   const [counter, setCounter] = useState(60);
 
   useEffect(() => {
+    let timer;
     if (counter <= 0) {
       setGameFinished(true);
     } else {
-      setTimeout(() => setCounter(counter - 1), 1000);
+      timer = setTimeout(() => setCounter(counter - 1), 1000);
     }
+    return () => {
+      clearTimeout(timer);
+    };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [counter]);
 

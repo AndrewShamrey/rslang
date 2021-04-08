@@ -1,12 +1,10 @@
 /* eslint-disable no-nested-ternary */
-const URL = 'https://react-learnwords-example.herokuapp.com/words';
-const MIN_PAGE = 0;
-const MAX_PAGE = 29;
+import { AMOUNT_OF_PAGES, BACK_URL, MEDIA_URI } from '../../utils/constants';
 
-// eslint-disable-next-line max-len
-const getRandomNumber = (min = MIN_PAGE, max = MAX_PAGE) => Math.floor(Math.random() * (max - min + 1)) + min;
+const getRandomNumber = (max = AMOUNT_OF_PAGES) => Math.floor(Math.random() * max);
 
 const getWords = async (group = 0, page) => {
+  const MAX_PAGE = AMOUNT_OF_PAGES - 1;
   const page1 = page < MAX_PAGE ? page + 1 : page - 1;
   const page2 = page < (MAX_PAGE - 1) ? page + 2
     : (page < MAX_PAGE ? page - 1 : page - 2);
@@ -14,9 +12,9 @@ const getWords = async (group = 0, page) => {
   console.log('page: ', page, 'page1: ', page1, 'page2: ', page2, ' group:', group);
 
   const urls = [
-    `${URL}?page=${page}&group=${group}`,
-    `${URL}?page=${page1}&group=${group}`,
-    `${URL}?page=${page2}&group=${group}`,
+    `${BACK_URL}words?page=${page}&group=${group}`,
+    `${BACK_URL}words?page=${page1}&group=${group}`,
+    `${BACK_URL}words?page=${page2}&group=${group}`,
   ];
 
   const requests = urls.map((url) => fetch(url, {
@@ -33,14 +31,6 @@ const getWords = async (group = 0, page) => {
     .then((tripleArray) => tripleArray.flat())
     .catch((error) => console.log(error));
 
-  // const rawResponse = await fetch(`${URL}?page=${page}&group=${group}`, {
-  //   method: 'GET',
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //   },
-  // });
-  // const content = await rawResponse.json();
-
   console.log(content);
   return content;
 };
@@ -53,39 +43,8 @@ function shuffleArray(arr) {
   return arr;
 }
 
-const getWordsForGame = (arr) => {
-  const rightHalf = [];
-  const wrongPart = [];
-  arr.filter((item, idx) => idx < (arr.length / 2))
-    .forEach((wordSet) => {
-      const { word } = wordSet;
-      const translation = wordSet.wordTranslate;
-      rightHalf.push({
-        word,
-        translation,
-        rightTranslation: translation,
-        isTrue: true,
-      });
-    });
-  arr.filter((item, idx) => idx >= (arr.length / 2))
-    .forEach((wordSet, ind) => {
-      const { word } = wordSet;
-      const rightTranslation = wordSet.wordTranslate;
-      const translation = arr[ind].wordTranslate;
-      wrongPart.push({
-        word,
-        translation,
-        rightTranslation,
-        isTrue: false,
-      });
-    });
-  const result = shuffleArray([...rightHalf, ...wrongPart]);
-  return result;
-};
-
 export {
   getWords,
   getRandomNumber,
   shuffleArray,
-  getWordsForGame,
 };
