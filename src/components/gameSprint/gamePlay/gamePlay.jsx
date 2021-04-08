@@ -8,6 +8,8 @@ import correct from '../../../assets/audio/correct.mp3';
 import { shuffleArray } from '../helpers/functions';
 import './gamePlay.scss';
 
+const BASE_POINTS = 20;
+
 const GamePlay = ({
   setGameFinished, isGameStarted, allWords, closeGame,
 }) => {
@@ -16,7 +18,46 @@ const GamePlay = ({
   const [maxStringOfRights, setMaxStringOfRights] = useState(0); // самая длинная серия
   const [rightAnswers, setRightAnswers] = useState([]);
   const [wrongAnswers, setWrongAnswers] = useState([]);
+  const [answerPoints, setAnswerPoints] = useState(BASE_POINTS);
+  const [score, setScore] = useState(0);
   const isSound = useSelector((state) => state.control.sprint.isSound);
+
+  let circles = '';
+  if (stringOfRights < 16) {
+    if (stringOfRights % 4 === 0) {
+      circles = (
+        <div className="circles-line">
+          <i className="far fa-circle circle" />
+          <i className="far fa-circle circle" />
+          <i className="far fa-circle circle" />
+        </div>
+      );
+    } else if ((stringOfRights - 1) % 4 === 0) {
+      circles = (
+        <div className="circles-line">
+          <i className="far fa-check-circle circle" />
+          <i className="far fa-circle circle" />
+          <i className="far fa-circle circle" />
+        </div>
+      );
+    } else if (stringOfRights % 2 === 0) {
+      circles = (
+        <div className="circles-line">
+          <i className="far fa-check-circle circle" />
+          <i className="far fa-check-circle circle" />
+          <i className="far fa-circle circle" />
+        </div>
+      );
+    } else {
+      circles = (
+        <div className="circles-line">
+          <i className="far fa-check-circle circle" />
+          <i className="far fa-check-circle circle" />
+          <i className="far fa-check-circle circle" />
+        </div>
+      );
+    }
+  }
 
   useEffect(() => {
     console.log('allWords in the useEffect on gamePlay', allWords);
@@ -57,12 +98,18 @@ const GamePlay = ({
     // console.log(workingWords[0].isTrue.toString());
     if (value === workingWords[0].isTrue.toString()) {
       if (isSound) playSound(correct);
+      setScore((points) => points + answerPoints);
+
+      if (stringOfRights === 4 || stringOfRights === 8 || stringOfRights === 12) {
+        setAnswerPoints((points) => points + BASE_POINTS);
+      }
       setStringOfRights((answer) => answer + 1);
       if (maxStringOfRights < stringOfRights) setMaxStringOfRights(stringOfRights);
       setRightAnswers((answers) => [...answers, workingWords[0]]);
     } else {
       if (isSound) playSound(error);
       setStringOfRights(0);
+      setAnswerPoints(BASE_POINTS);
       setWrongAnswers((answers) => [...answers, workingWords[0]]);
     }
     if (workingWords.length > 1) {
@@ -77,7 +124,7 @@ const GamePlay = ({
       <div className="game-controls">
         <GameSoundButton game="sprint" />
         <div className="game-controls__score">
-          score
+          {score}
         </div>
         <CloseIconButton
           additionalClassName="game-controls__close-btn"
@@ -86,7 +133,17 @@ const GamePlay = ({
       </div>
       <main className="game-play">
         <div className="game-play__upper">
-          <div className="circle" />
+          <div className="game-play__upper_circles">
+            {stringOfRights < 16 && (circles)}
+            {stringOfRights >= 16 && (
+              <div className="circles-line">
+                <i className="circle fas fa-check-circle" />
+              </div>
+            )}
+          </div>
+          <p>
+            {`+${answerPoints} баллов`}
+          </p>
         </div>
         <div className="game-play__birds">
           <div className="line" />

@@ -1,4 +1,5 @@
 @import '../../../sass/transitions.scss';
+@import '../../../sass/colors.scss';
 @import '../helpers/sprintColors.scss';
 
 .game-controls {
@@ -28,9 +29,10 @@
     font-size: 1.5rem;
     font-weight: bold;
     padding: 5px;
-    width: 50px;
+    width: 100px;
     border-radius: 4px;
     background-color: $purpleTransparent;
+    text-align: center;
   }
   &__close-btn {
     display: flex;
@@ -53,13 +55,26 @@
     height: 30px;
     padding: 10px;
     align-self: center;
+    display: flex;
+    flex-direction: column;
 
-    .circle {
-      border-radius: 50%;
-      background-color: green;
-      width: 30px;
-      height: 30px;
+    &_circles {
+      justify-content: center;
+      width: 100%;
+      .circles-line {
+        display: flex;
+        margin-bottom: 15px;
+        justify-content: center;
+      }
+      .circle {
+        color: $lightGreen;
+        width: 30px;
+        height: 30px;
+        font-size: 2rem;
+        margin: 0 5px;
+      }
     }
+
   }
   &__birds {
     align-self: center;
@@ -68,6 +83,7 @@
     height: 80px;
     position: relative;
     width: 320px;
+    margin-top: 15px;
   
     .line {
       position: absolute;
@@ -125,10 +141,10 @@
     }
 
     .right {
-      background-color: green;
+      background-color: $lightGreen;
     }
     .wrong {
-      background-color: red;
+      background-color: $lightRed;
     }
   }
 }
