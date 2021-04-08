@@ -14,7 +14,7 @@ const WordList = (props) => {
         return (
           <div id={i} key={el.id} className="WordConstructor__resultWordBlock">
             <button className="WordConstructor__resultWordAudio" type="button" id={i} onClick={() => playWord(id)}>
-              <img src={imgSound} alt="" width="20px" />
+              <img src={imgSound} alt="sound" width="20px" />
             </button>
             <button className="WordConstructor__resultWord" type="button">{el.word}</button>
             <span className="WordConstructor__resultWordTranslate">{` - ${el.wordTranslate}`}</span>

@@ -266,22 +266,16 @@ const GamePlay = (props) => {
               livesByDefault={livesByDefault}
               setLivesByDefault={setLivesByDefault}
             />
-
             <main className={`WordConstructor__play-main${answerClass}`}>
               <div className="WordConstructor__play-mainLives">
                 <span>{lives}</span>
                 <img src={heart} alt="heart" width="12px" />
               </div>
               <div className="WordConstructor__play-mainPlayWord" onClick={() => playAudioWord()} />
-
               <div className="WordConstructor__play-mainWord">{currentWordRU}</div>
-
-              <div
-                className="WordConstructor__play-mainWordTranscription"
-              >
+              <div className="WordConstructor__play-mainWordTranscription">
                 {isTranscription ? currentWordTranscription : ''}
               </div>
-
               <div className="WordConstructor__play-mainWordArr">
                 {
                 currentWord ? guessLetters.map((el, i) => (
@@ -291,7 +285,6 @@ const GamePlay = (props) => {
                 )) : null
               }
               </div>
-
               <div className="WordConstructor__play-mainWordLetters">
                 {
                 wordLetters ? wordLetters.map((el, i) => {
@@ -305,7 +298,6 @@ const GamePlay = (props) => {
                 }) : ''
               }
               </div>
-
               <div className="WordConstructor__play-mainLevel">{`Уровень ${level}`}</div>
               <div className="WordConstructor__play-mainSuccess">
                 <div className="WordConstructor__play-mainSuccessWidth" style={width} />
