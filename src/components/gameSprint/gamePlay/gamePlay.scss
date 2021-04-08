@@ -1,7 +1,44 @@
 @import '../../../sass/transitions.scss';
+@import '../helpers/sprintColors.scss';
 
+.game-controls {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 400px;
+  position: relative;
+  height: 30px;
+  > .sound {
+    top: 0;
+    left: 0;
+    position: relative;
+    display: flex;
+    &__off:after {
+      background-color: $darkgreen;
+    }
+    > i {
+      color: $darkgreen;
+    }
+  }
+  &__score {
+    font-size: 16px;
+    font-family: 'Courier New', Courier, monospace;
+    color: $darkgreen;
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding: 5px;
+    width: 50px;
+    border-radius: 4px;
+    background-color: $purpleTransparent;
+  }
+  &__close-btn {
+    display: flex;
+    margin: 0;
+  }
+}
 .game-play {
-  margin: 5px 0;
+  margin: 10px 0;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -31,19 +68,19 @@
     height: 80px;
     position: relative;
     width: 320px;
-
+  
     .line {
       position: absolute;
       width: 100%;
-      height: 7px;
-      background: white;
+      height: 3px;
+      background: $darkgreen;
       bottom: 30%;
       left: 0;
       border-radius: 4px;
       z-index: 1;
       opacity: 0.5;
     }
-
+  
     .bird {
       width: 80px;
       height: inherit;
@@ -52,18 +89,21 @@
       background-position: bottom;
         background-size: contain;
         background-repeat: no-repeat;
-
+  
       &.bird-1 {
         background-image: url('../../../assets/images/sprint/bird-1.png');
+        height: 90px;
       }
       &.bird-2 {
         background-image: url('../../../assets/images/sprint/bird-2.png');
       }
       &.bird-3 {
         background-image: url('../../../assets/images/sprint/bird-3.png');
+        height: 78px;
       }
       &.bird-4 {
         background-image: url('../../../assets/images/sprint/bird-4.png');
+        height: 83px;
       }
     }
   }

@@ -1,10 +1,6 @@
 @import '../../../sass/transitions.scss';
 @import '../../../sass/defaultComponentsStyles.scss';
-
-$elkagreen: #5c5737;
-$purple: #b69fb9;
-$purpleTransparent: #b69fb9be;
-$darkgreen: #413b2e;
+@import '../helpers/sprintColors.scss';
 
 .start-screen {
   border-radius: 4px;
@@ -28,7 +24,7 @@ $darkgreen: #413b2e;
       letter-spacing: 0.2rem;
       text-align: center;
       margin: 20px 0;
-      font-size: 2rem;
+      font-size: 2.5rem;
     }
     > p {
       text-align: center;
@@ -63,14 +59,12 @@ $darkgreen: #413b2e;
         }
       }
       .button-submit {
-        font-size: 16px;
+        @include styled__btn_outlined($purple, $darkgreen);
         align-self: center;
-        background-color: $purple;
-        border-radius: 4px;
-        width: 120px;
-        padding: 5px;
+        width: 200px;
         color: $darkgreen;
         cursor: pointer;
+        border: 1px solid $darkgreen;
         transition: $color-transition;
 
         &:hover {

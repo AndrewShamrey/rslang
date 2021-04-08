@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary */
-import { AMOUNT_OF_PAGES, BACK_URL, MEDIA_URI } from '../../utils/constants';
+import { AMOUNT_OF_PAGES, BACK_URL, MEDIA_URI } from '../../../utils/constants';
 
 const getRandomNumber = (max = AMOUNT_OF_PAGES) => Math.floor(Math.random() * max);
 

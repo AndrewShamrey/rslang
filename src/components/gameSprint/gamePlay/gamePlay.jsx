@@ -5,7 +5,7 @@ import CloseIconButton from '../../closeIconButton/closeIconButton';
 import playSound from '../../../utils/playSound';
 import error from '../../../assets/audio/error.mp3';
 import correct from '../../../assets/audio/correct.mp3';
-import { shuffleArray } from '../functions';
+import { shuffleArray } from '../helpers/functions';
 import './gamePlay.scss';
 
 const GamePlay = ({
@@ -23,7 +23,7 @@ const GamePlay = ({
     // для создания рабочего массива слов. если не перезагружать страницу,
     // при внесении изменений массив рабочих слов множится
     // слово, перевод, верный ли сет
-    if (isGameStarted && allWords.length) {
+    if (isGameStarted && allWords.length && !workingWords.length) {
       // Берем половину для верных
       allWords.filter((word, ind) => ind < (allWords.length / 2))
         .forEach((wordSet) => {
@@ -68,7 +68,6 @@ const GamePlay = ({
     if (workingWords.length > 1) {
       setWorkingWords((words) => words.slice(1));
     } else {
-      // работает, но надо очистить таймер
       setGameFinished(true);
     }
   };
@@ -77,8 +76,11 @@ const GamePlay = ({
     <>
       <div className="game-controls">
         <GameSoundButton game="sprint" />
+        <div className="game-controls__score">
+          score
+        </div>
         <CloseIconButton
-          additionalClassName="sprint__close-btn"
+          additionalClassName="game-controls__close-btn"
           onClick={closeGame}
         />
       </div>
@@ -91,13 +93,13 @@ const GamePlay = ({
           {stringOfRights >= 0 && (
             <div className="bird bird-1" />
           )}
-          {stringOfRights >= 3 && (
+          {stringOfRights >= 4 && (
             <div className="bird bird-2" />
           )}
-          {stringOfRights >= 6 && (
+          {stringOfRights >= 8 && (
             <div className="bird bird-3" />
           )}
-          {stringOfRights >= 9 && (
+          {stringOfRights >= 12 && (
             <div className="bird bird-4" />
           )}
         </div>

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import GameTimer from './timer';
-import { getRandomNumber } from './functions';
+import { getRandomNumber } from './helpers/functions';
 import StartScreen from './startScreen/startScreen';
 import GamePlay from './gamePlay/gamePlay';
 import './gameSprint.scss';
