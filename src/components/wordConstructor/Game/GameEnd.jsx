@@ -1,13 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import WordList from './components/WordList';
-import { rslangDataUrl } from '../utils/constants';
+import { RSLANG_DATA_URL } from '../../../utils/constants';
 import removeDuplicates from '../utils/removeDuplicates';
 import playAudio from '../utils/playAudio';
 
 const GameEnd = (props) => {
   const playAudioWord = (audio) => {
-    playAudio(`${rslangDataUrl}${audio}`);
+    playAudio(`${RSLANG_DATA_URL}${audio}`);
   };
 
   const {

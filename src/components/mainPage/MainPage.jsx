@@ -2,7 +2,7 @@ import Video from '../video/Video';
 import CapabilityCard from '../CapabilityCard/CapabilityCard';
 import DeveloperCard from './DeveloperCard';
 import './MainPage.scss';
-import { mainPageText, videoURL } from '../../utils/constants';
+import { MAIN_PAGE_TEXT, VIDEO_URL } from '../../utils/constants';
 import gamesIcon from '../../assets/images/games.png';
 import statisticIcon from '../../assets/images/statistic.png';
 import dictionaryIcon from '../../assets/images/dictionary.png';
@@ -11,7 +11,7 @@ import SamvelFoto from '../../assets/images/Samvel.jpg';
 import InnaFoto from '../../assets/images/Inna.jpg';
 
 const MainPage = () => {
-  const { capability: { games, dictionary, statistic }, about: { ...about } } = mainPageText;
+  const { capability: { games, dictionary, statistic }, about: { ...about } } = MAIN_PAGE_TEXT;
 
   return (
     <main className="Main-page">
@@ -45,7 +45,7 @@ const MainPage = () => {
         </ul>
       </section>
       <section className="Main-page__video">
-        <Video src={videoURL} />
+        <Video src={VIDEO_URL} />
       </section>
       <section className="Main-page__about">
         <h2 className="Main-page__about-title">О Команде</h2>

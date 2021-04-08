@@ -13,7 +13,7 @@ import finishSong from '../../../assets/audio/finish.mp3';
 import tikTakSong from '../../../assets/audio/tikTak.mp3';
 import errorSong from '../../../assets/audio/error.mp3';
 import goodSong from '../../../assets/audio/piu.mp3';
-import { wordsUrl, rslangDataUrl } from '../utils/constants';
+import { MEDIA_URI, RSLANG_DATA_URL } from '../../../utils/constants';
 
 const GamePlay = (props) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -47,7 +47,7 @@ const GamePlay = (props) => {
   const width = { width: `${success > 59 ? 100 : ((100 / 5) * (success % 6))}%` };
 
   const playAudioWord = (audio = words[wordId].audio) => {
-    if (volume) playAudio(`${rslangDataUrl}${audio}`);
+    if (volume) playAudio(`${RSLANG_DATA_URL}${audio}`);
   };
 
   const stopGame = () => {
@@ -158,7 +158,7 @@ const GamePlay = (props) => {
   };
 
   async function fetchData() {
-    const url = `${wordsUrl}?page=${getRandomNumber(29)}&group=${level - 1}`;
+    const url = `${MEDIA_URI}words?page=${getRandomNumber(29)}&group=${level - 1}`;
     const results = await Promise.all([
       fetch(url).then((d) => d.json()),
       fetch(url).then((d) => d.json()),
