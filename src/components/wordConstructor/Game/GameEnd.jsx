@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import WordList from './components/WordList';
 import { rslangDataUrl } from '../utils/constants';
 import removeDuplicates from '../utils/removeDuplicates';
-import imgSound from '../assets/sound.png';
 import playAudio from '../utils/playAudio';
 
 const GameEnd = (props) => {

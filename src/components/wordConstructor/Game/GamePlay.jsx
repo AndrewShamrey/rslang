@@ -8,11 +8,11 @@ import getRandomNumber from '../../../utils/getRandomNumber';
 import addRandomLetters from '../utils/addRandomLetters';
 import playAudio from '../utils/playAudio';
 import heart from '../assets/heart.png';
-import startSong from '../assets/audio/start.mp3';
-import finishSong from '../assets/audio/finish.mp3';
-import tikTakSong from '../assets/audio/tikTak.mp3';
-import errorSong from '../assets/audio/error.mp3';
-import goodSong from '../assets/audio/good.mp3';
+import startSong from '../../../assets/audio/start.mp3';
+import finishSong from '../../../assets/audio/finish.mp3';
+import tikTakSong from '../../../assets/audio/tikTak.mp3';
+import errorSong from '../../../assets/audio/error.mp3';
+import goodSong from '../../../assets/audio/piu.mp3';
 import { wordsUrl, rslangDataUrl } from '../utils/constants';
 
 const GamePlay = (props) => {
