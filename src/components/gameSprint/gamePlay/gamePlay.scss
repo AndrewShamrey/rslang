@@ -1,5 +1,6 @@
 @import '../../../sass/transitions.scss';
 @import '../../../sass/colors.scss';
+@import '../../../sass/defaultComponentsStyles.scss';
 @import '../helpers/sprintColors.scss';
 
 .game-controls {
@@ -48,7 +49,7 @@
   border-radius: 4px;
   width: 400px;
   height: 400px;
-  background-color: #b69fb9;
+  background-color: $purpleTransparent;
   box-shadow: 0 0 5px 2px #3e2c41;
 
   &__upper {
@@ -67,14 +68,16 @@
         justify-content: center;
       }
       .circle {
-        color: $lightGreen;
+        color: $signGreen;
         width: 30px;
         height: 30px;
         font-size: 2rem;
         margin: 0 5px;
       }
     }
-
+    &_text {
+      text-align: center;
+    }
   }
   &__birds {
     align-self: center;
@@ -83,7 +86,7 @@
     height: 80px;
     position: relative;
     width: 320px;
-    margin-top: 15px;
+    margin: 20px 0;
   
     .line {
       position: absolute;
@@ -132,19 +135,30 @@
     display: flex;
     justify-content: space-around;
 
-    >button {
-      width: 100px;
-      height: 40px;
-      cursor: pointer;
-      border-radius: 4px;
-      transition: $color-transition;
-    }
+    &_block {
+      display: flex;
+      flex-direction: column;
 
-    .right {
-      background-color: $lightGreen;
-    }
-    .wrong {
-      background-color: $lightRed;
+      .answer-button {
+        cursor: pointer;
+        border-radius: 4px;
+        width: 150px;
+        transition: $color-transition;
+  
+        &.right {
+          @include styled__btn_solid($lightGreen, $darkgreen);
+        }
+        &.wrong {
+          @include styled__btn_solid($lightRed, $darkgreen);
+        }
+      }
+      > i {
+        font-size: 1.3rem;
+        color: $darkgreen;
+        text-align: center;
+        margin-top: 10px;
+        opacity: 0.8;
+      }
     }
   }
 }
