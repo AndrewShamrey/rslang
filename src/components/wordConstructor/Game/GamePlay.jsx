@@ -4,7 +4,7 @@ import Preloader from './components/Preloader';
 import Header from './components/Header';
 import GameEnd from './GameEnd';
 import createObj from '../utils/createObject';
-import randomOf from '../utils/randomOf';
+import getRandomNumber from '../../../utils/getRandomNumber';
 import addRandomLetters from '../utils/addRandomLetters';
 import playAudio from '../utils/playAudio';
 import heart from '../assets/heart.png';
@@ -82,7 +82,7 @@ const GamePlay = (props) => {
   };
 
   const changeWord = () => {
-    const newID = randomOf(arrayOfIndices.length);
+    const newID = getRandomNumber(arrayOfIndices.length);
     setWordId(arrayOfIndices[newID]);
     setCurrentWord(words[arrayOfIndices[newID]].word);
     setCurrentWordRU(words[arrayOfIndices[newID]].wordTranslate);
@@ -158,7 +158,7 @@ const GamePlay = (props) => {
   };
 
   async function fetchData() {
-    const url = `${wordsUrl}?page=${Math.floor(Math.random() * 29)}&group=${level - 1}`;
+    const url = `${wordsUrl}?page=${getRandomNumber(29)}&group=${level - 1}`;
     const results = await Promise.all([
       fetch(url).then((d) => d.json()),
       fetch(url).then((d) => d.json()),
@@ -185,7 +185,7 @@ const GamePlay = (props) => {
 
   useEffect(() => {
     if (words.length > 0) {
-      const index = randomOf(words.length);
+      const index = getRandomNumber(words.length);
       setWordId(index);
       setCurrentWord(words[index].word);
       setCurrentWordRU(words[index].wordTranslate);
