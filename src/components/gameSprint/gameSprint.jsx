@@ -10,6 +10,7 @@ import './gameSprint.scss';
 const GameSprint = () => {
   const [isGameStarted, setGameStarted] = useState(false);
   const [isGameFinished, setGameFinished] = useState(false);
+  const [isGameReady, setIsGameReady] = useState(false);
   const [allWords, setAllWords] = useState([]);
   const [gameResult, setGameResult] = useState({
     correctAnswers: [],
@@ -17,7 +18,8 @@ const GameSprint = () => {
     longestSeries: 0,
   });
 
-  console.log(allWords);
+  // console.log(allWords);
+  console.log('gameResult: ', gameResult);
 
   const closeGame = () => {
     setGameStarted(false);
@@ -35,7 +37,7 @@ const GameSprint = () => {
 
   return (
     <div className="game-sprint">
-      {isGameStarted && !isGameFinished && (
+      {isGameStarted && !isGameFinished && isGameReady && (
         <GameTimer setGameFinished={setGameFinished} />
       )}
       {!isGameStarted && !isGameFinished && (
@@ -52,6 +54,8 @@ const GameSprint = () => {
           allWords={allWords}
           closeGame={closeGame}
           setGameResult={setGameResult}
+          isGameReady={isGameReady}
+          setIsGameReady={setIsGameReady}
         />
       )}
       {isGameFinished && (

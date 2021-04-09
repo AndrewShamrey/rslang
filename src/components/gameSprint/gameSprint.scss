@@ -28,24 +28,4 @@
     justify-content: center;
     align-items: center;
   }
-  >.statistics-page__results {
-      > .statistics-page__header {
-        color: $signGreen;
-      }
-      >.statistics-page__info {
-        color: $signGreen;
-      }
-    
-    >.statistics-page__answers {
-      &::-webkit-scrollbar-thumb:hover {
-        background-color: $signGreen;
-      }
-    }
-    >.statistics-page__answers-title {
-      color: $signGreen;
-    }
-    >.statistics-page__btn {
-      @include styled__btn_solid($signGreen, $white);
-    }
-  }
 }
