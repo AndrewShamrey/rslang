@@ -6,7 +6,7 @@ const StartScreen = ({
   setGameStarted, setAllWords, page,
 }) => {
   const [selectValue, setSelectValue] = useState(0);
-
+  console.log('level: ', selectValue);
   const submitHandler = (e) => {
     e.preventDefault();
     getWords(selectValue, page)

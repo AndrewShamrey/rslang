@@ -7,12 +7,13 @@ import playSound from '../../../utils/playSound';
 import error from '../../../assets/audio/error.mp3';
 import correct from '../../../assets/audio/correct.mp3';
 import { shuffleArray } from '../helpers/functions';
+import { GAMES } from '../../../utils/constants';
 import './gamePlay.scss';
 
 const BASE_POINTS = 20;
 
 const GamePlay = ({
-  setGameFinished, isGameStarted, allWords, closeGame,
+  setGameFinished, isGameStarted, allWords, closeGame, setGameResult,
 }) => {
   const [workingWords, setWorkingWords] = useState([]);
   const [stringOfRights, setStringOfRights] = useState(0);
@@ -61,6 +62,7 @@ const GamePlay = ({
   }
 
   const rightAnswerHandler = () => {
+    console.log('answered right');
     if (isSound) playSound(correct);
     setScore((points) => points + answerPoints);
 
@@ -70,13 +72,23 @@ const GamePlay = ({
     setStringOfRights((answer) => answer + 1);
     if (maxStringOfRights < stringOfRights) setMaxStringOfRights(stringOfRights);
     setRightAnswers((answers) => [...answers, workingWords[0]]);
+    setGameResult((state) => ({
+      ...state,
+      correctAnswers: [...state.correctAnswers, workingWords[0].obj],
+      longestSeries: maxStringOfRights,
+    }));
   };
 
   const wrongAnswerHandler = () => {
+    console.log('answered wrong');
     if (isSound) playSound(error);
     setStringOfRights(0);
     setAnswerPoints(BASE_POINTS);
     setWrongAnswers((answers) => [...answers, workingWords[0]]);
+    setGameResult((state) => ({
+      ...state,
+      incorrectAnswers: [...state.incorrectAnswers, workingWords[0].obj],
+    }));
   };
 
   hotkeys('left', {
@@ -109,14 +121,18 @@ const GamePlay = ({
         .forEach((wordSet) => {
           const { word } = wordSet;
           const translation = wordSet.wordTranslate;
-          setWorkingWords((words) => [...words, { word, translation, isTrue: true }]);
+          setWorkingWords((words) => [...words, {
+            obj: wordSet, word, translation, isTrue: true,
+          }]);
         });
       // Берем половину для неверных
       allWords.filter((word, ind) => ind >= (allWords.length / 2))
         .forEach((wordSet, ind) => {
           const { word } = wordSet;
           const translation = allWords[ind].wordTranslate;
-          setWorkingWords((words) => [...words, { word, translation, isTrue: false }]);
+          setWorkingWords((words) => [...words, {
+            obj: wordSet, word, translation, isTrue: false,
+          }]);
         });
       // and shuffle
       setWorkingWords((words) => shuffleArray(words));
@@ -150,7 +166,9 @@ const GamePlay = ({
   return (
     <>
       <div className="game-controls">
-        <GameSoundButton game="sprint" />
+        <GameSoundButton
+          game={GAMES.sprint}
+        />
         <div className="game-controls__score">
           {score}
         </div>

@@ -19,7 +19,7 @@ const saveShortTermStatistics = (game, result) => {
   const data = JSON.parse(localStorageData);
   const savedData = data[game];
 
-  if (savedData.date === date) {
+  if (savedData && savedData.date === date) {
     newGameData = {
       date,
       longestSeries: (

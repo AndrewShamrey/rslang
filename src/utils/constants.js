@@ -39,3 +39,8 @@ export const mainPageText = {
     Samvel: 'Главная страница\nмини-игра "Конструктор слов"',
   },
 };
+
+export const GAMES = {
+  audiochallenge: 'audiochallenge',
+  sprint: 'sprint',
+};

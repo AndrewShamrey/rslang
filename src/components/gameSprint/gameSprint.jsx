@@ -2,23 +2,35 @@ import { useState, useEffect } from 'react';
 import GameTimer from './timer';
 import { getRandomNumber } from './helpers/functions';
 import StartScreen from './startScreen/startScreen';
+import StatisticsPage from '../statisticPage/statisticsPage';
 import GamePlay from './gamePlay/gamePlay';
+import { GAMES } from '../../utils/constants';
 import './gameSprint.scss';
 
 const GameSprint = () => {
   const [isGameStarted, setGameStarted] = useState(false);
   const [isGameFinished, setGameFinished] = useState(false);
   const [allWords, setAllWords] = useState([]);
+  const [gameResult, setGameResult] = useState({
+    correctAnswers: [],
+    incorrectAnswers: [],
+    longestSeries: 0,
+  });
 
   console.log(allWords);
 
-  // const showStatistics = (correctAnswers, incorrectAnswers, longestSeries) => {
-  //   setGameResult(() => ({ correctAnswers, incorrectAnswers, longestSeries }));
-  //   setIsStatisticsPage(() => true);
-  // };
-
   const closeGame = () => {
     setGameStarted(false);
+  };
+
+  const showStartScreen = () => {
+    setGameStarted(false);
+    setGameFinished(false);
+    setGameResult({
+      correctAnswers: [],
+      incorrectAnswers: [],
+      longestSeries: 0,
+    });
   };
 
   return (
@@ -39,9 +51,16 @@ const GameSprint = () => {
           isGameStarted={isGameStarted}
           allWords={allWords}
           closeGame={closeGame}
+          setGameResult={setGameResult}
         />
       )}
-      {isGameFinished && <div>Finish screen</div>}
+      {isGameFinished && (
+        <StatisticsPage
+          game={GAMES.sprint}
+          gameResult={gameResult}
+          showStartPage={showStartScreen}
+        />
+      )}
     </div>
   );
 };
