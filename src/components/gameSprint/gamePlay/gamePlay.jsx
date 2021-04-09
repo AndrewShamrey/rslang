@@ -16,6 +16,7 @@ const WORDS_COUNT = 60;
 
 const GamePlay = ({
   setGameFinished, isGameStarted, allWords, closeGame, setGameResult, isGameReady, setIsGameReady,
+  gameScore, setGameScore,
 }) => {
   const [workingWords, setWorkingWords] = useState([]);
   const [stringOfRights, setStringOfRights] = useState(0);
@@ -23,7 +24,7 @@ const GamePlay = ({
   const [rightAnswers, setRightAnswers] = useState([]);
   const [wrongAnswers, setWrongAnswers] = useState([]);
   const [answerPoints, setAnswerPoints] = useState(BASE_POINTS);
-  const [score, setScore] = useState(0);
+  // const [gameScore, setGameScore] = useState(0);
   const isSound = useSelector((state) => state.control.sprint.isSound);
 
   let circles = '';
@@ -66,7 +67,7 @@ const GamePlay = ({
   const rightAnswerHandler = () => {
     console.log('answered right');
     if (isSound) playSound(correct);
-    setScore((points) => points + answerPoints);
+    setGameScore((points) => points + answerPoints);
 
     if (stringOfRights === 4 || stringOfRights === 8 || stringOfRights === 12) {
       setAnswerPoints((points) => points + BASE_POINTS);
@@ -176,7 +177,7 @@ const GamePlay = ({
           game={GAMES.sprint}
         />
         <div className="game-controls__score">
-          {score}
+          {gameScore}
         </div>
         <CloseIconButton
           additionalClassName="game-controls__close-btn"

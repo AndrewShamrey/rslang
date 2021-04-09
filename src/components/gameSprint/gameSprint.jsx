@@ -12,6 +12,7 @@ const GameSprint = () => {
   const [isGameFinished, setGameFinished] = useState(false);
   const [isGameReady, setIsGameReady] = useState(false);
   const [allWords, setAllWords] = useState([]);
+  const [gameScore, setGameScore] = useState(0);
   const [gameResult, setGameResult] = useState({
     correctAnswers: [],
     incorrectAnswers: [],
@@ -33,6 +34,7 @@ const GameSprint = () => {
       incorrectAnswers: [],
       longestSeries: 0,
     });
+    setGameScore(0);
   };
 
   return (
@@ -56,6 +58,8 @@ const GameSprint = () => {
           setGameResult={setGameResult}
           isGameReady={isGameReady}
           setIsGameReady={setIsGameReady}
+          gameScore={gameScore}
+          setGameScore={setGameScore}
         />
       )}
       {isGameFinished && (
@@ -63,6 +67,7 @@ const GameSprint = () => {
           game={GAMES.sprint}
           gameResult={gameResult}
           showStartPage={showStartScreen}
+          score={gameScore}
         />
       )}
     </div>

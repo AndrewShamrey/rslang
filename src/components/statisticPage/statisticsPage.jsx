@@ -7,7 +7,9 @@ import StatisticsList from '../statisticsList/statisticsList';
 import './statisticsPage.scss';
 import '../../sass/defaultComponentsStyles.scss';
 
-const StatisticsPage = ({ gameResult, showStartPage, game }) => {
+const StatisticsPage = ({
+  gameResult, showStartPage, game, score,
+}) => {
   const { correctAnswers, incorrectAnswers, longestSeries } = gameResult;
 
   useEffect(() => {
@@ -20,8 +22,11 @@ const StatisticsPage = ({ gameResult, showStartPage, game }) => {
       <p className="statistics-page__info">
         {`
           ${RESULT_PAGE.amountOfWords}: ${correctAnswers.length + incorrectAnswers.length},
-          ${RESULT_PAGE.longestSeries}: ${longestSeries}
+          ${RESULT_PAGE.longestSeries}: ${longestSeries},
         `}
+        {score && (
+          `${RESULT_PAGE.score}: ${score}`
+        )}
       </p>
 
       <div className="statistics-page__answers">
