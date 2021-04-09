@@ -54,3 +54,16 @@
     box-shadow: 0 10px 20px -10px $bg;
   }
 }
+
+@mixin styled__btn_text($bg, $fontColor) {
+  @include styled__btn_outlined($bg, $fontColor);
+  border-color: transparent;
+  box-shadow: none;
+
+
+  &:hover {
+    color: $fontColor;
+    background-color: $bg;
+    box-shadow: 0 10px 20px -10px $bg;
+  }
+}
