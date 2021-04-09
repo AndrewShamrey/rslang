@@ -6,7 +6,7 @@ import CloseIconButton from '../closeIconButton/closeIconButton';
 import StatisticsPage from '../statisticPage/statisticsPage';
 import GameSettings from '../gameSettings/gameSettings';
 import getRandomNumber from '../../utils/getRandomNumber';
-import { AMOUNT_OF_PAGES } from '../../utils/constants';
+import { AMOUNT_OF_PAGES, GAMES } from '../../utils/constants';
 
 import './audiochallenge.scss';
 
@@ -60,7 +60,7 @@ const Audiochallenge = () => {
           </button>
           {isSettings && <GameSettings close={toggleSettings} />}
           <StartPage
-            game="audiochallenge"
+            game={GAMES.audiochallenge}
             startGame={startGame}
             changeLevel={changeLevel}
           />
@@ -68,7 +68,7 @@ const Audiochallenge = () => {
       )}
       {isStatisticsPage && (
         <StatisticsPage
-          game="audiochallenge"
+          game={GAMES.audiochallenge}
           gameResult={gameResult}
           showStartPage={showStartPage}
         />
