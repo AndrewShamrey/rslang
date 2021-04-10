@@ -1,8 +1,16 @@
 import './switcher.scss';
 
-const Switcher = ({ isChecked = true, onChange, id }) => (
+const Switcher = ({
+  isChecked = true,
+  onChange,
+  id,
+  color = 'green',
+  additionalClassName = '',
+  round,
+  type = 'solid',
+}) => (
   <label
-    className="switcher s-success"
+    className={`switcher switcher_${type} switcher_${color} ${additionalClassName}`}
     htmlFor={id}
   >
     <input
@@ -11,7 +19,7 @@ const Switcher = ({ isChecked = true, onChange, id }) => (
       checked={isChecked}
       onChange={onChange}
     />
-    <span className="slider round" />
+    <span className={`slider ${round && 'switcher_round'}`} />
   </label>
 );
 

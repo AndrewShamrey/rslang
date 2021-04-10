@@ -1,116 +1,14 @@
-label {
-  font-size: 15px;
-  color: #888ea8;
-  letter-spacing: 1px;
-}
+@import '../../sass/colors.scss';
+@import '../../sass/defaultComponentsStyles.scss';
 
 .switcher {
-  position: relative;
-  display: inline-block;
-  width: 35px;
-  min-width: 35px;
-  height: 18px;
-  min-height: 18px;
+  &_solid {
+    &.switcher_green {    
+      @include styled__switcher_solid($themeGreen);
+    }
 
-  input {
-    display: none;
+    &.switcher_default {    
+      @include styled__switcher_solid($themeSwitchDefault);
+    }
   }
 }
-
-
-.switcher .slider.round {
-  border-radius: 34px;
-}
-
-.switcher .slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ebedf2;
-  -webkit-transition: .4s;
-  transition: .4s;
-}
-
-.switcher.s-success .slider:before {
-  background-color: #1abc9c;
-}
-
-.switcher .slider.round:before {
-  border-radius: 50%;
-}
-.switcher .slider:before {
-  position: absolute;
-  content: "";
-  background-color: white;
-  -webkit-transition: .4s;
-  -ms-transition: .4s;
-  transition: .4s;
-  height: 14px;
-  width: 14px;
-  left: 2px;
-  bottom: 2px;
-  box-shadow: 0 1px 15px 1px #34286857;
-}
-
-.switcher .slider.round:before {
-  border-radius: 50%;
-}
-
-.switcher input:checked + .slider:before {
-  background-color: #fff;
-}
-
-.switcher input:checked + .slider:before {
-  -webkit-transform: translateX(17px);
-  -ms-transform: translateX(17px);
-  transform: translateX(17px);
-}
-.switcher.s-success .slider:before {
-  background-color: #1abc9c;
-}
-
-.switcher input:checked + .slider:before {
-  background-color: #fff;
-}
-.switcher input:checked + .slider:before {
-  -webkit-transform: translateX(17px);
-  -ms-transform: translateX(17px);
-  transform: translateX(17px);
-}
-
-.switcher.s-success input:checked + .slider {
-  background-color: #1abc9c;
-}
-.switcher .slider.round {
-  border-radius: 34px;
-}
-.switcher .slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ebedf2;
-  -webkit-transition: .4s;
-  transition: .4s;
-}
-*, ::after, ::before {
-  box-sizing: border-box;
-}
-.form-group label, label {
-  font-size: 15px;
-  color: #888ea8;
-  letter-spacing: 1px;
-}
-
-// label {
-//   cursor: default;
-// }
-// .text-center {
-//   text-align: center!important;
-// }
-

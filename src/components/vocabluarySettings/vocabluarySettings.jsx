@@ -54,6 +54,9 @@ const VocabluarySettings = ({ close = () => {} }) => {
               isChecked={isTranslations}
               onChange={toggleTranslationSettings}
               id="isTranslations"
+              color="green"
+              type="solid"
+              round
             />
             <p>{VOCABLUARY_SETTINGS.translations}</p>
           </li>
@@ -62,6 +65,9 @@ const VocabluarySettings = ({ close = () => {} }) => {
               isChecked={isButtons}
               onChange={toggleButtonsDisplaySettings}
               id="isButtons"
+              color="green"
+              type="solid"
+              round
             />
             <p>{VOCABLUARY_SETTINGS.buttons}</p>
           </li>
