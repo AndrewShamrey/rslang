@@ -13,6 +13,7 @@ const GameSprint = () => {
   const [isGameReady, setIsGameReady] = useState(false);
   const [allWords, setAllWords] = useState([]);
   const [gameScore, setGameScore] = useState(0);
+  const [maxStringOfRights, setMaxStringOfRights] = useState(0);
   const [gameResult, setGameResult] = useState({
     correctAnswers: [],
     incorrectAnswers: [],
@@ -24,6 +25,12 @@ const GameSprint = () => {
 
   const closeGame = () => {
     setGameStarted(false);
+    setGameResult({
+      correctAnswers: [],
+      incorrectAnswers: [],
+      longestSeries: 0,
+    });
+    setGameScore(0);
   };
 
   const showStartScreen = () => {
@@ -37,6 +44,12 @@ const GameSprint = () => {
     setGameScore(0);
   };
 
+  // ({
+  //   correctAnswers: gameResult.correctAnswers,
+  //   incorrectAnswers: gameResult.incorrectAnswers,
+  //   longestSeries: gameResult.incorrectAnswers.length ? gameResult.longestSeries
+  //     : gameResult.longestSeries + 1,
+  // })
   return (
     <div className="game-sprint">
       {isGameStarted && !isGameFinished && isGameReady && (
@@ -60,12 +73,18 @@ const GameSprint = () => {
           setIsGameReady={setIsGameReady}
           gameScore={gameScore}
           setGameScore={setGameScore}
+          maxStringOfRights={maxStringOfRights}
+          setMaxStringOfRights={setMaxStringOfRights}
         />
       )}
       {isGameFinished && (
         <StatisticsPage
           game={GAMES.sprint}
-          gameResult={gameResult}
+          gameResult={({
+            correctAnswers: gameResult.correctAnswers,
+            incorrectAnswers: gameResult.incorrectAnswers,
+            longestSeries: maxStringOfRights,
+          })}
           showStartPage={showStartScreen}
           score={gameScore}
         />

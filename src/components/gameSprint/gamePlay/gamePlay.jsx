@@ -1,9 +1,9 @@
 import { useEffect, useState, useCallback } from 'react';
 import { useSelector } from 'react-redux';
-import hotkeys from 'hotkeys-js';
 import GameSoundButton from '../../gameSoundButton/gameSoundButton';
 import CloseIconButton from '../../closeIconButton/closeIconButton';
 import Preloader from '../../preloader/preloader';
+import ShowBirds from './gameBirds/gameBirds';
 import playSound from '../../../utils/playSound';
 import error from '../../../assets/audio/error.mp3';
 import correct from '../../../assets/audio/correct.mp3';
@@ -15,12 +15,12 @@ const BASE_POINTS = 20;
 const WORDS_COUNT = 60;
 
 const GamePlay = ({
-  setGameFinished, isGameStarted, allWords, closeGame, setGameResult, isGameReady, setIsGameReady,
-  gameScore, setGameScore,
+  setGameFinished, allWords, closeGame, setGameResult, isGameReady, setIsGameReady,
+  gameScore, setGameScore, maxStringOfRights, setMaxStringOfRights,
 }) => {
   const [workingWords, setWorkingWords] = useState([]);
   const [stringOfRights, setStringOfRights] = useState(0);
-  const [maxStringOfRights, setMaxStringOfRights] = useState(0); // самая длинная серия
+  // const [maxStringOfRights, setMaxStringOfRights] = useState(0); // самая длинная серия
   const [rightAnswers, setRightAnswers] = useState([]);
   const [wrongAnswers, setWrongAnswers] = useState([]);
   const [answerPoints, setAnswerPoints] = useState(BASE_POINTS);
@@ -64,27 +64,36 @@ const GamePlay = ({
     }
   }
 
+  useEffect(() => {
+    if (maxStringOfRights < stringOfRights) {
+      console.log('increase long series +1');
+      setMaxStringOfRights((strike) => strike + 1);
+      // setGameResult((state) => ({
+      //   ...state,
+      //   longestSeries: maxStringOfRights,
+      // }));
+    }
+    console.log('stringOfRights: ', stringOfRights, ', maxStringOfRights: ', maxStringOfRights);
+  }, [stringOfRights, maxStringOfRights, setMaxStringOfRights]);
+
+  useEffect(() => {
+    if (stringOfRights === 4 || stringOfRights === 8 || stringOfRights === 12) {
+      setAnswerPoints((points) => points + BASE_POINTS);
+    }
+  }, [stringOfRights]);
+
   const rightAnswerHandler = () => {
     console.log('answered right');
     if (isSound) playSound(correct);
     setGameScore((points) => points + answerPoints);
 
-    if (stringOfRights === 4 || stringOfRights === 8 || stringOfRights === 12) {
-      setAnswerPoints((points) => points + BASE_POINTS);
-    }
-
     setStringOfRights((answer) => answer + 1);
     console.log('stringOfRights: ', stringOfRights, ', maxStringOfRights: ', maxStringOfRights);
-    if (maxStringOfRights <= stringOfRights) {
-      console.log('increase long series +1');
-      setMaxStringOfRights((strike) => strike + 1);
-    }
-    console.log('stringOfRights: ', stringOfRights, ', maxStringOfRights: ', maxStringOfRights);
+
     setRightAnswers((answers) => [...answers, workingWords[0]]);
     setGameResult((state) => ({
       ...state,
       correctAnswers: [...state.correctAnswers, workingWords[0].obj],
-      longestSeries: maxStringOfRights,
     }));
   };
 
@@ -100,29 +109,10 @@ const GamePlay = ({
     }));
   };
 
-  /* hotkeys('left', {
-    keyup: false,
-    keydown: true,
-  }, (event, handler) => {
-    event.preventDefault();
-    rightAnswerHandler();
-    // не работает то, что ниже. и баллы не добавляются
-    setWorkingWords((words) => words.slice(1));
-  });
-  hotkeys('right', {
-    keyup: false,
-    keydown: true,
-  }, (event, handler) => {
-    event.preventDefault();
-    wrongAnswerHandler();
-    // не работает то, что ниже
-    setWorkingWords((words) => words.slice(1));
-  }); */
-
   useEffect(() => {
     console.log('allWords in the useEffect on gamePlay', allWords);
 
-    if (isGameStarted && allWords.length && !workingWords.length) {
+    if (allWords.length && !workingWords.length) {
       console.log('making words');
       // Берем половину для верных
       allWords.filter((word, ind) => ind < (allWords.length / 2))
@@ -200,21 +190,9 @@ const GamePlay = ({
               {`+${answerPoints} баллов`}
             </p>
           </div>
-          <div className="game-play__birds">
-            <div className="line" />
-            {stringOfRights >= 0 && (
-              <div className="bird bird-1" />
-            )}
-            {stringOfRights >= 4 && (
-              <div className="bird bird-2" />
-            )}
-            {stringOfRights >= 8 && (
-              <div className="bird bird-3" />
-            )}
-            {stringOfRights >= 12 && (
-              <div className="bird bird-4" />
-            )}
-          </div>
+          <ShowBirds
+            stringOfRights={stringOfRights}
+          />
           {workingWords.length && (
             <div className="game-play__word">
               {workingWords[0].word}
