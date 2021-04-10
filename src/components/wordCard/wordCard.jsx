@@ -1,31 +1,26 @@
+import { useSelector } from 'react-redux';
 import Backdrop from '../backdrop/backdrop';
 import WordSoundButton from '../wordSoundButton/wordSoundButton';
+import WordCardTable from '../wordCardTable/wordCardTable';
+import CloseIconButton from '../closeIconButton/closeIconButton';
 import playSound from '../../utils/playSound';
 import { BACK_URL, HTML_TAGS_REGEXP } from '../../utils/constants';
+import { WORD_CARD } from '../../utils/content';
 import './wordCard.scss';
 
-const wordCard = () => {
-  const wordData = {
-    id: '5e9f5ee35eb9e72bc21af4ca',
-    group: 0,
-    page: 2,
-    word: 'chart',
-    image: 'files/03_0043.jpg',
-    audio: 'files/03_0043.mp3',
-    audioMeaning: 'files/03_0043_meaning.mp3',
-    audioExample: 'files/03_0043_example.mp3',
-    textMeaning: 'A <i>chart</i> is a list of information.',
-    textExample: 'We used a <b>chart</b> to see how we had improved.',
-    transcription: '[tʃɑːrt]',
-    textExampleTranslate: 'Мы использовали график, чтобы увидеть, как мы улучшили',
-    textMeaningTranslate: 'Диаграмма - это список информации',
-    wordTranslate: 'диаграмма',
-  };
+const WordCard = ({
+  wordData,
+  showNext = () => {},
+  showPreviouse = () => {},
+  deleteWord = () => {},
+  moveToDifficult = () => {},
+  close = () => {},
+}) => {
+  const displayTranslations = useSelector((state) => (
+    state.control.vocabluary.settings.displayTranslations
+  ));
 
   const {
-    id,
-    group,
-    page,
     word,
     image,
     audio,
@@ -39,9 +34,29 @@ const wordCard = () => {
     wordTranslate,
   } = wordData;
 
+  const playWordData = () => {
+    const audioSrcSet = [audio, audioMeaning, audioExample];
+    let i = 0;
+
+    const playAudioSet = () => {
+      const audiofile = playSound(`${BACK_URL}${audioSrcSet[i]}`);
+      i += 1;
+
+      if (i < audioSrcSet.length) {
+        audiofile.onended = () => playAudioSet();
+      }
+    };
+
+    playAudioSet();
+  };
+
   return (
     <Backdrop>
       <div className="word-card">
+        <CloseIconButton
+          additionalClassName="word-card__btn-close"
+          onClick={close}
+        />
         <img
           className="word-card__img"
           src={`${BACK_URL}${image}`}
@@ -49,77 +64,43 @@ const wordCard = () => {
         />
         <div className="word-card__word-block">
           <p className="word-card__word">{word}</p>
-          <WordSoundButton onClick={() => playSound(`${BACK_URL}${audio}`)} />
+          <WordSoundButton onClick={playWordData} />
         </div>
         <p className="word-card__transcription">{transcription}</p>
-        <p className="word-card__word-translate">{wordTranslate}</p>
+        {displayTranslations && (
+          <p className="word-card__word-translate">{wordTranslate}</p>
+        )}
         <div className="word-card__meaning">
           <p className="word-card__meaning-text">{textMeaning.replaceAll(HTML_TAGS_REGEXP, '')}</p>
-          <p className="word-card__meaning-translate">{textMeaningTranslate}</p>
+          {displayTranslations && (
+            <p className="word-card__meaning-translate">{textMeaningTranslate}</p>
+          )}
         </div>
         <div className="word-card__example">
           <p className="word-card__example-text">{textExample.replaceAll(HTML_TAGS_REGEXP, '')}</p>
-          <p className="word-card__example-translate">{textExampleTranslate}</p>
+          {displayTranslations && (
+            <p className="word-card__example-translate">{textExampleTranslate}</p>
+          )}
         </div>
-        <table cols="6">
-          <tr>
-            <th>Саванна</th>
-            <th>Аудиовызов</th>
-            <th>Спринт</th>
-            <th>Конструктор слов</th>
-            <th>Сложные</th>
-            <th>Удалить</th>
-          </tr>
-          <tr>
-            <td>
-              {true && <i className="fas fa-check" />}
-            </td>
-            <td>
-              {true && <i className="fas fa-check" />}
-            </td>
-            <td>
-              {true && <i className="fas fa-check" />}
-            </td>
-            <td>
-              {true && <i className="fas fa-check" />}
-            </td>
-            <td>
-              <button
-                className="word-card__table-btn word-card__btn-difficult"
-                type="button"
-                onClick={() => {}} // add to difficult words handler
-              >
-                <i className="far fa-clock" />
-              </button>
-            </td>
-            <td>
-              <button
-                className="word-card__table-btn word-card__btn-delete"
-                type="button"
-                onClick={() => {}} // delete word handler
-              >
-                <i className="far fa-times-circle" />
-              </button>
-            </td>
-          </tr>
-        </table>
+        <WordCardTable
+          deleteWord={deleteWord}
+          moveToDifficult={moveToDifficult}
+        />
         <div className="word-card__controls">
           <button
             className="word-card__control"
             type="button"
-            onClick={() => {}} // move to next word handler
+            onClick={showPreviouse}
           >
             <i className="fas fa-chevron-left" />
-            {' '}
-            Предыдущее слово
+            {` ${WORD_CARD.previoseWord}`}
           </button>
           <button
             className="word-card__control"
             type="button"
-            onClick={() => {}} // move to next word handler
+            onClick={showNext}
           >
-            Следующее слово
-            {' '}
+            {`${WORD_CARD.nextWord} `}
             <i className="fas fa-chevron-right" />
           </button>
         </div>
@@ -128,4 +109,4 @@ const wordCard = () => {
   );
 };
 
-export default wordCard;
+export default WordCard;

@@ -18,11 +18,16 @@ function App() {
   const dispatch = useDispatch();
   const state = useSelector((rootState) => rootState.control);
 
-  // move to a component which will contain vocabluary settings
+  // move to a component which will contain vocabluary settings and/or word card
   const [isSettings, setIsSettings] = useState(false);
+  const [isWordCardOpen, setIsWordCardOpen] = useState(false);
 
   const toggleSettings = () => {
     setIsSettings((settings) => !settings);
+  };
+
+  const toggleWordCard = () => {
+    setIsWordCardOpen((isOpen) => !isOpen);
   };
 
   const handleUnload = () => {
@@ -49,8 +54,25 @@ function App() {
     };
   });
 
-  return (
+  // mocked data for testing WordCard component
+  const wordData = {
+    id: '5e9f5ee35eb9e72bc21af4ca',
+    group: 0,
+    page: 2,
+    word: 'chart',
+    image: 'files/03_0043.jpg',
+    audio: 'files/03_0043.mp3',
+    audioMeaning: 'files/03_0043_meaning.mp3',
+    audioExample: 'files/03_0043_example.mp3',
+    textMeaning: 'A <i>chart</i> is a list of information.',
+    textExample: 'We used a <b>chart</b> to see how we had improved.',
+    transcription: '[tʃɑːrt]',
+    textExampleTranslate: 'Мы использовали график, чтобы увидеть, как мы улучшили',
+    textMeaningTranslate: 'Диаграмма - это список информации',
+    wordTranslate: 'диаграмма',
+  };
 
+  return (
     <Router>
       <ScrollToTop />
       <div className="App">
@@ -58,14 +80,24 @@ function App() {
         <Switch>
           <Route exact path="/">
             <MainPage />
-            <WordCard />
           </Route>
           <Route path="/textbook/:section">
             <>
               <h1>Учебник</h1>
               <button type="button" onClick={toggleSettings}>open settings</button>
+              <button type="button" onClick={toggleWordCard}>open word card</button>
               {isSettings && (
                 <VocabluarySettings close={toggleSettings} />
+              )}
+              {isWordCardOpen && (
+                <WordCard
+                  wordData={wordData}
+                  showNext={() => {}}
+                  showPreviouse={() => {}}
+                  deleteWord={() => {}}
+                  moveToDifficult={() => {}}
+                  close={toggleWordCard}
+                />
               )}
             </>
           </Route>
