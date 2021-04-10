@@ -1,4 +1,7 @@
 import Backdrop from '../backdrop/backdrop';
+import WordSoundButton from '../wordSoundButton/wordSoundButton';
+import playSound from '../../utils/playSound';
+import { BACK_URL, HTML_TAGS_REGEXP } from '../../utils/constants';
 import './wordCard.scss';
 
 const wordCard = () => {
@@ -39,20 +42,86 @@ const wordCard = () => {
   return (
     <Backdrop>
       <div className="word-card">
-        <img src="" alt="" />
-        <div>
-          <p>q</p>
-          <button type="button">q</button>
+        <img
+          className="word-card__img"
+          src={`${BACK_URL}${image}`}
+          alt={word}
+        />
+        <div className="word-card__word-block">
+          <p className="word-card__word">{word}</p>
+          <WordSoundButton onClick={() => playSound(`${BACK_URL}${audio}`)} />
         </div>
-        <p>1</p>
-        <p>1</p>
-        <div>
-          <p>2</p>
-          <p>2</p>
+        <p className="word-card__transcription">{transcription}</p>
+        <p className="word-card__word-translate">{wordTranslate}</p>
+        <div className="word-card__meaning">
+          <p className="word-card__meaning-text">{textMeaning.replaceAll(HTML_TAGS_REGEXP, '')}</p>
+          <p className="word-card__meaning-translate">{textMeaningTranslate}</p>
         </div>
-        <div>
-          <p>2</p>
-          <p>2</p>
+        <div className="word-card__example">
+          <p className="word-card__example-text">{textExample.replaceAll(HTML_TAGS_REGEXP, '')}</p>
+          <p className="word-card__example-translate">{textExampleTranslate}</p>
+        </div>
+        <table cols="6">
+          <tr>
+            <th>Саванна</th>
+            <th>Аудиовызов</th>
+            <th>Спринт</th>
+            <th>Конструктор слов</th>
+            <th>Сложные</th>
+            <th>Удалить</th>
+          </tr>
+          <tr>
+            <td>
+              {true && <i className="fas fa-check" />}
+            </td>
+            <td>
+              {true && <i className="fas fa-check" />}
+            </td>
+            <td>
+              {true && <i className="fas fa-check" />}
+            </td>
+            <td>
+              {true && <i className="fas fa-check" />}
+            </td>
+            <td>
+              <button
+                className="word-card__table-btn word-card__btn-difficult"
+                type="button"
+                onClick={() => {}} // add to difficult words handler
+              >
+                <i className="far fa-clock" />
+              </button>
+            </td>
+            <td>
+              <button
+                className="word-card__table-btn word-card__btn-delete"
+                type="button"
+                onClick={() => {}} // delete word handler
+              >
+                <i className="far fa-times-circle" />
+              </button>
+            </td>
+          </tr>
+        </table>
+        <div className="word-card__controls">
+          <button
+            className="word-card__control"
+            type="button"
+            onClick={() => {}} // move to next word handler
+          >
+            <i className="fas fa-chevron-left" />
+            {' '}
+            Предыдущее слово
+          </button>
+          <button
+            className="word-card__control"
+            type="button"
+            onClick={() => {}} // move to next word handler
+          >
+            Следующее слово
+            {' '}
+            <i className="fas fa-chevron-right" />
+          </button>
         </div>
       </div>
     </Backdrop>
