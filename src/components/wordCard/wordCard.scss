@@ -1,0 +1,19 @@
+@import '../../sass/colors.scss';
+
+.word-card {
+  padding: 35px 20px;
+  width: 100%;
+  max-width: 720px;
+  pointer-events: auto;
+  background-color: $white;
+  background-clip: padding-box;
+  border: 1px solid #00000033;
+  border-radius: .3rem;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}

@@ -10,6 +10,7 @@ import Footer from './components/footer/footer';
 import MainPage from './components/mainPage/MainPage';
 import ErrorPage from './components/errorPage/errorPage';
 import Audiochallenge from './components/audiochallenge/audiochallenge';
+import WordCard from './components/wordCard/wordCard';
 import './App.scss';
 
 function App() {
@@ -49,6 +50,7 @@ function App() {
         <Switch>
           <Route exact path="/">
             <MainPage />
+            <WordCard />
           </Route>
           <Route path="/textbook/:section">
             <h1>Учебник</h1>
