@@ -1,3 +1,4 @@
+/* eslint-disable object-curly-newline */
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import saveShortTermStatistics from '../../utils/saveShortTermStatistics';
@@ -7,7 +8,7 @@ import StatisticsList from '../statisticsList/statisticsList';
 import './statisticsPage.scss';
 import '../../sass/defaultComponentsStyles.scss';
 
-const StatisticsPage = ({ gameResult, showStartPage, game }) => {
+const StatisticsPage = ({ gameResult, showStartPage, game, score }) => {
   const { correctAnswers, incorrectAnswers, longestSeries } = gameResult;
 
   useEffect(() => {
@@ -22,6 +23,9 @@ const StatisticsPage = ({ gameResult, showStartPage, game }) => {
           ${RESULT_PAGE.amountOfWords}: ${correctAnswers.length + incorrectAnswers.length},
           ${RESULT_PAGE.longestSeries}: ${longestSeries}
         `}
+        <span>
+          {score && (`, ${RESULT_PAGE.score}: ${score}`)}
+        </span>
       </p>
 
       <div className="statistics-page__answers">

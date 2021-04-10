@@ -21,3 +21,10 @@ export const AUDIOCHALLENGE_GAME_PAGE = {
   pass: 'Пропустить',
   nextWord: 'Следующее слово',
 };
+
+export const VOCABLUARY_SETTINGS = {
+  translations: 'Отображать перевод слов и предложений',
+  buttons: 'Отображать кнопки “Сложные слова”, “Удаленные слова”',
+  save: 'Сохранить',
+  cancel: 'Отмена',
+};

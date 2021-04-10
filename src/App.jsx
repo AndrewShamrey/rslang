@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   BrowserRouter as Router, Switch, Route, Redirect,
@@ -11,11 +11,19 @@ import MainPage from './components/mainPage/MainPage';
 import ErrorPage from './components/errorPage/errorPage';
 import Audiochallenge from './components/audiochallenge/audiochallenge';
 import WordCard from './components/wordCard/wordCard';
+import VocabluarySettings from './components/vocabluarySettings/vocabluarySettings';
 import './App.scss';
 
 function App() {
   const dispatch = useDispatch();
   const state = useSelector((rootState) => rootState.control);
+
+  // move to a component which will contain vocabluary settings
+  const [isSettings, setIsSettings] = useState(false);
+
+  const toggleSettings = () => {
+    setIsSettings((settings) => !settings);
+  };
 
   const handleUnload = () => {
     localStorage.setItem('currentState', JSON.stringify(state));
@@ -53,7 +61,13 @@ function App() {
             <WordCard />
           </Route>
           <Route path="/textbook/:section">
-            <h1>Учебник</h1>
+            <>
+              <h1>Учебник</h1>
+              <button type="button" onClick={toggleSettings}>open settings</button>
+              {isSettings && (
+                <VocabluarySettings close={toggleSettings} />
+              )}
+            </>
           </Route>
           <Route exact path="/savannah">
             <h1>Саванна</h1>
