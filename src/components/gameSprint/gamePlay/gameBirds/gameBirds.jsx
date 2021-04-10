@@ -1,3 +1,5 @@
+import './gameBirds.scss';
+
 const ShowBirds = ({ stringOfRights }) => (
   <div className="game-play__birds">
     <div className="line" />

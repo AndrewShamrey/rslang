@@ -21,10 +21,14 @@ const GamePlay = ({
 }) => {
   const [workingWords, setWorkingWords] = useState([]);
   const [stringOfRights, setStringOfRights] = useState(0);
-  const [rightAnswers, setRightAnswers] = useState([]);
-  const [wrongAnswers, setWrongAnswers] = useState([]);
   const [answerPoints, setAnswerPoints] = useState(BASE_POINTS);
   const isSound = useSelector((state) => state.control.sprint.isSound);
+
+  useEffect(() => {
+    if (workingWords.length === WORDS_COUNT) {
+      setIsGameReady(true);
+    }
+  }, [workingWords, setIsGameReady]);
 
   useEffect(() => {
     if (maxStringOfRights < stringOfRights) {
@@ -44,37 +48,35 @@ const GamePlay = ({
     }
   }, [stringOfRights]);
 
-  const rightAnswerHandler = () => {
+  const rightAnswerHandler = useCallback(() => {
     console.log('answered right');
     if (isSound) playSound(correct);
     setGameScore((points) => points + answerPoints);
 
     setStringOfRights((answer) => answer + 1);
-    console.log('stringOfRights: ', stringOfRights, ', maxStringOfRights: ', maxStringOfRights);
+    // console.log('stringOfRights: ', stringOfRights, ', maxStringOfRights: ', maxStringOfRights);
 
-    setRightAnswers((answers) => [...answers, workingWords[0]]);
     setGameResult((state) => ({
       ...state,
       correctAnswers: [...state.correctAnswers, workingWords[0].obj],
     }));
-  };
+  }, [answerPoints, isSound, setStringOfRights, setGameScore, workingWords, setGameResult]);
 
-  const wrongAnswerHandler = () => {
+  const wrongAnswerHandler = useCallback(() => {
     console.log('answered wrong');
     if (isSound) playSound(error);
     setStringOfRights(0);
     setAnswerPoints(BASE_POINTS);
-    setWrongAnswers((answers) => [...answers, workingWords[0]]);
     setGameResult((state) => ({
       ...state,
       incorrectAnswers: [...state.incorrectAnswers, workingWords[0].obj],
     }));
-  };
+  }, [isSound, setGameResult, workingWords]);
 
   useEffect(() => {
     console.log('allWords in the useEffect on gamePlay', allWords);
 
-    if (allWords.length && !workingWords.length) {
+    if (allWords.length) {
       console.log('making words');
 
       const newWords = allWords.map((item, ind) => {
@@ -96,17 +98,11 @@ const GamePlay = ({
       });
 
       setWorkingWords(shuffleArray(newWords));
+      // console.log('words collected', workingWords);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [allWords]);
 
-  useEffect(() => {
-    if (workingWords.length === WORDS_COUNT) {
-      setIsGameReady(true);
-    }
-  }, [workingWords, setIsGameReady]);
-
-  const handleAnswer = ({ target }) => {
+  const handleAnswer = useCallback(({ target }) => {
     const { value } = target;
     // console.log(value);
     // console.log(workingWords[0].isTrue);
@@ -120,7 +116,27 @@ const GamePlay = ({
     } else {
       setGameFinished(true);
     }
-  };
+  }, [rightAnswerHandler, wrongAnswerHandler, workingWords, setGameFinished]);
+
+  const keyboardEvents = useCallback((event) => {
+    const { key } = event;
+
+    if (key === 'ArrowLeft') {
+      handleAnswer({ target: { value: 'true' } });
+    }
+
+    if (key === 'ArrowRight') {
+      handleAnswer({ target: { value: 'false' } });
+    }
+  }, [handleAnswer]);
+
+  useEffect(() => {
+    document.addEventListener('keydown', keyboardEvents);
+
+    return () => {
+      document.removeEventListener('keydown', keyboardEvents);
+    };
+  }, [keyboardEvents]);
 
   return (
     <>

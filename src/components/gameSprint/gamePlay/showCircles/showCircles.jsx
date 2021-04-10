@@ -1,3 +1,5 @@
+import './showCircles.scss';
+
 const ShowCircles = ({ stringOfRights }) => {
   let circles = '';
   if (stringOfRights < 16) {
