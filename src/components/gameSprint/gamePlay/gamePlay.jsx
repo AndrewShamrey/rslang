@@ -4,6 +4,7 @@ import GameSoundButton from '../../gameSoundButton/gameSoundButton';
 import CloseIconButton from '../../closeIconButton/closeIconButton';
 import Preloader from '../../preloader/preloader';
 import ShowBirds from './gameBirds/gameBirds';
+import ShowCircles from './showCircles/showCircles';
 import playSound from '../../../utils/playSound';
 import error from '../../../assets/audio/error.mp3';
 import correct from '../../../assets/audio/correct.mp3';
@@ -20,49 +21,10 @@ const GamePlay = ({
 }) => {
   const [workingWords, setWorkingWords] = useState([]);
   const [stringOfRights, setStringOfRights] = useState(0);
-  // const [maxStringOfRights, setMaxStringOfRights] = useState(0); // самая длинная серия
   const [rightAnswers, setRightAnswers] = useState([]);
   const [wrongAnswers, setWrongAnswers] = useState([]);
   const [answerPoints, setAnswerPoints] = useState(BASE_POINTS);
-  // const [gameScore, setGameScore] = useState(0);
   const isSound = useSelector((state) => state.control.sprint.isSound);
-
-  let circles = '';
-  if (stringOfRights < 16) {
-    if (stringOfRights % 4 === 0) {
-      circles = (
-        <div className="circles-line">
-          <i className="far fa-circle circle" />
-          <i className="far fa-circle circle" />
-          <i className="far fa-circle circle" />
-        </div>
-      );
-    } else if ((stringOfRights - 1) % 4 === 0) {
-      circles = (
-        <div className="circles-line">
-          <i className="far fa-check-circle circle" />
-          <i className="far fa-circle circle" />
-          <i className="far fa-circle circle" />
-        </div>
-      );
-    } else if (stringOfRights % 2 === 0) {
-      circles = (
-        <div className="circles-line">
-          <i className="far fa-check-circle circle" />
-          <i className="far fa-check-circle circle" />
-          <i className="far fa-circle circle" />
-        </div>
-      );
-    } else {
-      circles = (
-        <div className="circles-line">
-          <i className="far fa-check-circle circle" />
-          <i className="far fa-check-circle circle" />
-          <i className="far fa-check-circle circle" />
-        </div>
-      );
-    }
-  }
 
   useEffect(() => {
     if (maxStringOfRights < stringOfRights) {
@@ -114,26 +76,26 @@ const GamePlay = ({
 
     if (allWords.length && !workingWords.length) {
       console.log('making words');
-      // Берем половину для верных
-      allWords.filter((word, ind) => ind < (allWords.length / 2))
-        .forEach((wordSet) => {
-          const { word } = wordSet;
-          const translation = wordSet.wordTranslate;
-          setWorkingWords((words) => [...words, {
-            obj: wordSet, word, translation, isTrue: true,
-          }]);
-        });
-      // Берем половину для неверных
-      allWords.filter((word, ind) => ind >= (allWords.length / 2))
-        .forEach((wordSet, ind) => {
-          const { word } = wordSet;
-          const translation = allWords[ind].wordTranslate;
-          setWorkingWords((words) => [...words, {
-            obj: wordSet, word, translation, isTrue: false,
-          }]);
-        });
 
-      setWorkingWords((words) => shuffleArray(words));
+      const newWords = allWords.map((item, ind) => {
+        let playWord;
+        if (ind < (allWords.length / 2)) {
+          const { word } = item;
+          const translation = item.wordTranslate;
+          playWord = {
+            obj: item, word, translation, isTrue: 'true',
+          };
+        } else {
+          const { word } = item;
+          const translation = allWords[ind - (allWords.length / 2)].wordTranslate;
+          playWord = {
+            obj: item, word, translation, isTrue: 'false',
+          };
+        }
+        return playWord;
+      });
+
+      setWorkingWords(shuffleArray(newWords));
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [allWords]);
@@ -144,11 +106,11 @@ const GamePlay = ({
     }
   }, [workingWords, setIsGameReady]);
 
-  const handleAnswer = (e) => {
-    const { value } = e.target;
+  const handleAnswer = ({ target }) => {
+    const { value } = target;
     // console.log(value);
-    // console.log(workingWords[0].isTrue.toString());
-    if (value === workingWords[0].isTrue.toString()) {
+    // console.log(workingWords[0].isTrue);
+    if (value === workingWords[0].isTrue) {
       rightAnswerHandler();
     } else {
       wrongAnswerHandler();
@@ -178,14 +140,7 @@ const GamePlay = ({
       {isGameReady && (
         <main className="game-play">
           <div className="game-play__upper">
-            <div className="game-play__upper_circles">
-              {stringOfRights < 16 && (circles)}
-              {stringOfRights >= 16 && (
-                <div className="circles-line">
-                  <i className="circle fas fa-check-circle" />
-                </div>
-              )}
-            </div>
+            <ShowCircles stringOfRights={stringOfRights} />
             <p className="game-play__upper_text">
               {`+${answerPoints} баллов`}
             </p>
