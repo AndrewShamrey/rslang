@@ -8,16 +8,16 @@ import ShowCircles from './showCircles/showCircles';
 import playSound from '../../../utils/playSound';
 import error from '../../../assets/audio/error.mp3';
 import correct from '../../../assets/audio/correct.mp3';
+import pass from '../../../assets/audio/pass.mp3';
 import { shuffleArray } from '../helpers/functions';
 import { GAMES } from '../../../utils/constants';
 import './gamePlay.scss';
 
 const BASE_POINTS = 20;
-const WORDS_COUNT = 60;
 
 const GamePlay = ({
   setGameFinished, allWords, closeGame, setGameResult, isGameReady, setIsGameReady,
-  gameScore, setGameScore, maxStringOfRights, setMaxStringOfRights,
+  gameScore, setGameScore, maxStringOfRights, setMaxStringOfRights, wordsCount,
 }) => {
   const [workingWords, setWorkingWords] = useState([]);
   const [stringOfRights, setStringOfRights] = useState(0);
@@ -25,10 +25,10 @@ const GamePlay = ({
   const isSound = useSelector((state) => state.control.sprint.isSound);
 
   useEffect(() => {
-    if (workingWords.length === WORDS_COUNT) {
+    if (workingWords.length === wordsCount) {
       setIsGameReady(true);
     }
-  }, [workingWords, setIsGameReady]);
+  }, [workingWords, setIsGameReady, wordsCount]);
 
   useEffect(() => {
     if (maxStringOfRights < stringOfRights) {
@@ -45,22 +45,23 @@ const GamePlay = ({
   useEffect(() => {
     if (stringOfRights === 4 || stringOfRights === 8 || stringOfRights === 12) {
       setAnswerPoints((points) => points + BASE_POINTS);
+      playSound(pass);
     }
   }, [stringOfRights]);
 
   const rightAnswerHandler = useCallback(() => {
     console.log('answered right');
-    if (isSound) playSound(correct);
     setGameScore((points) => points + answerPoints);
 
     setStringOfRights((answer) => answer + 1);
-    // console.log('stringOfRights: ', stringOfRights, ', maxStringOfRights: ', maxStringOfRights);
+    console.log('stringOfRights: ', stringOfRights);
+    if (isSound) playSound(correct);
 
     setGameResult((state) => ({
       ...state,
       correctAnswers: [...state.correctAnswers, workingWords[0].obj],
     }));
-  }, [answerPoints, isSound, setStringOfRights, setGameScore, workingWords, setGameResult]);
+  }, [setGameScore, isSound, setGameResult, answerPoints, stringOfRights, workingWords]);
 
   const wrongAnswerHandler = useCallback(() => {
     console.log('answered wrong');
