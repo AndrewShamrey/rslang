@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import LevelSelector from './components/LevelSelector';
+import LevelSelector from './components/LevelSelector/LevelSelector';
+import '../../../sass/defaultComponentsStyles.scss';
 
 const GameStart = () => {
   const [level, setLevel] = useState(1);
 
   return (
-    <div className="WordConstructor__start">
+    <main className="WordConstructor__start">
       <h2 className="WordConstructor__start-title">Конструктор слов</h2>
       <h3 className="WordConstructor__start-slogan">Составление оригинального слова по переводу</h3>
       <LevelSelector setLevel={setLevel} />
@@ -20,9 +21,9 @@ const GameStart = () => {
         }}
         role="button"
       >
-        Начать игру
+        Начать
       </Link>
-    </div>
+    </main>
   );
 };
 

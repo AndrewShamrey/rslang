@@ -1,5 +1,6 @@
 @import '../../sass/colors.scss';
 @import '../../sass/breakpoints.scss';
+@import '../../sass/defaultComponentsStyles.scss';
 
 .WordConstructor {
   position: relative;
@@ -7,15 +8,16 @@
   flex-direction: column;
   align-items: center;
   background-image: $wordConstructor-gradient;
-  padding: 0 5px;
+  padding: 45px 5px;
 
   &__start {
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
-    padding: 50px 0 0;
+    padding: 45px 0;
 
     &-title {
       color: $white;
@@ -27,39 +29,18 @@
     }
 
     &-slogan {
+      font-weight: 400;
+      font-size: 20px;
       color: $white;
       margin-top: 50px;
     }
 
-    &-select {
-      width: 200px;
-      margin-top: 10px;
-      background-color: $white;
-      text-align: center;
-      border-radius: 6px;
-      cursor: pointer;
-
-      &-title {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        text-align: center;
-        margin-top: 30px;
-        color: $white;
-      }
-    }
-
     &-button {
-      width: 200px;
-      height: 50px;
-      padding: 10px;
-      margin-top: 30px;
-      background-color: $white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border-radius: 6px;
-      cursor: pointer;
+      @include styled__btn_outlined($blue, $white, $white);
+      width: 150px;
+      font-size: 17px;
+      font-weight: 900;
+      text-transform: uppercase;
     }
   }
 
