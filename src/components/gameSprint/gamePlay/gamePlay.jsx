@@ -15,10 +15,11 @@ import { SPRINT_GAME } from '../../../utils/content';
 import './gamePlay.scss';
 
 const BASE_POINTS = 20;
+const ADDED_TIME = 5;
 
 const GamePlay = ({
   setGameFinished, allWords, closeGame, setGameResult, isGameReady, setIsGameReady,
-  gameScore, setGameScore, maxStringOfRights, setMaxStringOfRights, wordsCount,
+  gameScore, setGameScore, maxStringOfRights, setMaxStringOfRights, wordsCount, setAddTime,
 }) => {
   const [workingWords, setWorkingWords] = useState([]);
   const [stringOfRights, setStringOfRights] = useState(0);
@@ -45,9 +46,13 @@ const GamePlay = ({
   useEffect(() => {
     if (stringOfRights === 4 || stringOfRights === 8 || stringOfRights === 12) {
       setAnswerPoints((points) => points + BASE_POINTS);
-      playSound(pass);
+      if (isSound) playSound(pass);
     }
-  }, [stringOfRights]);
+    if (stringOfRights === 16) {
+      if (isSound) playSound(pass);
+      setAddTime(ADDED_TIME);
+    }
+  }, [isSound, setAddTime, stringOfRights]);
 
   const rightAnswerHandler = useCallback(() => {
     // console.log('answered right');

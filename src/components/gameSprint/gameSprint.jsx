@@ -21,6 +21,7 @@ const GameSprint = ({ page, level }) => {
   const [gameScore, setGameScore] = useState(0);
   const [maxStringOfRights, setMaxStringOfRights] = useState(0);
   const [wordsCount, setWordsCount] = useState(WORDS_COUNT_DEFAULT);
+  const [addTime, setAddTime] = useState(0);
   const [gameResult, setGameResult] = useState({
     correctAnswers: [],
     incorrectAnswers: [],
@@ -71,7 +72,10 @@ const GameSprint = ({ page, level }) => {
       <FullScreen handle={handle}>
         <div className="game-sprint">
           {isGameStarted && !isGameFinished && isGameReady && (
-            <GameTimer setGameFinished={setGameFinished} />
+            <GameTimer
+              setGameFinished={setGameFinished}
+              addTime={addTime}
+            />
           )}
           {!isGameStarted && !isGameFinished && (
             <StartScreen
@@ -97,6 +101,7 @@ const GameSprint = ({ page, level }) => {
               maxStringOfRights={maxStringOfRights}
               setMaxStringOfRights={setMaxStringOfRights}
               wordsCount={wordsCount}
+              setAddTime={setAddTime}
             />
           )}
           {isGameFinished && (

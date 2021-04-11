@@ -21,7 +21,7 @@ const StatisticsPage = ({ gameResult, showStartPage, game, score }) => {
       <p className="statistics-page__info">
         {`
           ${RESULT_PAGE.amountOfWords}: ${correctAnswers.length + incorrectAnswers.length},
-          ${RESULT_PAGE.longestSeries}: ${longestSeries},
+          ${RESULT_PAGE.longestSeries}: ${longestSeries}
         `}
         <span>
           {score && (`, ${RESULT_PAGE.score}: ${score}`)}

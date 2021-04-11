@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import { AMOUNT_OF_PAGES, BACK_URL } from '../../../utils/constants';
 
 const MIN_PAGE = 0;
@@ -28,7 +27,6 @@ const getPagesURLs = (group = 0, page, isPagesNumRestricted) => {
   } else {
     pagesArr.push(page, page + 1, page + 2);
   }
-  console.log(pagesArr);
 
   const pages = pagesArr.reduce((acc, item) => acc.concat(`${BACK_URL}words?page=${item}&group=${group}`), []);
   return { pages, pagesCount };
@@ -49,7 +47,6 @@ const getWords = async (urls) => {
     .then((tripleArray) => tripleArray.flat())
     .catch((error) => console.log(error));
 
-  console.log(content);
   return content;
 };
 

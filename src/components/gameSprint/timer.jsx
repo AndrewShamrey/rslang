@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 
-const GameTimer = ({ setGameFinished }) => {
+const GameTimer = ({ setGameFinished, addTime }) => {
   const [counter, setCounter] = useState(60);
+  const redAlert = counter <= 5 ? 'red' : '';
 
   useEffect(() => {
     let timer;
@@ -13,9 +14,14 @@ const GameTimer = ({ setGameFinished }) => {
     return () => {
       clearTimeout(timer);
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [counter]);
+  }, [counter, setGameFinished]);
 
-  return <div className="timer">{counter}</div>;
+  useEffect(() => {
+    if (addTime > 0) {
+      setCounter((time) => time + addTime);
+    }
+  }, [addTime]);
+
+  return <div className={`timer ${redAlert}`}>{counter}</div>;
 };
 export default GameTimer;
