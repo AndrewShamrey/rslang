@@ -15,7 +15,7 @@ export default function Header() {
   return (
     <header className="Header">
       <NavLink exact to="/" className="Header__logo" activeClassName="Header__logo_active">
-        <h1>RS Lang logo</h1>
+        <h1>RS Lang</h1>
       </NavLink>
 
       <nav className="Header__nav">

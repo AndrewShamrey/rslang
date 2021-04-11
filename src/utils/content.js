@@ -5,6 +5,13 @@ export const START_PAGE = {
   },
   level: 'Уровень',
   start: 'Начать',
+  sprint: {
+    title: 'Спринт',
+    descrLine1: 'Истинная гонка на проверку знаний!',
+    descrLine2: 'Укажите, верный ли перевод слова.',
+    selectLabel: 'Выберите уровень сложности:',
+    start: 'Начать игру',
+  },
 };
 
 export const RESULT_PAGE = {

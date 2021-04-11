@@ -22,13 +22,14 @@
   &__logo {
     min-width: max-content;
     cursor: pointer;
+    font-family: 'Jockey One', sans-serif;
 
     &:hover {
       color: $blue;
       transition: $color-transition;
     }
 
-    h1 {
+    > h1 {
       font-size: 26px;
       margin: 0;
 
