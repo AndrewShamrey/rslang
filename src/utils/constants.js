@@ -11,6 +11,7 @@ export const HTML_TAGS_REGEXP = /(<b>|<\/b>|<i>|<\/i>)/g;
 export const GAMES = {
   audiochallenge: 'audiochallenge',
   sprint: 'sprint',
+  wordConstructor: 'wordConstructor',
 };
 
 export const VIDEO_URL = 'https://media.w3.org/2010/05/sintel/trailer_hd.mp4';

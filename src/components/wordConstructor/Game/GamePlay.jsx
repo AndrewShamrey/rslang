@@ -6,6 +6,7 @@ import GameEnd from './GameEnd';
 import createObj from '../utils/createObject';
 import getRandomNumber from '../../../utils/getRandomNumber';
 import addRandomLetters from '../utils/addRandomLetters';
+import removeDuplicates from '../utils/removeDuplicates';
 import playAudio from '../utils/playAudio';
 import heart from '../assets/heart.png';
 import startSong from '../../../assets/audio/start.mp3';
@@ -42,6 +43,9 @@ const GamePlay = (props) => {
   const [arrayOfIndices, setArrayOfIndices] = useState([]);
   const [isAutoPlay, setIsAutoPlay] = useState(true);
   const [isTranscription, setIsTranscription] = useState(true);
+  const [longestSeries, setLongestSeries] = useState(0);
+  const [isSeriesError, setIsSeriesError] = useState(true);
+  const [sessionErrorWords, setSessionErrorWords] = useState([]);
 
   const intervals = [];
   const width = { width: `${success > 59 ? 100 : ((100 / 5) * (success % 6))}%` };
@@ -142,6 +146,10 @@ const GamePlay = (props) => {
       setBadWords([...badWords, words[wordId]]);
       setWordErrors(wordErrors + 1);
       setAndRemoveAnswerClass(false);
+      // --------------
+      setSessionErrorWords(Array.from(new Set([...sessionErrorWords, currentWord])));
+      // console.log('sessionErrorWords ', sessionErrorWords);
+      // console.log('goodWords ', goodWords.filter((el) => !sessionErrorWords.includes(el.word)));
     }
   };
 
@@ -155,6 +163,7 @@ const GamePlay = (props) => {
     setGuessLetters(currentWordLetters.map(() => ''));
     const wordArr = createObj(addRandomLetters([...currentWord], level));
     setWordLetters(wordArr);
+    setSessionErrorWords([]);
   };
 
   async function fetchData() {
@@ -249,7 +258,12 @@ const GamePlay = (props) => {
           level={level}
           newGame={() => { newGame(); }}
           badWords={badWords}
-          goodWords={goodWords}
+          goodWords={goodWords.filter((el) => !sessionErrorWords.includes(el.word))}
+          gameResult={{
+            correctAnswers: removeDuplicates(goodWords, 'id'),
+            incorrectAnswers: removeDuplicates(badWords, 'id'),
+            longestSeries,
+          }}
         />
       ) : (
         <div className="WordConstructor__play">
