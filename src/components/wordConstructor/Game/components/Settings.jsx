@@ -15,7 +15,7 @@ const Settings = (props) => {
           onClick={() => setOptionsIsOpen(false)}
           type="button"
         >
-          <img src={cancel} alt="cancel" width="30px" />
+          <img className="WordConstructor__optionsCloseBtn" src={cancel} alt="cancel" />
         </button>
 
         <ul className="WordConstructor__optionsList">

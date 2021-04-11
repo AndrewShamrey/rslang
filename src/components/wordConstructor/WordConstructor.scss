@@ -132,6 +132,10 @@
           }
         }
       }
+
+      img {
+        width: 30px;
+      }
     }
 
     &-main {
@@ -155,13 +159,16 @@
       }
 
       &Lives {
+        display: flex;
+        align-items: center;
         position: absolute;
         top: 10px;
         left: 5px;
+      }
 
-        img {
-          margin-left: 3px;
-        }
+      &Heart {
+        width: 20px;
+        margin-left: 5px;
       }
 
       &PlayWord {
@@ -371,6 +378,10 @@
       &:hover {
         transform: scale(1.2);
       }
+
+      &Btn {
+        width: 20px;
+      }
     }
 
     &Controls {
@@ -475,6 +486,10 @@
 
       &:hover {
         background-color: rgba($color: $white, $alpha: 0.3);
+      }
+
+      &Btn {
+        width: 30px;
       }
     }
 

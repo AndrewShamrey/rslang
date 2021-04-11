@@ -5,7 +5,7 @@ const Info = (props) => {
   const { infoIsOpen } = props;
   return infoIsOpen ? (
     <div className="WordConstructor__info">
-      <img src={logo} alt="logo" width="100px" className="WordConstructor__infoLogo" />
+      <img src={logo} alt="logo" className="WordConstructor__infoLogo" />
       <h2 className="WordConstructor__infoSlogan">Собери слово из букв!</h2>
       <ol className="WordConstructor__infoList">
         <li className="WordConstructor__infoItem">Кликайте по буквам в нужном порядке, чтобы собрать оригинальное слово.</li>

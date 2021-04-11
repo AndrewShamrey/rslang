@@ -21,11 +21,11 @@ const Header = (props) => {
       <div className="WordConstructor__play-headerScore">{`Очки: ${score}`}</div>
       <div className="WordConstructor__play-headerControls">
         <button className="WordConstructor__play-headerControlsInfo" type="button" onClick={() => setInfoIsOpen(!infoIsOpen)} onMouseLeave={() => setInfoIsOpen(false)}>
-          <img src={info} alt="info" width="30px" />
+          <img src={info} alt="info" />
           <Info infoIsOpen={infoIsOpen} />
         </button>
         <button className="WordConstructor__play-headerControlsSettings" type="button" onClick={() => setOptionsIsOpen(!optionsIsOpen)}>
-          <img src={settings} alt="settings" width="30px" />
+          <img src={settings} alt="settings" />
         </button>
         <Settings
           optionsIsOpen={optionsIsOpen}
@@ -38,10 +38,10 @@ const Header = (props) => {
           setLivesByDefault={setLivesByDefault}
         />
         <button className="WordConstructor__play-headerControlsVolume" onClick={() => setVolume(!volume)} type="button">
-          {volume ? <img src={audioOn} alt="volume" width="30px" /> : <img src={audioOff} alt="volume" width="30px" /> }
+          {volume ? <img src={audioOn} alt="volume" /> : <img src={audioOff} alt="volume" /> }
         </button>
         <Link className="WordConstructor__play-headerControlsCancel" to={{ pathname: '/wordConstructor/start' }}>
-          <img src={cancel} alt="cancel" width="30px" />
+          <img src={cancel} alt="cancel" />
         </Link>
       </div>
     </header>

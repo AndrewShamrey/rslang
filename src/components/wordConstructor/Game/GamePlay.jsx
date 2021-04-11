@@ -268,7 +268,7 @@ const GamePlay = (props) => {
           <main className={`WordConstructor__play-main${answerClass}`}>
             <div className="WordConstructor__play-mainLives">
               <span>{lives}</span>
-              <img src={heart} alt="heart" width="12px" />
+              <img className="WordConstructor__play-mainHeart" src={heart} alt="heart" />
             </div>
             <div className="WordConstructor__play-mainPlayWord" onClick={() => playAudioWord()} />
             <div className="WordConstructor__play-mainWord">{currentWordRU}</div>
