@@ -19,6 +19,12 @@ const initialState = {
   sprint: {
     isSound: true,
   },
+  vocabluary: {
+    settings: {
+      displayAdditionalButtons: true,
+      displayTranslations: true,
+    },
+  },
 };
 
 const controlReducer = (state = initialState, action) => {
@@ -44,6 +50,10 @@ const controlReducer = (state = initialState, action) => {
       return produce(state, (draft) => {
         const { sprint } = draft;
         draft.sprint = { ...sprint, ...action.payload };
+      });
+    case ACTION_TYPES.SET_VOCABLUARY_SETTINGS:
+      return produce(state, (draft) => {
+        draft.vocabluary.settings = action.payload;
       });
     default:
       return state;

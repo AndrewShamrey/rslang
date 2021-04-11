@@ -54,3 +54,74 @@
     box-shadow: 0 10px 20px -10px $bg;
   }
 }
+
+@mixin styled__btn_text($bg, $fontColor) {
+  @include styled__btn_outlined($bg, $fontColor);
+  border-color: transparent;
+  box-shadow: none;
+
+
+  &:hover {
+    color: $fontColor;
+    background-color: $bg;
+    box-shadow: 0 10px 20px -10px $bg;
+  }
+}
+
+@mixin styled__switcher_solid($switchColor, $contrastColor: #ebedf2, $shadowColor: #34286857) {
+  position: relative;
+  display: inline-block;
+  width: 35px;
+  min-width: 35px;
+  height: 18px;
+  min-height: 18px;
+
+  input {
+    display: none;
+
+    &:checked + .slider:before {      
+      background-color: $white;
+      -webkit-transform: translateX(17px);
+      -ms-transform: translateX(17px);
+      transform: translateX(17px);
+    }
+
+    &:checked + .slider {
+      background-color: $themeGreen;
+    }
+  }
+
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: $contrastColor;
+    -webkit-transition: .4s;
+    transition: .4s;
+
+    &:before {
+      position: absolute;
+      content: "";
+      background-color: $switchColor;
+      -webkit-transition: .4s;
+      -ms-transition: .4s;
+      transition: .4s;
+      height: 14px;
+      width: 14px;
+      left: 2px;
+      bottom: 2px;
+      box-shadow: 0 1px 15px 1px $shadowColor;
+    }
+
+    &.switcher_round {
+      border-radius: 34px;
+
+      &:before {
+        border-radius: 50%;
+      }
+    }
+  }
+}

@@ -4,6 +4,7 @@ import {
   SWITCH_GAME_SOUND,
   SET_AUDIOCHALLENGE_SETTINGS,
   SET_SPRINT_SETTINGS,
+  SET_VOCABLUARY_SETTINGS,
 } from '../actionTypes/control';
 
 export const doSmth = (value) => ({ type: DO_SMTH, payload: value });
@@ -18,4 +19,7 @@ export const setAudiochallengeSettings = (settings) => ({
 });
 export const setSprintSettings = (settings) => ({
   type: SET_SPRINT_SETTINGS, payload: settings,
+});
+export const setVocabluarySettings = (settings) => ({
+  type: SET_VOCABLUARY_SETTINGS, payload: settings,
 });
