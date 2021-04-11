@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { FullScreen, useFullScreenHandle } from 'react-full-screen';
 import GameTimer from './timer';
 import { getRandomNumber } from './helpers/functions';
 import StartScreen from './startScreen/startScreen';
@@ -25,6 +26,18 @@ const GameSprint = ({ page, level }) => {
     incorrectAnswers: [],
     longestSeries: 0,
   });
+
+  const handle = useFullScreenHandle();
+
+  const HandleFullScreen = () => {
+    if (handle.active) {
+      handle.exit();
+    } else {
+      handle.enter();
+    }
+  };
+
+  const screenButton = handle.active ? (<i className="fa fa-compress" />) : (<i className="fa fa-expand" />);
 
   useEffect(() => {
     if (page && level) {
@@ -54,49 +67,56 @@ const GameSprint = ({ page, level }) => {
   };
 
   return (
-    <div className="game-sprint">
-      {isGameStarted && !isGameFinished && isGameReady && (
-        <GameTimer setGameFinished={setGameFinished} />
-      )}
-      {!isGameStarted && !isGameFinished && (
-        <StartScreen
-          setGameStarted={setGameStarted}
-          setAllWords={setAllWords}
-          page={gamePage}
-          level={gameLevel}
-          isNoSelect={isNoSelect}
-          setWordsCount={setWordsCount}
-        />
-      )}
-      {isGameStarted && !isGameFinished && (
-        <GamePlay
-          setGameFinished={setGameFinished}
-          isGameStarted={isGameStarted}
-          allWords={allWords}
-          closeGame={showStartScreen}
-          setGameResult={setGameResult}
-          isGameReady={isGameReady}
-          setIsGameReady={setIsGameReady}
-          gameScore={gameScore}
-          setGameScore={setGameScore}
-          maxStringOfRights={maxStringOfRights}
-          setMaxStringOfRights={setMaxStringOfRights}
-          wordsCount={wordsCount}
-        />
-      )}
-      {isGameFinished && (
-        <StatisticsPage
-          game={GAMES.sprint}
-          gameResult={({
-            correctAnswers: gameResult.correctAnswers,
-            incorrectAnswers: gameResult.incorrectAnswers,
-            longestSeries: maxStringOfRights,
-          })}
-          showStartPage={showStartScreen}
-          score={gameScore}
-        />
-      )}
-    </div>
+    <>
+      <FullScreen handle={handle}>
+        <div className="game-sprint">
+          {isGameStarted && !isGameFinished && isGameReady && (
+            <GameTimer setGameFinished={setGameFinished} />
+          )}
+          {!isGameStarted && !isGameFinished && (
+            <StartScreen
+              setGameStarted={setGameStarted}
+              setAllWords={setAllWords}
+              page={gamePage}
+              level={gameLevel}
+              isNoSelect={isNoSelect}
+              setWordsCount={setWordsCount}
+            />
+          )}
+          {isGameStarted && !isGameFinished && (
+            <GamePlay
+              setGameFinished={setGameFinished}
+              isGameStarted={isGameStarted}
+              allWords={allWords}
+              closeGame={showStartScreen}
+              setGameResult={setGameResult}
+              isGameReady={isGameReady}
+              setIsGameReady={setIsGameReady}
+              gameScore={gameScore}
+              setGameScore={setGameScore}
+              maxStringOfRights={maxStringOfRights}
+              setMaxStringOfRights={setMaxStringOfRights}
+              wordsCount={wordsCount}
+            />
+          )}
+          {isGameFinished && (
+            <StatisticsPage
+              game={GAMES.sprint}
+              gameResult={({
+                correctAnswers: gameResult.correctAnswers,
+                incorrectAnswers: gameResult.incorrectAnswers,
+                longestSeries: maxStringOfRights,
+              })}
+              showStartPage={showStartScreen}
+              score={gameScore}
+            />
+          )}
+          <button type="button" className="game-sprint__fullscreen" onClick={HandleFullScreen}>
+            {screenButton}
+          </button>
+        </div>
+      </FullScreen>
+    </>
   );
 };
 
