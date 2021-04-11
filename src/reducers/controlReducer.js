@@ -16,6 +16,12 @@ const initialState = {
     exampleAnswer: false,
     exampleTranslateAnswer: false,
   },
+  vocabluary: {
+    settings: {
+      displayAdditionalButtons: true,
+      displayTranslations: true,
+    },
+  },
 };
 
 const controlReducer = (state = initialState, action) => {
@@ -36,6 +42,10 @@ const controlReducer = (state = initialState, action) => {
       return produce(state, (draft) => {
         const { audiochallenge } = draft;
         draft.audiochallenge = { ...audiochallenge, ...action.payload };
+      });
+    case ACTION_TYPES.SET_VOCABLUARY_SETTINGS:
+      return produce(state, (draft) => {
+        draft.vocabluary.settings = action.payload;
       });
     default:
       return state;

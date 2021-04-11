@@ -1,0 +1,14 @@
+@import '../../sass/colors.scss';
+@import '../../sass/defaultComponentsStyles.scss';
+
+.switcher {
+  &_solid {
+    &.switcher_green {    
+      @include styled__switcher_solid($themeGreen);
+    }
+
+    &.switcher_default {    
+      @include styled__switcher_solid($themeSwitchDefault);
+    }
+  }
+}
