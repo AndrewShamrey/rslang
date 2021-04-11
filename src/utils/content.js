@@ -50,3 +50,9 @@ export const WORD_CARD_TABLE = {
   difficult: 'Сложные',
   delete: 'Удалить',
 };
+
+export const SPRINT_GAME = {
+  points: 'баллов',
+  right: 'Верно',
+  wrong: 'Неверно',
+};

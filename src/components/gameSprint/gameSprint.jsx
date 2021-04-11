@@ -28,14 +28,14 @@ const GameSprint = ({ page, level }) => {
 
   useEffect(() => {
     if (page && level) {
-      console.log(page, level);
+      // console.log(page, level);
       setGamePage(page);
       setGameLevel(level);
       setIsNoSelect(true);
     }
   }, [level, page]);
   // console.log(allWords);
-  console.log('gameResult: ', gameResult);
+  // console.log('gameResult: ', gameResult);
 
   const showStartScreen = () => {
     setGameStarted(false);

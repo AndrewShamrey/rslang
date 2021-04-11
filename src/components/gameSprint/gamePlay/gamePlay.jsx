@@ -11,6 +11,7 @@ import correct from '../../../assets/audio/correct.mp3';
 import pass from '../../../assets/audio/pass.mp3';
 import { shuffleArray } from '../helpers/functions';
 import { GAMES } from '../../../utils/constants';
+import { SPRINT_GAME } from '../../../utils/content';
 import './gamePlay.scss';
 
 const BASE_POINTS = 20;
@@ -32,14 +33,13 @@ const GamePlay = ({
 
   useEffect(() => {
     if (maxStringOfRights < stringOfRights) {
-      console.log('increase long series +1');
+      // console.log('increase long series +1');
       setMaxStringOfRights((strike) => strike + 1);
       // setGameResult((state) => ({
       //   ...state,
       //   longestSeries: maxStringOfRights,
       // }));
     }
-    console.log('stringOfRights: ', stringOfRights, ', maxStringOfRights: ', maxStringOfRights);
   }, [stringOfRights, maxStringOfRights, setMaxStringOfRights]);
 
   useEffect(() => {
@@ -50,21 +50,19 @@ const GamePlay = ({
   }, [stringOfRights]);
 
   const rightAnswerHandler = useCallback(() => {
-    console.log('answered right');
+    // console.log('answered right');
     setGameScore((points) => points + answerPoints);
-
     setStringOfRights((answer) => answer + 1);
-    console.log('stringOfRights: ', stringOfRights);
     if (isSound) playSound(correct);
 
     setGameResult((state) => ({
       ...state,
       correctAnswers: [...state.correctAnswers, workingWords[0].obj],
     }));
-  }, [setGameScore, isSound, setGameResult, answerPoints, stringOfRights, workingWords]);
+  }, [setGameScore, isSound, setGameResult, answerPoints, workingWords]);
 
   const wrongAnswerHandler = useCallback(() => {
-    console.log('answered wrong');
+    // console.log('answered wrong');
     if (isSound) playSound(error);
     setStringOfRights(0);
     setAnswerPoints(BASE_POINTS);
@@ -75,10 +73,8 @@ const GamePlay = ({
   }, [isSound, setGameResult, workingWords]);
 
   useEffect(() => {
-    console.log('allWords in the useEffect on gamePlay', allWords);
-
     if (allWords.length) {
-      console.log('making words');
+      // console.log('making words');
 
       const newWords = allWords.map((item, ind) => {
         let playWord;
@@ -159,7 +155,7 @@ const GamePlay = ({
           <div className="game-play__upper">
             <ShowCircles stringOfRights={stringOfRights} />
             <p className="game-play__upper_text">
-              {`+${answerPoints} баллов`}
+              {`+${answerPoints} ${SPRINT_GAME.points}`}
             </p>
           </div>
           <ShowBirds
@@ -178,13 +174,13 @@ const GamePlay = ({
           <div className="game-play__buttons">
             <div className="game-play__buttons_block">
               <button value="true" type="button" className="answer-button right" onClick={handleAnswer}>
-                Верно
+                {SPRINT_GAME.right}
               </button>
               <i className="fas fa-arrow-left" />
             </div>
             <div className="game-play__buttons_block">
               <button value="false" type="button" className="answer-button wrong" onClick={handleAnswer}>
-                Неверно
+                {SPRINT_GAME.wrong}
               </button>
               <i className="fas fa-arrow-right" />
             </div>
