@@ -1,0 +1,155 @@
+@import '../../sass/colors.scss';
+@import '../../sass/defaultComponentsStyles.scss';
+@import '../../sass/transitions.scss';
+
+.word-card {
+  padding: 40px 40px 20px;
+  width: 100%;
+  max-width: 560px;
+  font-size: 14px;
+  pointer-events: auto;
+  background-color: $white;
+  background-clip: padding-box;
+  border: 1px solid #00000033;
+  border-radius: .3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+
+  &__img {
+    margin-bottom: 10px;
+    width: 320px;
+    height: 220px;
+    border: 1px solid $grey2;
+    border-radius: 20px;
+  }
+
+  &__word-block {
+    margin-bottom: 5px;
+    font-size: 20px;
+    color: $grey3;
+    display: flex;
+
+    & > * {
+      margin: 0 5px;
+    }
+  }
+
+  &__word {
+    color: $blue;
+  }
+
+  &__transcription {
+    margin-bottom: 5px;
+    font-size: 20px;
+    color: $grey3;
+  }
+
+  &__word-translate {
+    margin-bottom: 20px;
+    font-size: 20px;
+  }
+
+  &__meaning {
+    margin-bottom: 20px;
+    text-align: center;
+
+    &-text {
+      font-size: 16px;
+    }
+
+    &-translate {
+      color: $grey3;
+    }
+  }
+
+  &__example {
+    margin-bottom: 20px;
+    text-align: center;
+
+    &-text {
+      font-size: 16px;
+      color: $blue;
+    }
+
+    &-translate {
+      color: $grey3;
+    }
+  }
+
+  table {
+    margin-bottom: 20px;
+    width: 480px;
+    max-width: 100%;
+    text-align: center;
+    border-collapse: collapse;
+  }
+
+  th {
+    padding: 2px;
+    background-color: $grey2;
+    border: 1px solid $grey3;
+    border-bottom: none;
+  }
+
+  td {
+    padding: 4px 2px;
+    font-size: 18px;
+    color: $themeGreen;
+    background-color:$bgLightGrey;
+    border: 1px solid $grey3;
+  }
+
+  &__table-btn {
+    border: none;
+    background-color: none;
+    font-size: inherit;
+    outline-width: 1px;
+    outline-offset: 2px;
+    cursor: pointer;
+    transition: $color-transition;
+
+    i {
+      font-size: inherit;
+      color: inherit;
+    }
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+
+  &__btn-delete {
+    color: $red;
+    outline-color: $red;
+  }
+
+  &__btn-difficult {
+    color: $blue;
+    outline-color: $blue;
+  }
+
+  &__control {
+    @include styled__btn_text($blue, $white);
+    outline-color: $blue;
+
+    * {
+      vertical-align: center;
+    }
+  }
+
+  &__btn-close {
+    width: 24px;
+    font-size: 24px;
+    color: $grey3;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    outline-color: $blue;
+  }
+}
