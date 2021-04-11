@@ -47,7 +47,7 @@ const GamePlay = (props) => {
   const width = { width: `${success > 59 ? 100 : ((100 / 5) * (success % 6))}%` };
 
   const playAudioWord = (audio = words[wordId].audio) => {
-    if (volume) playAudio(`${RSLANG_DATA_URL}${audio}`);
+    if (volume && audio) playAudio(`${RSLANG_DATA_URL}${audio}`);
   };
 
   const stopGame = () => {
@@ -61,19 +61,13 @@ const GamePlay = (props) => {
   };
 
   const tick = () => {
-    if (timer === 61) {
-      if (volume) {
-        playAudio(startSong);
-      }
+    if (timer === 61 && volume) {
+      playAudio(startSong);
     }
-    if (timer === 60) {
-      if (volume) {
-        if (isAutoPlay) {
-          setTimeout(() => {
-            playAudioWord();
-          }, 1000);
-        }
-      }
+    if (timer === 60 && volume && isAutoPlay) {
+      setTimeout(() => {
+        playAudioWord();
+      }, 1000);
     }
     if (timer === 0 || lives === 0 || wordId === 119) {
       stopGame();
@@ -91,63 +85,69 @@ const GamePlay = (props) => {
     setGuessLetters(guessLetters.map(() => ''));
   };
 
+  const setAndRemoveAnswerClass = (isTrueAnswer = true) => {
+    if (volume) playAudio(isTrueAnswer ? goodSong : errorSong);
+    setAnswerClass(` WordConstructor__play-main_${isTrueAnswer ? 'good' : 'error'}`);
+    setTimeout(() => setAnswerClass(''), 200);
+  };
+
+  const changeScore = (id) => {
+    if (guessWordIndex + 1 === currentWordLetters.length) {
+      setScore(score + 10);
+      const i = arrayOfIndices.indexOf(id);
+      if (i > -1) {
+        setArrayOfIndices([...arrayOfIndices.slice(0, i), ...arrayOfIndices.slice(i + 1)]);
+      }
+      setGoodWords([...goodWords, words[wordId]]);
+      changeWord();
+      setSuccess(success + 1);
+      if (success > 1 && (success % 6) === 5) {
+        if (level < 6) setLevel(level + 1);
+      }
+    } else {
+      setScore(score + 1);
+    }
+  };
+
+  const checkLetter = (letter) => {
+    const index = wordLetters.findIndex((el) => el.a === letter);
+    const wordLettersCopy = [...wordLetters];
+
+    if (wordLetters[index].n === 1) {
+      wordLettersCopy.splice(index, 1);
+      setWordLetters(wordLettersCopy);
+    } else if (wordLetters[index].n > 1) {
+      const newElement = wordLetters.find((el) => el.a === letter);
+      newElement.n -= 1;
+      wordLettersCopy.splice(index, 1, newElement);
+      setWordLetters(wordLettersCopy);
+    }
+  };
+
   const checkWord = (letter) => {
     const id = wordId;
 
     if (letter === currentWord[guessWordIndex]) {
-      if (volume) playAudio(goodSong);
-      setGuessLetters(guessLetters.map((el, i) => {
+      const guessLettersArray = guessLetters.map((el, i) => {
         if (i === guessWordIndex) return letter;
         return el;
-      }));
-
-      setAnswerClass(' WordConstructor__play-main_good');
-      setTimeout(() => setAnswerClass(''), 200);
-
+      });
+      setGuessLetters(guessLettersArray);
+      setAndRemoveAnswerClass();
       setGuessWordIndex(guessWordIndex + 1);
-      if (guessWordIndex + 1 === currentWordLetters.length) {
-        setScore(score + 10);
-        const i = arrayOfIndices.indexOf(id);
-        if (i > -1) {
-          setArrayOfIndices([...arrayOfIndices.slice(0, i), ...arrayOfIndices.slice(i + 1)]);
-        }
-        setGoodWords([...goodWords, words[wordId]]);
-        changeWord();
-        setSuccess(success + 1);
-        if (success > 1 && (success % 6) === 5) {
-          if (level < 6) setLevel(level + 1);
-        }
-      } else {
-        setScore(score + 1);
-      }
-      const index = wordLetters.findIndex((el) => el.a === letter);
-      const wordLettersCopy = [...wordLetters];
-
-      if (wordLetters[index].n === 1) {
-        wordLettersCopy.splice(index, 1);
-        setWordLetters(wordLettersCopy);
-      } else if (wordLetters[index].n > 1) {
-        const newElement = wordLetters.find((el) => el.a === letter);
-        newElement.n -= 1;
-        wordLettersCopy.splice(index, 1, newElement);
-        setWordLetters(wordLettersCopy);
-      }
+      changeScore(id);
+      checkLetter(letter);
     } else {
-      if (volume) {
-        playAudio(errorSong);
-      }
       setLives(lives - 1);
       setBadWords([...badWords, words[wordId]]);
       setWordErrors(wordErrors + 1);
-      setAnswerClass(' WordConstructor__play-main_error');
-      setTimeout(() => setAnswerClass(''), 200);
+      setAndRemoveAnswerClass(false);
     }
   };
 
   const newGame = () => {
-    if (volume) {
-      playAudio(tikTakSong, true);
-    }
+    intervals.forEach(clearTimeout);
+    if (volume) playAudio(tikTakSong, true);
     setTimer(65);
     setIsFinish(false);
     setLives(livesByDefault);
@@ -229,64 +229,63 @@ const GamePlay = (props) => {
     }
   }, [lives]);
 
+  if (isLoading) return <Preloader />;
+
   if (timer > 60) {
     return (
-      isLoading ? <Preloader /> : (
-        <div className="WordConstructor__play">
-          <div className="WordConstructor__play-startTimer">
-            {timer % 60}
-          </div>
+      <div className="WordConstructor__play">
+        <div className="WordConstructor__play-startTimer">
+          {timer % 60}
         </div>
-      )
+      </div>
     );
   }
+
   return (
-    // eslint-disable-next-line no-nested-ternary
-    isLoading ? <Preloader /> : (
-      (isFinish || lives < 1 || timer === 0)
-        ? (
-          <GameEnd
+    (isFinish || lives < 1 || timer === 0)
+      ? (
+        <GameEnd
+          score={score}
+          level={level}
+          newGame={() => { newGame(); }}
+          badWords={badWords}
+          goodWords={goodWords}
+        />
+      ) : (
+        <div className="WordConstructor__play">
+          <Header
+            timer={timer}
+            volume={volume}
             score={score}
-            level={level}
-            newGame={() => { newGame(); }}
-            badWords={badWords}
-            goodWords={goodWords}
+            setVolume={setVolume}
+            isTranscription={isTranscription}
+            setIsTranscription={setIsTranscription}
+            isAutoPlay={isAutoPlay}
+            setIsAutoPlay={setIsAutoPlay}
+            livesByDefault={livesByDefault}
+            setLivesByDefault={setLivesByDefault}
           />
-        ) : (
-          <div className="WordConstructor__play">
-            <Header
-              timer={timer}
-              volume={volume}
-              score={score}
-              setVolume={setVolume}
-              isTranscription={isTranscription}
-              setIsTranscription={setIsTranscription}
-              isAutoPlay={isAutoPlay}
-              setIsAutoPlay={setIsAutoPlay}
-              livesByDefault={livesByDefault}
-              setLivesByDefault={setLivesByDefault}
-            />
-            <main className={`WordConstructor__play-main${answerClass}`}>
-              <div className="WordConstructor__play-mainLives">
-                <span>{lives}</span>
-                <img src={heart} alt="heart" width="12px" />
-              </div>
-              <div className="WordConstructor__play-mainPlayWord" onClick={() => playAudioWord()} />
-              <div className="WordConstructor__play-mainWord">{currentWordRU}</div>
-              <div className="WordConstructor__play-mainWordTranscription">
-                {isTranscription ? currentWordTranscription : ''}
-              </div>
-              <div className="WordConstructor__play-mainWordArr">
-                {
+          <main className={`WordConstructor__play-main${answerClass}`}>
+            <div className="WordConstructor__play-mainLives">
+              <span>{lives}</span>
+              <img src={heart} alt="heart" width="12px" />
+            </div>
+            <div className="WordConstructor__play-mainPlayWord" onClick={() => playAudioWord()} />
+            <div className="WordConstructor__play-mainWord">{currentWordRU}</div>
+            <div className="WordConstructor__play-mainWordTranscription">
+              {isTranscription ? currentWordTranscription : ''}
+            </div>
+            <div className="WordConstructor__play-mainWordArr">
+              {
                 currentWord ? guessLetters.map((el, i) => (
                   <div key={i} className="WordConstructor__play-mainWordArrItem">
                     {el || ''}
                   </div>
                 )) : null
               }
-              </div>
-              <div className="WordConstructor__play-mainWordLetters">
-                {
+            </div>
+            <div className="WordConstructor__play-mainWordLetters">
+              {
                 wordLetters ? wordLetters.map((el, i) => {
                   const letter = el.a;
                   return (
@@ -297,15 +296,14 @@ const GamePlay = (props) => {
                   );
                 }) : ''
               }
-              </div>
-              <div className="WordConstructor__play-mainLevel">{`Уровень ${level}`}</div>
-              <div className="WordConstructor__play-mainSuccess">
-                <div className="WordConstructor__play-mainSuccessWidth" style={width} />
-              </div>
-            </main>
-          </div>
-        )
-    )
+            </div>
+            <div className="WordConstructor__play-mainLevel">{`Уровень ${level}`}</div>
+            <div className="WordConstructor__play-mainSuccess">
+              <div className="WordConstructor__play-mainSuccessWidth" style={width} />
+            </div>
+          </main>
+        </div>
+      )
   );
 };
 
