@@ -44,8 +44,9 @@ const GamePlay = (props) => {
   const [isAutoPlay, setIsAutoPlay] = useState(true);
   const [isTranscription, setIsTranscription] = useState(true);
   const [longestSeries, setLongestSeries] = useState(0);
-  const [isSeriesError, setIsSeriesError] = useState(true);
+  const [isSeriesError, setIsSeriesError] = useState(false);
   const [sessionErrorWords, setSessionErrorWords] = useState([]);
+  const [sessionLongestSeries, setSessionLongestSeries] = useState(0);
 
   const intervals = [];
   const width = { width: `${success > 59 ? 100 : ((100 / 5) * (success % 6))}%` };
@@ -101,6 +102,7 @@ const GamePlay = (props) => {
       const i = arrayOfIndices.indexOf(id);
       if (i > -1) {
         setArrayOfIndices([...arrayOfIndices.slice(0, i), ...arrayOfIndices.slice(i + 1)]);
+        if (!isSeriesError) setSessionLongestSeries(sessionLongestSeries + 1);
       }
       setGoodWords([...goodWords, words[wordId]]);
       changeWord();
@@ -146,10 +148,9 @@ const GamePlay = (props) => {
       setBadWords([...badWords, words[wordId]]);
       setWordErrors(wordErrors + 1);
       setAndRemoveAnswerClass(false);
-      // --------------
       setSessionErrorWords(Array.from(new Set([...sessionErrorWords, currentWord])));
-      // console.log('sessionErrorWords ', sessionErrorWords);
-      // console.log('goodWords ', goodWords.filter((el) => !sessionErrorWords.includes(el.word)));
+      setIsSeriesError(true);
+      setSessionLongestSeries(0);
     }
   };
 
@@ -164,14 +165,15 @@ const GamePlay = (props) => {
     const wordArr = createObj(addRandomLetters([...currentWord], level));
     setWordLetters(wordArr);
     setSessionErrorWords([]);
+    setIsSeriesError(false);
   };
 
   async function fetchData() {
-    const url = `${MEDIA_URI}words?page=${getRandomNumber(29)}&group=${level - 1}`;
+    const random = getRandomNumber(29);
     const results = await Promise.all([
-      fetch(url).then((d) => d.json()),
-      fetch(url).then((d) => d.json()),
-      fetch(url).then((d) => d.json()),
+      fetch(`${MEDIA_URI}words?page=${random}&group=${level - 1}`).then((d) => d.json()),
+      fetch(`${MEDIA_URI}words?page=${(random + 1) % 29}&group=${level - 1}`).then((d) => d.json()),
+      fetch(`${MEDIA_URI}words?page=${(random + 2) % 29}&group=${level - 1}`).then((d) => d.json()),
     ]);
     const data = await results.reduce((acc, cur) => {
       acc = [...acc, ...cur];
@@ -193,12 +195,19 @@ const GamePlay = (props) => {
   }, []);
 
   useEffect(() => {
+    if (sessionLongestSeries > longestSeries) setLongestSeries(sessionLongestSeries);
+  }, [sessionLongestSeries]);
+
+  useEffect(() => {
     if (words.length > 0) {
       const index = getRandomNumber(words.length);
       setWordId(index);
-      setCurrentWord(words[index].word);
-      setCurrentWordRU(words[index].wordTranslate);
-      setCurrentWordTranscription(words[index].transcription);
+      const guard = (words[index].word === currentWord)
+        ? words[(index + 1) % words.length]
+        : words[index];
+      setCurrentWord(guard.word);
+      setCurrentWordRU(guard.wordTranslate);
+      setCurrentWordTranscription(guard.transcription);
     }
   }, [words]);
 
@@ -207,6 +216,7 @@ const GamePlay = (props) => {
       const wordArr = createObj(addRandomLetters([...currentWord], level));
       setWordLetters(wordArr);
       setCurrentWordLetters([...currentWord]);
+      setIsSeriesError(false);
     }
     if (volume && isAutoPlay && timer < 60) {
       setTimeout(() => {
