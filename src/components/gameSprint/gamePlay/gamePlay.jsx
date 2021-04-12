@@ -9,7 +9,7 @@ import playSound from '../../../utils/playSound';
 import error from '../../../assets/audio/error.mp3';
 import correct from '../../../assets/audio/correct.mp3';
 import pass from '../../../assets/audio/pass.mp3';
-import { shuffleArray } from '../helpers/functions';
+import { shuffleArray, getRandomNumber } from '../helpers/functions';
 import { GAMES } from '../../../utils/constants';
 import { SPRINT_GAME } from '../../../utils/content';
 import './gamePlay.scss';
@@ -91,7 +91,7 @@ const GamePlay = ({
           };
         } else {
           const { word } = item;
-          const translation = allWords[ind - (allWords.length / 2)].wordTranslate;
+          const translation = allWords[getRandomNumber(allWords.length / 2)].wordTranslate;
           playWord = {
             obj: item, word, translation, isTrue: 'false',
           };
@@ -101,6 +101,9 @@ const GamePlay = ({
 
       setWorkingWords(shuffleArray(newWords));
       // console.log('words collected', workingWords);
+      // если игра не первая - обнулить эти параметры, чтобы не путали
+      setStringOfRights(0);
+      setAnswerPoints(BASE_POINTS);
     }
   }, [allWords]);
 

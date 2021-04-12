@@ -65,6 +65,10 @@ const GameSprint = ({ page, level }) => {
     setGameScore(0);
     setIsGameReady(false);
     setWordsCount(WORDS_COUNT_DEFAULT);
+    setAddTime(0);
+    setIsNoSelect(false);
+    setGamePage(getRandomNumber());
+    setGameLevel(0);
   };
 
   return (
