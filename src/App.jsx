@@ -10,6 +10,7 @@ import Footer from './components/footer/footer';
 import MainPage from './components/mainPage/MainPage';
 import ErrorPage from './components/errorPage/errorPage';
 import Audiochallenge from './components/audiochallenge/audiochallenge';
+import AppStatisticsPage from './components/appStatisticsPage/appStatisticsPage';
 import WordCard from './components/wordCard/wordCard';
 import VocabluarySettings from './components/vocabluarySettings/vocabluarySettings';
 import './App.scss';
@@ -114,7 +115,7 @@ function App() {
             <h1>Конструктор слов</h1>
           </Route>
           <Route exact path="/statistics">
-            <h1>Статистика</h1>
+            <AppStatisticsPage />
           </Route>
           <Route path="/authorization">
             <h1>Авторизация</h1>
