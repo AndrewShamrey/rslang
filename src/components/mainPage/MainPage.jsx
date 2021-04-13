@@ -16,7 +16,14 @@ const MainPage = () => {
   return (
     <main className="Main-page">
       <section className="Main-page__capability">
-        <h2 className="Main-page__capability-title">RS-Lang - открой глубины английского языка!</h2>
+        <h2 className="Main-page__capability-title">
+          <span className="name-style">
+            RS Lang
+          </span>
+          <span>
+            {' - открой глубины английского языка!'}
+          </span>
+        </h2>
         <ul className="Main-page__capability-list">
           <li className="Main-page__capability-item">
             <CapabilityCard

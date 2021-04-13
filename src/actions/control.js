@@ -4,6 +4,7 @@ import {
   SET_IS_AUTHORIZED,
   SWITCH_GAME_SOUND,
   SET_AUDIOCHALLENGE_SETTINGS,
+  SET_SPRINT_SETTINGS,
   SET_VOCABLUARY_SETTINGS,
   SET_WORDCONSTRUCTOR_SETTINGS,
 } from '../actionTypes/control';
@@ -18,6 +19,9 @@ export const switchGameSound = (game) => ({ type: SWITCH_GAME_SOUND, payload: ga
 export const setAudiochallengeSettings = (settings) => ({
   type: SET_AUDIOCHALLENGE_SETTINGS,
   payload: settings,
+});
+export const setSprintSettings = (settings) => ({
+  type: SET_SPRINT_SETTINGS, payload: settings,
 });
 export const setVocabluarySettings = (settings) => ({
   type: SET_VOCABLUARY_SETTINGS,
