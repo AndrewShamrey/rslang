@@ -15,6 +15,7 @@ export const RESULT_PAGE = {
   incorrect: 'Неправильные ответы',
   playAgain: 'Играть снова',
   return: 'Перейти на главную страницу',
+  score: 'Баллы',
 };
 
 export const AUDIOCHALLENGE_GAME_PAGE = {
