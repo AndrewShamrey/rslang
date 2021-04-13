@@ -3,9 +3,13 @@ export default class FetchData {
     this.baseUrl = url;
   }
 
-  getPersonByMailAndPass(email, password) {
+  signinPerson(email, password) {
     const body = JSON.stringify({ email, password });
     return this._defaultMethod('POST', 'signin', null, null, body);
+  }
+
+  postNewPerson(body) {
+    return this._defaultMethod('POST', 'users', null, null, body);
   }
 
   _defaultMethod(method, path = '', name = '', pass = '', body = '', id = '') {
