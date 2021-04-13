@@ -1,45 +1,18 @@
-import { STATISTICS_PAGE } from '../../utils/content';
+import { useCallback } from 'react';
+import {
+  STATISTICS_PAGE, EMPTY_STATS_SAVANNA, EMPTY_STATS_AUDIOCHALLENGE,
+  EMPTY_STATS_CONSTRUCTOR, EMPTY_STATS_SPRINT,
+} from '../../utils/content';
+import dispatchShortTermStats from './dispatchShortTermStats';
 import './appStatisticsPage.scss';
 
 const AppStatisticsPage = () => {
-  console.log('stats');
   const wordsOnDay = 78;
   const successOnDay = 70;
   const wordsAll = 3000;
-
-  const gameData = [{
-    id: 1,
-    css: 'savanna',
-    title: STATISTICS_PAGE.savannaName,
-    series: 4,
-    words: 30,
-    right: 15,
-  },
-  {
-    id: 2,
-    css: 'audio-game',
-    title: STATISTICS_PAGE.audioName,
-    series: 4,
-    words: 30,
-    right: 15,
-  },
-  {
-    id: 3,
-    css: 'constructor',
-    title: STATISTICS_PAGE.constructorName,
-    series: 4,
-    words: 30,
-    right: 15,
-  },
-  {
-    id: 4,
-    css: 'sprint',
-    title: STATISTICS_PAGE.sprintName,
-    series: 4,
-    words: 30,
-    right: 15,
-  },
-  ];
+  const getData = dispatchShortTermStats();
+  const gameData = getData.length ? getData : [EMPTY_STATS_SAVANNA, EMPTY_STATS_AUDIOCHALLENGE,
+    EMPTY_STATS_CONSTRUCTOR, EMPTY_STATS_SPRINT];
 
   return (
     <main className="app-stats-page">
@@ -84,7 +57,7 @@ const AppStatisticsPage = () => {
                 {game.words}
               </div>
               <div className="data-percent item">
-                {`${(game.right / game.words) * 100}%`}
+                {`${game.right}%`}
               </div>
             </div>
           ))}

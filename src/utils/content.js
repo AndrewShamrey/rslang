@@ -70,3 +70,37 @@ export const SPRINT_GAME = {
   right: 'Верно',
   wrong: 'Неверно',
 };
+
+export const EMPTY_STATS = {
+  series: 0,
+  words: 0,
+  right: 0,
+};
+
+export const EMPTY_STATS_SAVANNA = {
+  id: 1,
+  css: 'savanna',
+  title: STATISTICS_PAGE.savannaName,
+  ...EMPTY_STATS,
+};
+
+export const EMPTY_STATS_AUDIOCHALLENGE = {
+  id: 2,
+  css: 'audio-game',
+  title: STATISTICS_PAGE.audioName,
+  ...EMPTY_STATS,
+};
+
+export const EMPTY_STATS_CONSTRUCTOR = {
+  id: 3,
+  css: 'constructor',
+  title: STATISTICS_PAGE.constructorName,
+  ...EMPTY_STATS,
+};
+
+export const EMPTY_STATS_SPRINT = {
+  id: 4,
+  css: 'sprint',
+  title: STATISTICS_PAGE.sprintName,
+  ...EMPTY_STATS,
+};
