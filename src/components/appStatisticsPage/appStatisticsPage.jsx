@@ -2,7 +2,6 @@ import { STATISTICS_PAGE } from '../../utils/content';
 import './appStatisticsPage.scss';
 
 const AppStatisticsPage = () => {
-  console.log('stats');
   const wordsOnDay = 78;
   const successOnDay = 70;
   const wordsAll = 3000;

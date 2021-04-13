@@ -53,8 +53,7 @@ const LogInPage = () => {
         dispatch(setCurrentPerson(person));
         dispatch(setIsAuthorized(true));
       })
-      .catch((er) => {
-        console.log(er.message);
+      .catch(() => {
         setWarning(true);
         setActiveSubmit(true);
       });
