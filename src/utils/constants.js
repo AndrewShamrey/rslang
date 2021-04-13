@@ -77,6 +77,7 @@ export const LETTERS = [
 export const AUTHORIZATION_INFO = {
   login: 'Вход',
   signup: 'Регистрация',
+  signout: 'Выход',
   name: 'Имя',
   loginName: 'Email',
   passName: 'Пароль',
