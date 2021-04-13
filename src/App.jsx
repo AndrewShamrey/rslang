@@ -13,6 +13,7 @@ import GameSprint from './components/gameSprint/gameSprint';
 import WordConstructor from './components/wordConstructor/WordConstructor';
 import Audiochallenge from './components/audiochallenge/audiochallenge';
 import AppStatisticsPage from './components/appStatisticsPage/appStatisticsPage';
+import Savannah from './components/savannah/savannah';
 import WordCard from './components/wordCard/wordCard';
 import VocabluarySettings from './components/vocabluarySettings/vocabluarySettings';
 import './App.scss';
@@ -105,7 +106,7 @@ function App() {
             </>
           </Route>
           <Route exact path="/savannah">
-            <h1>Саванна</h1>
+            <Savannah />
           </Route>
           <Route exact path="/audiochallenge">
             <Audiochallenge />

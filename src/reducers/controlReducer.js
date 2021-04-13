@@ -34,6 +34,18 @@ const initialState = {
       winLevelWordCount: 6,
     },
   },
+  savannah: {
+    isSound: true,
+    amountOfAnswers: 5,
+    transcriptionQuestion: false,
+    meaningQuestion: false,
+    exampleQuestion: false,
+    transcriptionAnswer: false,
+    meaningAnswer: false,
+    meaningTranslateAnswer: false,
+    exampleAnswer: false,
+    exampleTranslateAnswer: false,
+  },
 };
 
 const controlReducer = (state = initialState, action) => {
