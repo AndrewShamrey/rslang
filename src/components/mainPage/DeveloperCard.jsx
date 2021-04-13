@@ -7,7 +7,7 @@ const CapabilityCard = ({ img = defaultPhoto, name = 'Name', info = 'info' }) =>
     <img className="DeveloperCard__image" src={img} alt="UserPhoto" />
     <div className="DeveloperCard__info">
       <h4 className="DeveloperCard__title">{name}</h4>
-      <pre className="DeveloperCard__text">{info}</pre>
+      <p className="DeveloperCard__text">{info}</p>
     </div>
   </article>
 );
