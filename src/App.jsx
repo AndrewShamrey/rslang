@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   BrowserRouter as Router, Switch, Route, Redirect,
 } from 'react-router-dom';
-import { setPrevState, doSmth } from './actions/control';
+import { setPrevState } from './actions/control';
+import AuthPage from './components/authPage/authPage';
 import ScrollToTop from './components/scrollToTop/scrollToTop';
 import Header from './components/header/Header';
 import Footer from './components/footer/footer';
@@ -40,10 +41,6 @@ function App() {
     if (prevState) {
       dispatch(setPrevState(prevState));
     }
-  };
-
-  const handleSmth = () => {
-    dispatch(doSmth(2));
   };
 
   useEffect(() => {
@@ -118,8 +115,8 @@ function App() {
             <h1>Статистика</h1>
           </Route>
           <Route path="/authorization">
-            <h1>Авторизация</h1>
-            {/* {state.currentPerson ? <Redirect to="/" /> : <AuthPage />} */}
+            {/* <h1>Авторизация</h1> */}
+            {state.currentPerson ? <Redirect to="/" /> : <AuthPage />}
           </Route>
           <Route path="*">
             <ErrorPage />

@@ -3,7 +3,6 @@ import produce from 'immer';
 import * as ACTION_TYPES from '../actionTypes/control';
 
 const initialState = {
-  smth: 1,
   audiochallenge: {
     isSound: true,
     amountOfAnswers: 5,
@@ -31,17 +30,16 @@ const initialState = {
       winLevelWordCount: 6,
     },
   },
+  isAuthorized: false,
+  currentPerson: null,
 };
 
 const controlReducer = (state = initialState, action) => {
   switch (action.type) {
-    case ACTION_TYPES.DO_SMTH:
-      return produce(state, (draft) => {
-        draft.smth = state.smth + action.payload;
-      });
     case ACTION_TYPES.SET_PREV_STATE:
       return produce(state, (draft) => {
-        draft.smth = action.prevState.smth;
+        draft.isAuthorized = action.prevState.isAuthorized;
+        draft.currentPerson = action.prevState.currentPerson;
       });
     case ACTION_TYPES.SWITCH_GAME_SOUND:
       return produce(state, (draft) => {
@@ -59,6 +57,14 @@ const controlReducer = (state = initialState, action) => {
     case ACTION_TYPES.SET_WORDCONSTRUCTOR_SETTINGS:
       return produce(state, (draft) => {
         draft.wordConstructor.settings = action.payload;
+      });
+    case ACTION_TYPES.SET_IS_AUTHORIZED:
+      return produce(state, (draft) => {
+        draft.isAuthorized = action.payload;
+      });
+    case ACTION_TYPES.SET_CURRENT_PERSON:
+      return produce(state, (draft) => {
+        draft.currentPerson = action.payload;
       });
     default:
       return state;
