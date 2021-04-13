@@ -43,3 +43,17 @@ export const WORD_CARD_TABLE = {
   difficult: 'Сложные',
   delete: 'Удалить',
 };
+
+export const STATISTICS_PAGE = {
+  title: 'Статистика',
+  shortHeader: 'За сегодня',
+  wordsLearned: 'Изучено слов',
+  rightsPercent: 'Правильных ответов',
+  longestSeries: 'Самая длинная серия',
+  savannaName: 'Саванна',
+  audioName: 'Аудиовызов',
+  constructorName: 'Конструктор слов',
+  sprintName: 'Спринт',
+  longHeader: 'За все время',
+  wordsWholeTime: 'Всего изучено слов',
+};
