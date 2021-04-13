@@ -25,6 +25,15 @@ const initialState = {
       displayTranslations: true,
     },
   },
+  wordConstructor: {
+    isSound: true,
+    settings: {
+      isTranscription: true,
+      isAutoPlay: true,
+      livesByDefault: 5,
+      winLevelWordCount: 6,
+    },
+  },
 };
 
 const controlReducer = (state = initialState, action) => {
@@ -54,6 +63,10 @@ const controlReducer = (state = initialState, action) => {
     case ACTION_TYPES.SET_VOCABLUARY_SETTINGS:
       return produce(state, (draft) => {
         draft.vocabluary.settings = action.payload;
+      });
+    case ACTION_TYPES.SET_WORDCONSTRUCTOR_SETTINGS:
+      return produce(state, (draft) => {
+        draft.wordConstructor.settings = action.payload;
       });
     default:
       return state;

@@ -1,0 +1,426 @@
+@import '../../sass/colors.scss';
+@import '../../sass/breakpoints.scss';
+@import '../../sass/defaultComponentsStyles.scss';
+
+.WordConstructor {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-image: $wordConstructor-gradient;
+  padding: 45px 5px;
+
+  &__start {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 45px 0;
+
+    &-volume {
+      position: absolute;
+      top: 30px;
+      left: 50px;
+      width: 30px;
+    }
+
+    &-settings {
+      position: absolute;
+      top: 30px;
+      right: 50px;
+      width: 30px;
+    }
+
+    &-title {
+      color: $white;
+      margin-top: 5%;
+      text-transform: uppercase;
+      font-size: 60px;
+      letter-spacing: 1px;
+      text-align: center;
+    }
+
+    &-slogan {
+      font-weight: 400;
+      font-size: 20px;
+      color: $white;
+      margin-top: 50px;
+    }
+
+    &-button {
+      @include styled__btn_outlined($blue, $white, $white);
+      width: 150px;
+      font-size: 17px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+  }
+
+  &__play {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    position: relative;
+    padding-top: 100px;
+
+    &-startTimer {
+      width: 150px;
+      height: 150px;
+      color: $white;
+      font-size: 36px;
+      margin: 0 auto;
+      background-image: url('./assets/spinner-green.svg');
+      background-size: contain;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    &-header {
+      width: 100%;
+      min-height: 100px;
+      color: $white;
+      font-size: 24px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      position: absolute;
+      top: 0;
+      left: 0;
+
+      &Timer {
+        width: 80px;
+        height: 80px;
+        background-image: url('./assets/spinner-green.svg');
+        background-size: contain;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      &Controls {
+        display: flex;
+        background: none;
+
+        &Cancel,
+        &Settings,
+        &Info {
+          position: relative;
+          cursor: pointer;
+          padding: 5px;
+          background: none;
+          border: none;
+          border-radius: 50%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          outline: none;
+
+          &:hover {
+            background-color: rgba($color: $white, $alpha: 0.3);
+          }
+        }
+      }
+
+      img {
+        width: 30px;
+      }
+    }
+
+    &-main {
+      min-width: 480px;
+      max-width: 600px;
+      width: 100%;
+      min-height: 370px;
+      border-radius: 5px;
+      border: 2px solid $white;
+      color: $white;
+      position: relative;
+      padding: 20px 10px 0;
+      margin: 50px auto 30px;
+
+      &_good {
+        animation: showTrueAnswer 0.2s forwards;
+      }
+
+      &_error {
+        animation: showFalseAnswer 0.2s forwards;
+      }
+
+      &Lives {
+        display: flex;
+        align-items: center;
+        position: absolute;
+        top: 10px;
+        left: 5px;
+      }
+
+      &Heart {
+        width: 20px;
+        margin-left: 5px;
+      }
+
+      &PlayWord {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background-image: url('./assets/voice-recognition.png');
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center;
+        transition: all 0.3s;
+
+        &:hover {
+          cursor: pointer;
+          background-color: rgba($color: $white, $alpha: 0.1);
+        }
+      }
+
+      &Word {
+        min-height: 50px;
+        margin: 30px 0 0;
+        font-size: 26px;
+        letter-spacing: 1px;
+        text-align: center;
+        text-transform: uppercase;
+      }
+
+      &WordTranscription {
+        margin-bottom: 15px;
+        text-align: center;
+        min-height: 20px;
+      }
+
+      &WordArr {
+        border-radius: 6px;
+        min-height: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        padding: 10px;
+        background-color: rgba($color: $white, $alpha: 0.6);
+
+        &Item {
+          position: relative;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          color: $grey;
+          width: 20px;
+          height: 30px;
+          border-bottom: 2px solid black;
+          text-align: center;
+          margin: 1px;
+          transition: 0.5s;
+          border-radius: 20%;
+          user-select: none;
+        }
+      }
+
+      &WordLetters {
+        border-radius: 6px;
+        min-height: 50px;
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+      }
+
+      &Letter {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: $grey;
+        font-size: 14px;
+        background-color: rgba($color: $white, $alpha: 0.85);
+        border: 1px solid $white;
+        margin: 2px;
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+
+        &Num {
+          font-size: 10px;
+          position: absolute;
+          top: 0;
+          right: 0;
+          color: $blue;
+        }
+      }
+
+      &Level {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 40px 0 10px;
+      }
+
+      &Success {
+        position: relative;
+        height: 20px;
+        border: 2px solid $green;
+        border-radius: 5px;
+
+        &Width {
+          height: 100%;
+          transition: all 0.3s;
+          background-color: $blueTransparent;
+        }
+      }
+    }
+  }
+
+  &__result {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  &__info {
+    position: absolute;
+    z-index: 11;
+    padding: 5px;
+    top: 40px;
+    right: 40px;
+    width: 300px;
+    height: 300px;
+    border: 2px solid $blue;
+    border-radius: 5px;
+    background-color: $white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: $grey;
+    font-size: 10px;
+    transition: all 0.3s;
+
+    &Slogan {
+      margin: 30px 0 0;
+      font-size: 14px;
+      text-align: justify;
+    }
+
+    &List {
+      font-size: 12px;
+      text-align: start;
+      list-style-type: decimal;
+      padding-left: 20px;
+      margin-top: 20px;
+    }
+
+    &Item {
+      list-style: decimal;
+      margin-top: 5px;
+    }
+  }
+
+  &__options {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 12;
+    width: 100vw;
+    height: 100vh;
+    background-color: $transparentBlack;
+    color: $grey;
+    font-size: 16px;
+    letter-spacing: 1px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    &Close {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      top: -40px;
+      right: -40px;
+      cursor: pointer;
+      padding: 5px;
+      background: none;
+      border: none;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      outline: none;
+
+      &:hover {
+        background-color: rgba($color: $white, $alpha: 0.3);
+      }
+
+      &Btn {
+        width: 30px;
+      }
+    }
+
+    &Box {
+      display: flex;
+      flex-direction: column;
+      justify-self: start;
+      position: relative;
+      padding: 10px;
+      max-width: 600px;
+      min-width: 480px;
+      width: 100%;
+      min-height: 300px;
+      border: 2px solid black;
+      background-color: $white;
+      border-radius: 5px;
+    }
+
+    &List {
+      position: relative;
+    }
+
+    &Item {
+      display: flex;
+      text-align: start;
+      margin-top: 20px;
+      cursor: pointer;
+      width: max-content;
+
+      input {
+        margin-left: 10px;
+        margin-right: 5px;
+      }
+
+      span {
+        max-width: 50%;
+      }
+    }
+  }
+}
+
+@keyframes showTrueAnswer {
+  0% {
+    box-shadow: 0 0 0px $green;
+  }
+  50% {
+    box-shadow: 0 0 30px $green;
+  }
+  100% {
+    box-shadow: 0 0 0px $green;
+  }
+}
+
+@keyframes showFalseAnswer {
+  0% {
+    box-shadow: 0 0 0px $red;
+  }
+  50% {
+    box-shadow: 0 0 30px $red;
+  }
+  100% {
+    box-shadow: 0 0 0px $red;
+  }
+}

@@ -11,10 +11,12 @@ export const HTML_TAGS_REGEXP = /(<b>|<\/b>|<i>|<\/i>)/g;
 export const GAMES = {
   audiochallenge: 'audiochallenge',
   sprint: 'sprint',
+  wordConstructor: 'wordConstructor',
 };
 
-export const videoURL = 'https://media.w3.org/2010/05/sintel/trailer_hd.mp4';
-export const mainPageText = {
+export const VIDEO_URL = 'https://media.w3.org/2010/05/sintel/trailer_hd.mp4';
+export const RSLANG_DATA_URL = 'https://raw.githubusercontent.com/irinainina/rslang-data/master/';
+export const MAIN_PAGE_TEXT = {
   capability: {
     games: {
       info:
@@ -43,3 +45,31 @@ export const mainPageText = {
     Samvel: 'Главная страница\nмини-игра "Конструктор слов"',
   },
 };
+export const LETTERS = [
+  'a',
+  'b',
+  'c',
+  'd',
+  'e',
+  'f',
+  'g',
+  'h',
+  'i',
+  'j',
+  'k',
+  'l',
+  'm',
+  'n',
+  'o',
+  'p',
+  'q',
+  'r',
+  's',
+  't',
+  'u',
+  'v',
+  'w',
+  'x',
+  'y',
+  'z',
+];

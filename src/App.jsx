@@ -10,6 +10,7 @@ import Footer from './components/footer/footer';
 import MainPage from './components/mainPage/MainPage';
 import ErrorPage from './components/errorPage/errorPage';
 import GameSprint from './components/gameSprint/gameSprint';
+import WordConstructor from './components/wordConstructor/WordConstructor';
 import Audiochallenge from './components/audiochallenge/audiochallenge';
 import WordCard from './components/wordCard/wordCard';
 import VocabluarySettings from './components/vocabluarySettings/vocabluarySettings';
@@ -112,7 +113,7 @@ function App() {
             <GameSprint />
           </Route>
           <Route exact path="/wordconstructor">
-            <h1>Конструктор слов</h1>
+            <WordConstructor />
           </Route>
           <Route exact path="/statistics">
             <h1>Статистика</h1>

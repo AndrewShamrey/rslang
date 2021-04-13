@@ -4,7 +4,6 @@ import { useLocation, NavLink } from 'react-router-dom';
 import AuthorizationButton from '../authirizationButton/authorizationButton';
 import DropDown from './DropDown';
 import './Header.scss';
-// import book from '../../assets/images/'
 
 export default function Header() {
   const isAuthorized = useSelector((rootState) => rootState.control.isAuthorized);

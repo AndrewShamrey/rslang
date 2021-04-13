@@ -1,0 +1,22 @@
+@import '../../../../../sass/colors.scss';
+
+.WordConstructor__settings-button {
+  position: relative;
+  cursor: pointer;
+  padding: 5px;
+  background: none;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  outline: none;
+
+  &:hover {
+    background-color: rgba($color: $white, $alpha: 0.3);
+  }
+
+  img {
+    width: 30px;
+  }
+}
