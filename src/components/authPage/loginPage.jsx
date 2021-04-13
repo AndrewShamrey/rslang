@@ -49,11 +49,12 @@ const LogInPage = () => {
 
     fetchClass.signinPerson(login, pass)
       .then((person) => {
+        setActiveSubmit(true);
         dispatch(setCurrentPerson(person));
         dispatch(setIsAuthorized(true));
-        setActiveSubmit(true);
       })
-      .catch(() => {
+      .catch((er) => {
+        console.log(er.message);
         setWarning(true);
         setActiveSubmit(true);
       });

@@ -96,12 +96,10 @@ const SignInPage = () => {
   const signUpAccount = (e) => {
     e.preventDefault();
 
-    console.log('click');
     if (!validatePersonsData()) {
       return;
     }
 
-    console.log('isvalide');
     const newPerson = {
       name, email: login, password: pass, photo: imgURL,
     };
@@ -110,17 +108,15 @@ const SignInPage = () => {
       delete newPerson.photo;
     }
 
-    console.log('newuser - ', newPerson);
-
     fetchClass.postNewPerson(JSON.stringify(newPerson))
       .then((data) => {
         setActiveSubmit(false);
 
         fetchClass.signinPerson(newPerson.email, newPerson.password)
           .then((person) => {
+            setActiveSubmit(true);
             dispatch(setCurrentPerson(person));
             dispatch(setIsAuthorized(true));
-            setActiveSubmit(true);
           })
           .catch((err) => {
             const message = err.message === 'Failed to fetch' ? 'serverError' : 'defaultWarning';
