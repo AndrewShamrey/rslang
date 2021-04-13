@@ -117,7 +117,6 @@ function App() {
             <AppStatisticsPage />
           </Route>
           <Route path="/authorization">
-            {/* <h1>Авторизация</h1> */}
             {state.currentPerson ? <Redirect to="/" /> : <AuthPage />}
           </Route>
           <Route path="*">
