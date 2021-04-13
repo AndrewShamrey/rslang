@@ -45,7 +45,7 @@ const LogInPage = () => {
       return;
     }
 
-    fetchClass.getPersonByMailAndPass(login, pass)
+    fetchClass.signinPerson(login, pass)
       .then((person) => {
         // ! ---------------------------------------------------------------------
         console.log(person);
