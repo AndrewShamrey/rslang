@@ -73,3 +73,15 @@ export const LETTERS = [
   'y',
   'z',
 ];
+
+export const AUTHORIZATION_INFO = {
+  login: 'Вход',
+  signup: 'Регистрация',
+  loginName: 'Email',
+  passName: 'Пароль',
+  defaultWarning: 'Неверный email или пароль!',
+  passwordWarning: 'Длина пароля должна быть хотя бы 8 символов.',
+  nickNameWarning: 'Этот email уже существует.',
+  imageSizeWarning: 'Максимальный размер изображения - 4МБ.',
+  uploadPhoto: 'Загрузите свое фото',
+};
