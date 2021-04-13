@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import Preloader from './components/Preloader';
 import Header from './components/Header';
 import GameEnd from './GameEnd';
@@ -17,11 +18,15 @@ import goodSong from '../../../assets/audio/piu.mp3';
 import { MEDIA_URI, RSLANG_DATA_URL } from '../../../utils/constants';
 
 const GamePlay = (props) => {
+  const isSound = useSelector((state) => state.control.wordConstructor.isSound);
+
+  const {
+    isTranscription, isAutoPlay, livesByDefault, winLevelWordCount,
+  } = useSelector((state) => state.control.wordConstructor.settings);
+
   const [isLoading, setIsLoading] = useState(true);
   const [isFinish, setIsFinish] = useState(false);
   const [timer, setTimer] = useState(65);
-  const [volume, setVolume] = useState(true);
-  const [livesByDefault, setLivesByDefault] = useState(5);
   const [lives, setLives] = useState(livesByDefault);
   const { location: { aboutProps: { level: propLevel } } } = props;
   const [level, setLevel] = useState(propLevel);
@@ -41,24 +46,22 @@ const GamePlay = (props) => {
   const [success, setSuccess] = useState(0);
   const [answerClass, setAnswerClass] = useState('');
   const [arrayOfIndices, setArrayOfIndices] = useState([]);
-  const [isAutoPlay, setIsAutoPlay] = useState(true);
-  const [isTranscription, setIsTranscription] = useState(true);
   const [longestSeries, setLongestSeries] = useState(0);
   const [isSeriesError, setIsSeriesError] = useState(false);
   const [sessionErrorWords, setSessionErrorWords] = useState([]);
   const [sessionLongestSeries, setSessionLongestSeries] = useState(0);
 
   const intervals = [];
-  const width = { width: `${success > 59 ? 100 : ((100 / 5) * (success % 6))}%` };
+  const width = { width: `${success > 59 ? 100 : ((100 / (winLevelWordCount - 1)) * (success % winLevelWordCount))}%` };
 
   const playAudioWord = (audio = words[wordId].audio) => {
-    if (volume && audio) playAudio(`${RSLANG_DATA_URL}${audio}`);
+    if (isSound && audio) playAudio(`${RSLANG_DATA_URL}${audio}`);
   };
 
   const stopGame = () => {
     setIsFinish(true);
     setTimer(0);
-    if (volume) {
+    if (isSound) {
       playAudio(finishSong);
     }
     intervals.forEach(clearInterval);
@@ -66,10 +69,10 @@ const GamePlay = (props) => {
   };
 
   const tick = () => {
-    if (timer === 61 && volume) {
+    if (timer === 61 && isSound) {
       playAudio(startSong);
     }
-    if (timer === 60 && volume && isAutoPlay) {
+    if (timer === 60 && isSound && isAutoPlay) {
       setTimeout(() => {
         playAudioWord();
       }, 1000);
@@ -91,7 +94,7 @@ const GamePlay = (props) => {
   };
 
   const setAndRemoveAnswerClass = (isTrueAnswer = true) => {
-    if (volume) playAudio(isTrueAnswer ? goodSong : errorSong);
+    if (isSound) playAudio(isTrueAnswer ? goodSong : errorSong);
     setAnswerClass(` WordConstructor__play-main_${isTrueAnswer ? 'good' : 'error'}`);
     setTimeout(() => setAnswerClass(''), 200);
   };
@@ -107,7 +110,7 @@ const GamePlay = (props) => {
       setGoodWords([...goodWords, words[wordId]]);
       changeWord();
       setSuccess(success + 1);
-      if (success > 1 && (success % 6) === 5) {
+      if (success > 1 && ((success % winLevelWordCount) === (winLevelWordCount - 1))) {
         if (level < 6) setLevel(level + 1);
       }
     } else {
@@ -156,7 +159,7 @@ const GamePlay = (props) => {
 
   const newGame = () => {
     intervals.forEach(clearTimeout);
-    if (volume) playAudio(tikTakSong, true);
+    if (isSound) playAudio(tikTakSong, true);
     setTimer(65);
     setIsFinish(false);
     setLives(livesByDefault);
@@ -183,7 +186,7 @@ const GamePlay = (props) => {
     await setWords(data);
     await setIsLoading(false);
     if (timer === 65) {
-      if (volume) {
+      if (isSound) {
         playAudio(tikTakSong, true);
       }
       tick();
@@ -218,7 +221,7 @@ const GamePlay = (props) => {
       setCurrentWordLetters([...currentWord]);
       setIsSeriesError(false);
     }
-    if (volume && isAutoPlay && timer < 60) {
+    if (isSound && isAutoPlay && timer < 60) {
       setTimeout(() => {
         playAudioWord();
       }, 1000);
@@ -279,15 +282,7 @@ const GamePlay = (props) => {
         <div className="WordConstructor__play">
           <Header
             timer={timer}
-            volume={volume}
             score={score}
-            setVolume={setVolume}
-            isTranscription={isTranscription}
-            setIsTranscription={setIsTranscription}
-            isAutoPlay={isAutoPlay}
-            setIsAutoPlay={setIsAutoPlay}
-            livesByDefault={livesByDefault}
-            setLivesByDefault={setLivesByDefault}
           />
           <main className={`WordConstructor__play-main${answerClass}`}>
             <div className="WordConstructor__play-mainLives">

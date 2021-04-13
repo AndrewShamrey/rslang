@@ -1,11 +1,18 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { setWordConstructorSettings } from '../../../../actions/control';
 import cancel from '../../assets/cancel.png';
 
-const Settings = (props) => {
+const Settings = ({ optionsIsOpen, setOptionsIsOpen }) => {
+  const dispatch = useDispatch();
+  const settings = useSelector((state) => state.control.wordConstructor.settings);
   const {
-    optionsIsOpen, setOptionsIsOpen, isTranscription, setIsTranscription,
-    isAutoPlay, setIsAutoPlay, livesByDefault, setLivesByDefault,
-  } = props;
+    isTranscription, isAutoPlay, livesByDefault, winLevelWordCount,
+  } = settings;
+
+  const changeSettings = (newSettings) => {
+    dispatch(setWordConstructorSettings(newSettings));
+  };
 
   return optionsIsOpen ? (
     <div className="WordConstructor__options">
@@ -28,7 +35,9 @@ const Settings = (props) => {
                 min={3}
                 max={7}
                 id="WordConstructor__lives"
-                onChange={(e) => { setLivesByDefault(e.currentTarget.value); }}
+                onChange={(e) => changeSettings(
+                  { ...settings, livesByDefault: e.currentTarget.value },
+                )}
               />
               <span>{livesByDefault}</span>
             </label>
@@ -41,7 +50,9 @@ const Settings = (props) => {
                 checked={isTranscription}
                 type="checkbox"
                 id="WordConstructor__transcription"
-                onChange={() => setIsTranscription(!isTranscription)}
+                onChange={() => changeSettings(
+                  { ...settings, isTranscription: !isTranscription },
+                )}
               />
             </label>
           </li>
@@ -53,8 +64,26 @@ const Settings = (props) => {
                 checked={isAutoPlay}
                 type="checkbox"
                 id="WordConstructor__autoplay"
-                onChange={() => setIsAutoPlay(!isAutoPlay)}
+                onChange={() => changeSettings(
+                  { ...settings, isAutoPlay: !isAutoPlay },
+                )}
               />
+            </label>
+          </li>
+          <li>
+            <label className="WordConstructor__optionsItem" htmlFor="WordConstructor__winLevelWordCount">
+              <span>Количество слов для перехода на следующий уровень</span>
+              <input
+                type="range"
+                value={winLevelWordCount}
+                min={5}
+                max={10}
+                id="WordConstructor__winLevelWordCount"
+                onChange={(e) => changeSettings(
+                  { ...settings, winLevelWordCount: e.currentTarget.value },
+                )}
+              />
+              <span>{winLevelWordCount}</span>
             </label>
           </li>
         </ul>

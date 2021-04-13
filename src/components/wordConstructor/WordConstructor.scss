@@ -19,6 +19,20 @@
     align-items: center;
     padding: 45px 0;
 
+    &-volume {
+      position: absolute;
+      top: 30px;
+      left: 50px;
+      width: 30px;
+    }
+
+    &-settings {
+      position: absolute;
+      top: 30px;
+      right: 50px;
+      width: 30px;
+    }
+
     &-title {
       color: $white;
       margin-top: 5%;
@@ -93,7 +107,6 @@
         display: flex;
         background: none;
 
-        &Volume,
         &Cancel,
         &Settings,
         &Info {
@@ -269,18 +282,6 @@
     position: relative;
     width: 100%;
     height: 100%;
-    // max-width: 600px;
-    // min-width: 280px;
-    // margin: 0 0 30px;
-    // padding: 10px;
-    // width: 100%;
-    // min-height: 280px;
-    // max-height: 640px;
-    // border: 2px solid $white;
-    // border-radius: 5px;
-    // background-color: rgba($color: $white, $alpha: 0.1);
-    // box-shadow: 0 0 1px $white;
-    // transition: 0.5s;
   }
 
   &__info {
@@ -296,7 +297,6 @@
     background-color: $white;
     display: flex;
     flex-direction: column;
-    // justify-content: center;
     align-items: center;
     color: $grey;
     font-size: 10px;
@@ -379,16 +379,23 @@
     }
 
     &List {
+      position: relative;
     }
 
     &Item {
       display: flex;
       text-align: start;
       margin-top: 20px;
+      cursor: pointer;
+      width: max-content;
 
       input {
         margin-left: 10px;
         margin-right: 5px;
+      }
+
+      span {
+        max-width: 50%;
       }
     }
   }
