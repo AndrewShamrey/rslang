@@ -45,20 +45,18 @@ const LogInPage = () => {
       return;
     }
 
+    setActiveSubmit(false);
+
     fetchClass.signinPerson(login, pass)
       .then((person) => {
-        // ! ---------------------------------------------------------------------
-        console.log(person);
-        if (typeof person === 'string') {
-          setWarning(true);
-          return;
-        }
-
-        setActiveSubmit(false);
         dispatch(setCurrentPerson(person));
         dispatch(setIsAuthorized(true));
+        setActiveSubmit(true);
       })
-      .catch((err) => console.log('Error - ', err));
+      .catch(() => {
+        setWarning(true);
+        setActiveSubmit(true);
+      });
   };
 
   return (

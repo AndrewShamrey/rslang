@@ -1,6 +1,7 @@
 export default class FetchData {
   constructor(url) {
     this.baseUrl = url;
+    // this.baseUrl = 'http://localhost:4000';
   }
 
   signinPerson(email, password) {
@@ -20,6 +21,16 @@ export default class FetchData {
           'Content-Type': 'application/json',
         },
       }).then((response) => response.json());
+    }
+
+    if (!id) {
+      return fetch(`${this.baseUrl}/${path}`, {
+        method,
+        body,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }).then((resp) => resp.json());
     }
 
     return fetch(`${this.baseUrl}/${path}/${id}`, {

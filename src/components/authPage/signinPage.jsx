@@ -96,33 +96,45 @@ const SignInPage = () => {
   const signUpAccount = (e) => {
     e.preventDefault();
 
+    console.log('click');
     if (!validatePersonsData()) {
       return;
     }
 
+    console.log('isvalide');
     const newPerson = {
       name, email: login, password: pass, photo: imgURL,
     };
+
     if (!newPerson.photo) {
       delete newPerson.photo;
     }
 
+    console.log('newuser - ', newPerson);
+
     fetchClass.postNewPerson(JSON.stringify(newPerson))
       .then((data) => {
-        if (typeof data === 'string') {
-          setMessage('nickNameWarning');
-          setWarning(true);
-          return;
-        }
+        setActiveSubmit(false);
 
         fetchClass.signinPerson(newPerson.email, newPerson.password)
           .then((person) => {
-            setActiveSubmit(false);
             dispatch(setCurrentPerson(person));
             dispatch(setIsAuthorized(true));
+            setActiveSubmit(true);
+          })
+          .catch((err) => {
+            const message = err.message === 'Failed to fetch' ? 'serverError' : 'defaultWarning';
+
+            setMessage(message);
+            setWarning(true);
+            setActiveSubmit(true);
           });
       })
-      .catch((err) => console.log('Error - ', err));
+      .catch(() => {
+        setMessage('nickNameWarning');
+        setWarning(true);
+        setActiveSubmit(true);
+      });
   };
 
   return (
