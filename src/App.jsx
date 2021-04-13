@@ -12,6 +12,7 @@ import ErrorPage from './components/errorPage/errorPage';
 import GameSprint from './components/gameSprint/gameSprint';
 import WordConstructor from './components/wordConstructor/WordConstructor';
 import Audiochallenge from './components/audiochallenge/audiochallenge';
+import AppStatisticsPage from './components/appStatisticsPage/appStatisticsPage';
 import WordCard from './components/wordCard/wordCard';
 import VocabluarySettings from './components/vocabluarySettings/vocabluarySettings';
 import './App.scss';
@@ -116,7 +117,7 @@ function App() {
             <WordConstructor />
           </Route>
           <Route exact path="/statistics">
-            <h1>Статистика</h1>
+            <AppStatisticsPage />
           </Route>
           <Route path="/authorization">
             <h1>Авторизация</h1>
