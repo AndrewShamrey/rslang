@@ -97,13 +97,7 @@ const AppStatisticsPage = () => {
             Всего изучено слов: 3000
           </div>
         </div>
-        <div className="app-stats-page__long_graph1">
-          1st picture
-        </div>
-        <div className="app-stats-page__long_graph2">
-          2nd picture
-        </div>
-        <LineChart title="Изучено слов за каждый день" />
+        <LineChart />
       </div>
     </main>
   );
