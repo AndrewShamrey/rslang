@@ -1,4 +1,5 @@
 import './appStatisticsPage.scss';
+import LineChart from './modules/LineChart';
 
 const AppStatisticsPage = () => {
   console.log('stats');
@@ -102,6 +103,7 @@ const AppStatisticsPage = () => {
         <div className="app-stats-page__long_graph2">
           2nd picture
         </div>
+        <LineChart title="Изучено слов за каждый день" />
       </div>
     </main>
   );
