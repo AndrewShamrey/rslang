@@ -9,9 +9,10 @@ import playSound from '../../../utils/playSound';
 import error from '../../../assets/audio/error.mp3';
 import correct from '../../../assets/audio/correct.mp3';
 import pass from '../../../assets/audio/pass.mp3';
-import { shuffleArray, getRandomNumber } from '../helpers/functions';
+import { getRandomNumber } from '../helpers/functions';
 import { GAMES } from '../../../utils/constants';
 import { SPRINT_GAME } from '../../../utils/content';
+import shuffleArray from '../../../utils/shuffleArray';
 import './gamePlay.scss';
 
 const BASE_POINTS = 20;
@@ -36,10 +37,6 @@ const GamePlay = ({
     if (maxStringOfRights < stringOfRights) {
       // console.log('increase long series +1');
       setMaxStringOfRights((strike) => strike + 1);
-      // setGameResult((state) => ({
-      //   ...state,
-      //   longestSeries: maxStringOfRights,
-      // }));
     }
   }, [stringOfRights, maxStringOfRights, setMaxStringOfRights]);
 
