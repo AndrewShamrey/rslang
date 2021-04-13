@@ -9,10 +9,10 @@ const saveShortTermStatistics = (game, result) => {
     learnedWords: [...correctAnswers, ...incorrectAnswers],
   };
 
-  const localStorageData = localStorage.shortTermStatistics;
+  const localStorageData = localStorage.team113ShortTermStatistics;
 
   if (!localStorageData) {
-    localStorage.shortTermStatistics = JSON.stringify({ [game]: newGameData });
+    localStorage.team113ShortTermStatistics = JSON.stringify({ [game]: newGameData });
     return;
   }
 
@@ -33,7 +33,7 @@ const saveShortTermStatistics = (game, result) => {
     };
   }
 
-  localStorage.shortTermStatistics = JSON.stringify({ ...data, [game]: newGameData });
+  localStorage.team113ShortTermStatistics = JSON.stringify({ ...data, [game]: newGameData });
 };
 
 export default saveShortTermStatistics;
