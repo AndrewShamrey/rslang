@@ -5,7 +5,7 @@
   height: 100vh;
   width: 100%;
   background-color: cornflowerblue;
-  background: url(../../assets/images/back2.jpg) no-repeat 50% fixed;
+  background: url(../../assets/images/ben.jpg) no-repeat 50% fixed;
   background-size: cover;
   z-index: 2;
 }
