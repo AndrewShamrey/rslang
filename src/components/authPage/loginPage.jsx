@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentPerson, setIsAuthorized } from '../../actions/control';
-import { AUTHORIZATION_INFO, BACK_URL } from '../../utils/constants';
+import { AUTHORIZATION_INFO } from '../../utils/vocabulary';
+import { BACK_URL } from '../../utils/constants';
 import FetchData from '../../utils/fetchData';
 import './authPage.css';
 
@@ -14,6 +15,7 @@ const LogInPage = () => {
   const [login, setLogin] = useState('');
   const [pass, setPass] = useState('');
   const [isActiveSubmit, setActiveSubmit] = useState(true);
+  const lang = useSelector((rootState) => rootState.control.applicationLanguage);
 
   const handleChangeLogin = ({ target: { value } }) => {
     setLogin(value);
@@ -45,11 +47,9 @@ const LogInPage = () => {
       return;
     }
 
-    fetchClass.signinPerson(login, pass)
-      .then((person) => {
-        // ! ---------------------------------------------------------------------
-        console.log(person);
-        if (typeof person === 'string') {
+    fetchClass.getPersonByNameAndPass(login, pass)
+      .then(([person]) => {
+        if (!person) {
           setWarning(true);
           return;
         }
@@ -63,12 +63,12 @@ const LogInPage = () => {
 
   return (
     <form className="form-container" onSubmit={logInAccount}>
-      {warning && <div className="warning-error">{AUTHORIZATION_INFO.defaultWarning}</div>}
+      {warning && <div className="warning-error">{AUTHORIZATION_INFO[lang].defaultWarning}</div>}
       <div className="form-field">
         <input
           className="input-text"
           name="login"
-          placeholder={AUTHORIZATION_INFO.loginName}
+          placeholder={AUTHORIZATION_INFO[lang].loginName}
           type="text"
           value={login}
           autoComplete="off"
@@ -79,7 +79,7 @@ const LogInPage = () => {
         <input
           className="input-text input-pass"
           name="pass"
-          placeholder={AUTHORIZATION_INFO.passName}
+          placeholder={AUTHORIZATION_INFO[lang].passName}
           type={isOpenPass ? 'text' : 'password'}
           value={pass}
           autoComplete="off"
@@ -90,7 +90,7 @@ const LogInPage = () => {
       <input
         className="input-sign-in"
         type="submit"
-        value={AUTHORIZATION_INFO.login}
+        value={AUTHORIZATION_INFO[lang].login}
         name="login"
       />
     </form>

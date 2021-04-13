@@ -1,23 +1,22 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentPerson, setIsAuthorized } from '../../actions/control';
-import {
-  AUTHORIZATION_INFO, DEFAULT_PHOTO, MAX_IMAGE_SIZE, BACK_URL,
-} from '../../utils/constants';
 import FetchData from '../../utils/fetchData';
+import { AUTHORIZATION_INFO } from '../../utils/vocabulary';
+import { DEFAULT_PHOTO, MAX_IMAGE_SIZE, BACK_URL } from '../../utils/constants';
 import DeleteIMG from '../../assets/images/error.svg';
 import './authPage.css';
 
-const SignInPage = () => {
+const LogInPage = () => {
   const fetchClass = new FetchData(BACK_URL);
 
   const dispatch = useDispatch();
+  const lang = useSelector((rootState) => rootState.control.applicationLanguage);
   const [warningImg, setImgWarning] = useState(false);
   const [imgURL, setImgUrl] = useState(null);
   const [isOpenPass, togglePass] = useState(false);
   const [warning, setWarning] = useState(false);
   const [warningMessage, setMessage] = useState('defaultWarning');
-  const [name, setName] = useState('');
   const [login, setLogin] = useState('');
   const [pass, setPass] = useState('');
   const [isActiveSubmit, setActiveSubmit] = useState(true);
@@ -40,14 +39,6 @@ const SignInPage = () => {
         setImage(base64data);
       }
     };
-  };
-
-  const handleChangeName = ({ target: { value } }) => {
-    setName(value);
-    if (warning) {
-      setWarning(false);
-      setMessage('defaultWarning');
-    }
   };
 
   const handleChangeLogin = ({ target: { value } }) => {
@@ -84,7 +75,7 @@ const SignInPage = () => {
       return false;
     }
 
-    if (pass.length < 8) {
+    if (pass.length < 8 || pass.length > 20) {
       setMessage('passwordWarning');
       setWarning(true);
       return false;
@@ -100,23 +91,21 @@ const SignInPage = () => {
       return;
     }
 
-    const newPerson = {
-      name, email: login, password: pass, photo: imgURL,
-    };
+    const newPerson = { nickname: login, pass, photo: imgURL };
     if (!newPerson.photo) {
       delete newPerson.photo;
     }
 
     fetchClass.postNewPerson(JSON.stringify(newPerson))
       .then((data) => {
-        if (typeof data === 'string') {
+        if (data.status !== 201) {
           setMessage('nickNameWarning');
           setWarning(true);
           return;
         }
 
-        fetchClass.signinPerson(newPerson.email, newPerson.password)
-          .then((person) => {
+        fetchClass.getPersonByNameAndPass(newPerson.nickname, newPerson.pass)
+          .then(([person]) => {
             setActiveSubmit(false);
             dispatch(setCurrentPerson(person));
             dispatch(setIsAuthorized(true));
@@ -127,23 +116,12 @@ const SignInPage = () => {
 
   return (
     <form className="form-container" onSubmit={signUpAccount}>
-      {warning && <div className="warning-error">{AUTHORIZATION_INFO[warningMessage]}</div>}
-      <div className="form-field">
-        <input
-          className="input-text"
-          name="text"
-          placeholder={AUTHORIZATION_INFO.name}
-          type="text"
-          value={name}
-          autoComplete="off"
-          onChange={handleChangeName}
-        />
-      </div>
+      {warning && <div className="warning-error">{AUTHORIZATION_INFO[lang][warningMessage]}</div>}
       <div className="form-field">
         <input
           className="input-text"
           name="login"
-          placeholder={AUTHORIZATION_INFO.loginName}
+          placeholder={AUTHORIZATION_INFO[lang].loginName}
           type="text"
           value={login}
           autoComplete="off"
@@ -154,7 +132,7 @@ const SignInPage = () => {
         <input
           className="input-text input-pass"
           name="pass"
-          placeholder={AUTHORIZATION_INFO.passName}
+          placeholder={AUTHORIZATION_INFO[lang].passName}
           type={isOpenPass ? 'text' : 'password'}
           value={pass}
           autoComplete="off"
@@ -162,7 +140,7 @@ const SignInPage = () => {
         />
         <span className="toggle-pass" onClick={toggleVisiblePassword} />
       </div>
-      {warningImg && <div className="warning-error">{AUTHORIZATION_INFO.imageSizeWarning}</div>}
+      {warningImg && <div className="warning-error">{AUTHORIZATION_INFO[lang].imageSizeWarning}</div>}
       <div className="form-field photo-field">
         <div className="photo-container">
           <img className="user-photo" src={imgURL || DEFAULT_PHOTO} alt="user" />
@@ -171,7 +149,7 @@ const SignInPage = () => {
           </div>
         </div>
         <label className="load-label" htmlFor="avatar">
-          {AUTHORIZATION_INFO.uploadPhoto}
+          {AUTHORIZATION_INFO[lang].uploadPhoto}
           <input
             type="file"
             id="avatar"
@@ -183,11 +161,11 @@ const SignInPage = () => {
       <input
         className="input-sign-in"
         type="submit"
-        value={AUTHORIZATION_INFO.signup}
+        value={AUTHORIZATION_INFO[lang].signup}
         name="signup"
       />
     </form>
   );
 };
 
-export default SignInPage;
+export default LogInPage;
