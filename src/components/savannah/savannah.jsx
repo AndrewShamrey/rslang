@@ -64,7 +64,7 @@ const Savannah = () => {
   return (
     <FullScreen handle={handle}>
       <main className="savannah" style={{ backgroundPositionY: `${backgroundPosition}%` }}>
-        <GameSoundButton game={GAMES.savannah} />
+        <GameSoundButton game={GAMES.savanna} />
         {isStartPage && (
           <>
             <button
@@ -76,7 +76,7 @@ const Savannah = () => {
             </button>
             {isSettings && <GameSettings close={toggleSettings} />}
             <StartPage
-              game={GAMES.savannah}
+              game={GAMES.savanna}
               startGame={startGame}
               changeLevel={changeLevel}
             />
@@ -84,7 +84,7 @@ const Savannah = () => {
         )}
         {isStatisticsPage && (
           <StatisticsPage
-            game={GAMES.savannah}
+            game={GAMES.savanna}
             gameResult={gameResult}
             showStartPage={showStartPage}
           />

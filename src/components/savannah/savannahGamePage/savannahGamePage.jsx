@@ -20,9 +20,9 @@ import './savannahGamePage.scss';
 const SavannahGamePage = ({
   level, page, showStatistics, closeGame, setBackgroundPosition,
 }) => {
-  const isSound = useSelector((state) => state.control.audiochallenge.isSound);
-  const amountOfAnswers = useSelector((state) => state.control.audiochallenge.amountOfAnswers);
-  const wordAudio = useSelector((state) => state.control.audiochallenge.wordAudio);
+  const isSound = useSelector((state) => state.control.savanna.isSound);
+  const amountOfAnswers = useSelector((state) => state.control.savanna.amountOfAnswers);
+  const wordAudio = useSelector((state) => state.control.savanna.wordAudio);
 
   const amountOfStars = 5;
 

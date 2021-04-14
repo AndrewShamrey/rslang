@@ -1,4 +1,4 @@
-
+@import '../../../sass//breakpoints.scss';
 
 @keyframes move-highlight {
   0% {
@@ -19,6 +19,19 @@
 }
 
 .savannah {
+  @media (max-width: $size-md) {
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  &__game-wrapper {
+    margin-top: 120px;
+
+    @media (max-width: $size-md) {
+      margin-top: 300px;
+    }
+  }
+
   &__current-word {
     display: inline-block;
     position: absolute;

@@ -3,7 +3,7 @@ import { HTML_TAGS_REGEXP } from '../../../utils/constants';
 import './helperBlock.scss';
 
 const QuestionBlock = ({ currentWord = {} }) => {
-  const { meaningQuestion, exampleQuestion } = useSelector((state) => state.control.savannah);
+  const { meaningQuestion, exampleQuestion } = useSelector((state) => state.control.savanna);
 
   return (
     <div className="helper-board">

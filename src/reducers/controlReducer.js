@@ -33,7 +33,7 @@ const initialState = {
       winLevelWordCount: 6,
     },
   },
-  savannah: {
+  savanna: {
     isSound: true,
     amountOfAnswers: 5,
     wordAudio: false,
@@ -75,8 +75,8 @@ const controlReducer = (state = initialState, action) => {
       });
     case ACTION_TYPES.SET_SAVANNAH_SETTINGS:
       return produce(state, (draft) => {
-        const { savannah } = draft;
-        draft.savannah = { ...savannah, ...action.payload };
+        const { savanna } = draft;
+        draft.savanna = { ...savanna, ...action.payload };
       });
     case ACTION_TYPES.SET_IS_AUTHORIZED:
       return produce(state, (draft) => {
