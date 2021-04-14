@@ -73,3 +73,21 @@ export const LETTERS = [
   'y',
   'z',
 ];
+export const GAME_NAMES = [
+  {
+    name: 'Аудиовызов',
+    path: '/audiochallenge',
+  },
+  {
+    name: 'Конструктор слов',
+    path: '/wordconstructor',
+  },
+  {
+    name: 'Саванна',
+    path: '/savannah',
+  },
+  {
+    name: 'Спринт',
+    path: '/sprint',
+  },
+];
