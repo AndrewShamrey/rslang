@@ -8,6 +8,7 @@ const DropDown = () => {
   const [isOpen, setIsOpen] = useState(false);
   // const isAuthorized = true;
   const isAuthorized = useSelector((rootState) => rootState.control.isAuthorized);
+  // console.log('isAuthorized ', isAuthorized);
 
   const handleOnClick = (e) => {
     e.stopPropagation();
@@ -34,14 +35,96 @@ const DropDown = () => {
       </span>
       {isOpen && (
       <div className="Header__dropdown-content" onMouseLeave={handleOnClick}>
-        <NavLink to="/textbook/1" className="Header__dropdown-item" onClick={handleOnClick} activeClassName="active">Раздел 1</NavLink>
-        <NavLink to="/textbook/2" className="Header__dropdown-item" onClick={handleOnClick} activeClassName="active">Раздел 2</NavLink>
-        <NavLink to="/textbook/3" className="Header__dropdown-item" onClick={handleOnClick} activeClassName="active">Раздел 3</NavLink>
-        <NavLink to="/textbook/4" className="Header__dropdown-item" onClick={handleOnClick} activeClassName="active">Раздел 4</NavLink>
-        <NavLink to="/textbook/5" className="Header__dropdown-item" onClick={handleOnClick} activeClassName="active">Раздел 5</NavLink>
-        <NavLink to="/textbook/6" className="Header__dropdown-item" onClick={handleOnClick} activeClassName="active">Раздел 6</NavLink>
+        <NavLink
+          exact
+          to={{
+            pathname: '/textbook/0',
+            page: 0,
+          }}
+          className="Header__dropdown-item"
+          onClick={handleOnClick}
+          activeClassName="active"
+        >
+          Главная
+        </NavLink>
+        <NavLink
+          to={{
+            pathname: '/textbook/1',
+            page: 1,
+          }}
+          className="Header__dropdown-item"
+          onClick={handleOnClick}
+          activeClassName="active"
+        >
+          Раздел 1
+        </NavLink>
+        <NavLink
+          to={{
+            pathname: '/textbook/2',
+            page: 2,
+          }}
+          className="Header__dropdown-item"
+          onClick={handleOnClick}
+          activeClassName="active"
+        >
+          Раздел 2
+        </NavLink>
+        <NavLink
+          to={{
+            pathname: '/textbook/3',
+            page: 3,
+          }}
+          className="Header__dropdown-item"
+          onClick={handleOnClick}
+          activeClassName="active"
+        >
+          Раздел 3
+        </NavLink>
+        <NavLink
+          to={{
+            pathname: '/textbook/4',
+            page: 4,
+          }}
+          className="Header__dropdown-item"
+          onClick={handleOnClick}
+          activeClassName="active"
+        >
+          Раздел 4
+        </NavLink>
+        <NavLink
+          to={{
+            pathname: '/textbook/5',
+            page: 5,
+          }}
+          className="Header__dropdown-item"
+          onClick={handleOnClick}
+          activeClassName="active"
+        >
+          Раздел 5
+        </NavLink>
+        <NavLink
+          to={{
+            pathname: '/textbook/6',
+            page: 6,
+          }}
+          className="Header__dropdown-item"
+          onClick={handleOnClick}
+          activeClassName="active"
+        >
+          Раздел 6
+        </NavLink>
         {isAuthorized && (
-        <NavLink to="/vocabulary" className="Header__dropdown-item" onClick={handleOnClick} activeClassName="active">Словарь</NavLink>
+        <NavLink
+          to={{
+            pathname: '/vocabulary',
+            words: [],
+          }}
+          className="Header__dropdown-item"
+          onClick={handleOnClick}
+          activeClassName="active"
+        >
+          Словарь
+        </NavLink>
         )}
       </div>
       )}
