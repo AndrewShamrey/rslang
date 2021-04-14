@@ -2,7 +2,7 @@
 @import '../../sass/breakpoints.scss';
 @import '../../sass/defaultComponentsStyles.scss';
 
-.audiochallenge {
+.savannah {
   padding: 45px 0; 
   width: 100%;
   min-height: 100%;
@@ -10,14 +10,12 @@
   display: flex;
   align-items: center;
   transition: background-color 0.5s linear;
-  background-color: $lightBlue;
+  background: url(../../assets//images/savannah-bg.svg);  
+  background-repeat: no-repeat;
+  background-position-y: 100%;
+  background-position-x: center;
   position: relative;
-
-  
-  @media (max-width: $size-md) {
-    flex-direction: column;
-    justify-content: flex-end;
-  }
+  transition: all 1s ease;
 
   * {    
     outline-color: $lightBlue;
@@ -38,6 +36,45 @@
     }
   }
 
+  .start-page {
+    &__about {
+      margin: 0 auto;
+      max-width: 768px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+  
+    &__select {
+      @include styled__btn_outlined($themeGreen, $white, $white);
+      margin-bottom: 30px;
+      padding: 0.4rem 1rem;
+      width: 150px;  
+      font-size: 14px;
+      font-weight: 900;
+      text-transform: uppercase;
+  
+      &:hover {
+        transform: none;
+      }
+    }
+  
+    &__description {
+      margin: 0 10px 50px;
+    }
+    
+    &__start {
+      @include styled__btn_outlined($themeGreen, $white, $white);
+      width: 150px;
+      font-size: 17px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+  }
+
+  
   &__fullscreen {
     position: absolute;
     left: 15px;

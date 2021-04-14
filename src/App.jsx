@@ -15,6 +15,7 @@ import WordConstructor from './components/wordConstructor/WordConstructor';
 import Audiochallenge from './components/audiochallenge/audiochallenge';
 import Textbook from './components/textbook/Textbook';
 import AppStatisticsPage from './components/appStatisticsPage/appStatisticsPage';
+import Savannah from './components/savannah/savannah';
 import './App.scss';
 
 function App() {
@@ -52,7 +53,7 @@ function App() {
           </Route>
           <Route path="/textbook/:section" component={Textbook} />
           <Route exact path="/savannah">
-            <h1>Саванна</h1>
+            <Savannah />
           </Route>
           <Route exact path="/audiochallenge">
             <Audiochallenge />

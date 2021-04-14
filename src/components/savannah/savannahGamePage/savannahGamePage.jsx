@@ -2,23 +2,29 @@ import {
   useState, useEffect, useCallback, useMemo,
 } from 'react';
 import { useSelector } from 'react-redux';
-import WordList from '../wordList/wordList';
-import Preloader from '../preloader/preloader';
-import QuestionBlock from '../questionBlock/questionBlock';
-import playSound from '../../utils/playSound';
-import shuffleArray from '../../utils/shuffleArray';
-import WordsAPI from '../../utils/wordsAPI';
-import getRandomNumber from '../../utils/getRandomNumber';
-import error from '../../assets/audio/error.mp3';
-import correct from '../../assets/audio/correct.mp3';
-import { BACK_URL, AMOUNT_OF_PAGES } from '../../utils/constants';
-import { AUDIOCHALLENGE_GAME_PAGE } from '../../utils/content';
+import WordList from '../../wordList/wordList';
+import Preloader from '../../preloader/preloader';
+import StarsList from '../starsList/starsList';
+import playSound from '../../../utils/playSound';
+import CloseIconButton from '../../closeIconButton/closeIconButton';
+import HelperBlock from '../helperBlock/helperBlock';
+import shuffleArray from '../../../utils/shuffleArray';
+import WordsAPI from '../../../utils/wordsAPI';
+import getRandomNumber from '../../../utils/getRandomNumber';
+import error from '../../../assets/audio/error.mp3';
+import correct from '../../../assets/audio/correct.mp3';
+import { BACK_URL, AMOUNT_OF_PAGES } from '../../../utils/constants';
 
-import './audiochallengeGamePage.scss';
+import './savannahGamePage.scss';
 
-const AudiochallengeGamePage = ({ level, page, showStatistics }) => {
-  const isSound = useSelector((state) => state.control.audiochallenge.isSound);
-  const amountOfAnswers = useSelector((state) => state.control.audiochallenge.amountOfAnswers);
+const SavannahGamePage = ({
+  level, page, showStatistics, closeGame, setBackgroundPosition,
+}) => {
+  const isSound = useSelector((state) => state.control.savanna.isSound);
+  const amountOfAnswers = useSelector((state) => state.control.savanna.amountOfAnswers);
+  const wordAudio = useSelector((state) => state.control.savanna.wordAudio);
+
+  const amountOfStars = 5;
 
   const [isQuestion, setIsQuestion] = useState(true);
   const [isCorrectAnswer, setIsCorrectAnswer] = useState(true);
@@ -34,10 +40,18 @@ const AudiochallengeGamePage = ({ level, page, showStatistics }) => {
     currentSeries: 0,
     answerId: null,
   });
+  const [starsLeft, setStarsLeft] = useState(amountOfStars);
+  const [timeoutId, setTimeoutId] = useState(null);
+  const [bgStep, setBgStep] = useState(0);
 
   const wordsAPI = useMemo(() => new WordsAPI(), []);
 
   const { answers, answerId, currentWord } = gameData;
+
+  const close = () => {
+    clearTimeout(timeoutId);
+    closeGame();
+  };
 
   const playGameSound = useCallback((sound) => {
     if (isSound) {
@@ -76,40 +90,6 @@ const AudiochallengeGamePage = ({ level, page, showStatistics }) => {
     return [newCurrentSeries, longestSeries];
   }, [gameData]);
 
-  const getCorrectAnswer = useCallback((id, answer) => {
-    const [currentSeries, longestSeries] = getAnswersSeries();
-
-    setGameData((state) => ({
-      ...state,
-      correctAnswers: [...state.correctAnswers, state.currentWord],
-      answerId: id,
-      currentSeries,
-      longestSeries,
-    }));
-
-    playGameSound(correct);
-    setIsQuestion(false);
-    setIsCorrectAnswer(answer);
-  }, [playGameSound, getAnswersSeries]);
-
-  const getIncorrectAnswer = useCallback((id, answer) => {
-    setGameData((state) => ({
-      ...state,
-      incorrectAnswers: [...state.incorrectAnswers, state.currentWord],
-      currentSeries: 0,
-      answerId: id,
-    }));
-
-    playGameSound(error);
-    setIsQuestion(false);
-    setIsCorrectAnswer(answer);
-  }, [playGameSound]);
-
-  const pass = useCallback((e) => {
-    e?.target?.blur();
-    getIncorrectAnswer(null, false);
-  }, [getIncorrectAnswer]);
-
   const generateWrongAnswersArray = useCallback((wordsArr) => {
     let i = 0;
     const answersArr = [];
@@ -128,8 +108,18 @@ const AudiochallengeGamePage = ({ level, page, showStatistics }) => {
     return answersArr;
   }, [amountOfAnswers]);
 
-  const nextWord = useCallback((e) => {
-    e?.target?.blur();
+  useEffect(() => {
+    const {
+      correctAnswers, incorrectAnswers, longestSeries,
+    } = gameData;
+
+    if (!starsLeft) {
+      clearTimeout(timeoutId);
+      showStatistics(correctAnswers, incorrectAnswers, longestSeries);
+    }
+  }, [gameData, showStatistics, starsLeft, timeoutId]);
+
+  const nextWord = useCallback(() => {
     setIsPreloader(true);
 
     const {
@@ -138,6 +128,7 @@ const AudiochallengeGamePage = ({ level, page, showStatistics }) => {
     const newCurrentWord = words[0];
 
     if (!newCurrentWord) {
+      clearTimeout(timeoutId);
       showStatistics(correctAnswers, incorrectAnswers, longestSeries);
       return;
     }
@@ -153,8 +144,47 @@ const AudiochallengeGamePage = ({ level, page, showStatistics }) => {
     }));
     setIsQuestion(true);
     setIsPreloader(false);
-    playSound(`${BACK_URL}/${newCurrentWord.audio}`);
-  }, [gameData, showStatistics, generateWrongAnswersArray]);
+    if (wordAudio) {
+      playSound(`${BACK_URL}/${newCurrentWord.audio}`);
+    }
+  }, [gameData, generateWrongAnswersArray, wordAudio, timeoutId, showStatistics]);
+
+  const getCorrectAnswer = useCallback((id, answer) => {
+    const [currentSeries, longestSeries] = getAnswersSeries();
+
+    playGameSound(correct);
+    setIsQuestion(false);
+    setIsCorrectAnswer(answer);
+
+    setGameData((state) => ({
+      ...state,
+      correctAnswers: [...state.correctAnswers, state.currentWord],
+      answerId: id,
+      currentSeries,
+      longestSeries,
+    }));
+    setBackgroundPosition((state) => state - bgStep);
+    setTimeout(() => nextWord(), 1000);
+  }, [getAnswersSeries, playGameSound, setBackgroundPosition, bgStep, nextWord]);
+
+  const getIncorrectAnswer = useCallback(async (id, answer) => {
+    playGameSound(error);
+    setIsQuestion(false);
+    setIsCorrectAnswer(answer);
+
+    setGameData((state) => ({
+      ...state,
+      incorrectAnswers: [...state.incorrectAnswers, state.currentWord],
+      currentSeries: 0,
+      answerId: id,
+    }));
+
+    if (starsLeft > 0) {
+      setStarsLeft((state) => state - 1);
+    }
+
+    setTimeout(() => nextWord(), 1000);
+  }, [nextWord, playGameSound, starsLeft]);
 
   const getAnswer = ({ target }) => {
     if (!isQuestion) return;
@@ -183,35 +213,35 @@ const AudiochallengeGamePage = ({ level, page, showStatistics }) => {
     }
 
     getIncorrectAnswer(id, answer);
-  }, [getCorrectAnswer, getIncorrectAnswer, isQuestion, gameData]);
+  }, [isQuestion, gameData, getIncorrectAnswer, getCorrectAnswer]);
 
   const keyboardEvents = useCallback((event) => {
     const controls = ['1', '2', '3', '4', '5'];
     const { key } = event;
 
-    if (key === 'Enter' && !isQuestion) {
-      nextWord();
-    }
-
-    if (key === 'Enter' && isQuestion) {
-      pass();
-    }
-
     if (controls.includes(key)) {
       getAnswerByKeyboard(event);
     }
-  }, [isQuestion, getAnswerByKeyboard, nextWord, pass]);
+  }, [getAnswerByKeyboard]);
+
+  useEffect(() => {
+    clearTimeout(timeoutId);
+    const newTimeoutId = setTimeout(() => getIncorrectAnswer(null, false), 5000);
+    setTimeoutId(newTimeoutId);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentWord]);
 
   useEffect(() => {
     const startGame = async () => {
-      let words = await wordsAPI.getCollectionWords(level, page);
-      words = shuffleArray(words);
+      const words = await wordsAPI.getCollectionWords(level, page);
+      shuffleArray(words);
 
       const newCurrentWord = words[0];
 
       const wrongAnswersData = await getWrongAnswersData();
       const wrongAnswersArr = generateWrongAnswersArray(wrongAnswersData);
-      const answersData = shuffleArray([...wrongAnswersArr, newCurrentWord]);
+      const answersData = [...wrongAnswersArr, newCurrentWord];
+      shuffleArray(answersData);
 
       setGameData(() => ({
         words: words.slice(1),
@@ -224,12 +254,16 @@ const AudiochallengeGamePage = ({ level, page, showStatistics }) => {
         currentSeries: 0,
         answerId: undefined,
       }));
+      setBgStep(Math.floor(100 / words.length));
       setIsPreloader(false);
-      playSound(`${BACK_URL}/${newCurrentWord.audio}`);
+
+      if (wordAudio) {
+        playSound(`${BACK_URL}/${newCurrentWord.audio}`);
+      }
     };
 
     startGame();
-  }, [generateWrongAnswersArray, getWrongAnswersData, level, page, wordsAPI]);
+  }, [generateWrongAnswersArray, getWrongAnswersData, level, page, wordAudio, wordsAPI]);
 
   useEffect(() => {
     document.addEventListener('keydown', keyboardEvents);
@@ -244,12 +278,16 @@ const AudiochallengeGamePage = ({ level, page, showStatistics }) => {
 
   return (
     <>
-      <div className="game-wrapper">
-        <QuestionBlock
-          currentWord={currentWord}
-          isQuestion={isQuestion}
+      <CloseIconButton
+        additionalClassName="audiochallenge__close-btn"
+        onClick={close}
+      />
+      <div className="savannah__game-wrapper game-wrapper">
+        <StarsList
+          amount={amountOfStars}
+          starsLeft={starsLeft}
         />
-
+        {isQuestion && <p className="savannah__current-word">{currentWord?.word}</p>}
         {currentWord && (
           <WordList
             words={answers}
@@ -260,17 +298,10 @@ const AudiochallengeGamePage = ({ level, page, showStatistics }) => {
             answerId={answerId}
           />
         )}
-
-        <button
-          className={isQuestion ? 'pass' : 'next'}
-          onClick={isQuestion ? pass : nextWord}
-          type="button"
-        >
-          {isQuestion ? AUDIOCHALLENGE_GAME_PAGE.pass : AUDIOCHALLENGE_GAME_PAGE.nextWord }
-        </button>
+        <HelperBlock currentWord={currentWord} />
       </div>
     </>
   );
 };
 
-export default AudiochallengeGamePage;
+export default SavannahGamePage;
