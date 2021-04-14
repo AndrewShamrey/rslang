@@ -1,21 +1,25 @@
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
+import ReactPaginate from 'react-paginate';
 import Preloader from '../../../wordConstructor/Game/components/Preloader';
 import GamesList from '../GamesList/GamesList';
 import WordList from '../WordList/WordList';
 import SettingsButton from '../SettingsButton/SettingsButton';
 import WordCard from '../../../wordCard/wordCard';
-import { BACK_URL, RSLANG_DATA_URL } from '../../../../utils/constants';
+import VocabluarySettings from '../../../vocabluarySettings/vocabluarySettings';
+import { BACK_URL } from '../../../../utils/constants';
 import './TextbookPage.scss';
 
-const TextbookPage = ({ page }) => {
+const TextbookPage = ({ page, toggleSettings, isSettings }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isWordCardOpen, setIsWordCardOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [currentGroup, setCurrentGroup] = useState(page);
   const [words, setWords] = useState([]);
+
+  const toggleWordCard = () => {
+    setIsWordCardOpen(!isWordCardOpen);
+  };
 
   async function fetchData() {
     await setIsLoading(true);
@@ -29,11 +33,10 @@ const TextbookPage = ({ page }) => {
   }, []);
 
   useEffect(() => {
-    console.log('words ', words);
-  }, [words]);
+    fetchData();
+  }, [currentPage]);
 
   useEffect(() => {
-    // setIsLoading(true);
     fetchData();
   }, [page]);
 
@@ -41,21 +44,38 @@ const TextbookPage = ({ page }) => {
 
   return (
     <main className="TextbookPage">
-      <SettingsButton />
+      <SettingsButton onClick={() => toggleSettings()} />
       <h2 className="Textbook__title">{`Раздел ${page}`}</h2>
       <GamesList />
       <WordList words={words} />
 
-      {/* {isWordCardOpen && (
+      <ReactPaginate
+        previousLabel={<i className="fa fa-arrow-left" aria-hidden="true" />}
+        nextLabel={<i className="fa fa-arrow-right" aria-hidden="true" />}
+        breakLabel="..."
+        breakClassName="break-me"
+        initialPage={currentPage}
+        pageCount={30}
+        pageRangeDisplayed={2}
+        marginPagesDisplayed={1}
+        onPageChange={(e) => setCurrentPage(e.selected)}
+        containerClassName="TextbookPage__pagination"
+        activeClassName="active"
+      />
+
+      {isWordCardOpen && (
       <WordCard
         wordData={words[0]}
         showNext={() => {}}
         showPreviouse={() => {}}
         deleteWord={() => {}}
         moveToDifficult={() => {}}
-        close={setIsWordCardOpen(!isWordCardOpen)}
+        close={toggleWordCard}
       />
-      )} */}
+      )}
+      {isSettings && (
+      <VocabluarySettings close={toggleSettings} />
+      )}
     </main>
   );
 };

@@ -9,12 +9,12 @@ const WordListItem = ({
   <>
     <div className="WorldListItem__image">
       <img
-        src={`${BACK_URL}${word.image}`}
+        src={`${BACK_URL}/${word.image}`}
         alt={word.word}
       />
     </div>
     <span className="WorldListItem__word">
-      <WordSoundButton onClick={() => playSound(`${BACK_URL}${word.audio}`)} />
+      <WordSoundButton onClick={() => playSound(`${BACK_URL}/${word.audio}`)} />
       <span className="word-card__word">
         {word.word}
       </span>

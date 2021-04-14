@@ -14,21 +14,18 @@ const Textbook = (props) => {
 
   const [page, setPage] = useState(section);
   const [isSettings, setIsSettings] = useState(false);
-  const [isWordCardOpen, setIsWordCardOpen] = useState(false);
 
   const toggleSettings = () => {
     setIsSettings((settings) => !settings);
-  };
-
-  const toggleWordCard = () => {
-    setIsWordCardOpen((isOpen) => !isOpen);
   };
 
   useEffect(() => {
     setPage(section);
   }, [section]);
 
-  if (page > 0) return <TextbookPage page={page} />;
+  if (page > 0) {
+    return <TextbookPage page={page} isSettings={isSettings} toggleSettings={toggleSettings} />;
+  }
 
   return (
     <div className="Textbook">
