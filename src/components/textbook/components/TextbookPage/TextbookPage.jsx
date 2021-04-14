@@ -16,9 +16,14 @@ const TextbookPage = ({ page, toggleSettings, isSettings }) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [currentGroup, setCurrentGroup] = useState(page);
   const [words, setWords] = useState([]);
+  const [currentWord, setCurrentWord] = useState(null);
 
   const toggleWordCard = () => {
     setIsWordCardOpen(!isWordCardOpen);
+  };
+
+  const changeCurrentWorld = (word) => {
+    setCurrentWord(word);
   };
 
   async function fetchData() {
@@ -47,7 +52,11 @@ const TextbookPage = ({ page, toggleSettings, isSettings }) => {
       <SettingsButton onClick={() => toggleSettings()} />
       <h2 className="Textbook__title" style={{ color: DIFFICULTY_COUNT_AND_COLORS[page - 1][1] }}>{`Раздел ${page}`}</h2>
       <GamesList />
-      <WordList words={words} />
+      <WordList
+        words={words}
+        toggleWordCard={() => toggleWordCard()}
+        changeCurrentWorld={changeCurrentWorld}
+      />
 
       <ReactPaginate
         previousLabel={<i className="fa fa-arrow-left" aria-hidden="true" />}
@@ -65,7 +74,7 @@ const TextbookPage = ({ page, toggleSettings, isSettings }) => {
 
       {isWordCardOpen && (
       <WordCard
-        wordData={words[0]}
+        wordData={currentWord}
         showNext={() => {}}
         showPreviouse={() => {}}
         deleteWord={() => {}}

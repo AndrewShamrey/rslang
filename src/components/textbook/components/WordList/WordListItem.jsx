@@ -4,7 +4,7 @@ import playSound from '../../../../utils/playSound';
 import { BACK_URL } from '../../../../utils/constants';
 
 const WordListItem = ({
-  word, statistic, moveToDifficult, deleteWord,
+  word, statistic, moveToDifficult, deleteWord, toggleWordCard, changeCurrentWorld,
 }) => (
   <>
     <div className="WorldListItem__image">
@@ -15,7 +15,13 @@ const WordListItem = ({
     </div>
     <span className="WorldListItem__word">
       <WordSoundButton onClick={() => playSound(`${BACK_URL}/${word.audio}`)} />
-      <span className="word-card__word">
+      <span
+        className="word-card__word"
+        onClick={() => {
+          toggleWordCard();
+          changeCurrentWorld(word);
+        }}
+      >
         {word.word}
       </span>
     </span>
