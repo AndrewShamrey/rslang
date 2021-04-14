@@ -1,18 +1,14 @@
-import { useCallback } from 'react';
-import {
-  STATISTICS_PAGE, EMPTY_STATS_SAVANNA, EMPTY_STATS_AUDIOCHALLENGE,
-  EMPTY_STATS_CONSTRUCTOR, EMPTY_STATS_SPRINT,
-} from '../../utils/content';
+import { STATISTICS_PAGE } from '../../utils/content';
 import dispatchShortTermStats from './dispatchShortTermStats';
 import './appStatisticsPage.scss';
 
 const AppStatisticsPage = () => {
-  const wordsOnDay = 78;
-  const successOnDay = 70;
   const wordsAll = 3000;
+
   const getData = dispatchShortTermStats();
-  const gameData = getData.length ? getData : [EMPTY_STATS_SAVANNA, EMPTY_STATS_AUDIOCHALLENGE,
-    EMPTY_STATS_CONSTRUCTOR, EMPTY_STATS_SPRINT];
+  const { gamesData: gameData, shortStats } = getData;
+  const wordsOnDay = shortStats.wordsLearned;
+  const successOnDay = shortStats.wordsSuccessful;
 
   return (
     <main className="app-stats-page">
