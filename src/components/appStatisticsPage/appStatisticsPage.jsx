@@ -3,7 +3,6 @@ import './appStatisticsPage.scss';
 import LineChart from './modules/LineChart';
 
 const AppStatisticsPage = () => {
-  console.log('stats');
   const wordsOnDay = 78;
   const successOnDay = 70;
   const wordsAll = 3000;

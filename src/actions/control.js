@@ -1,6 +1,6 @@
 import {
-  DO_SMTH,
   SET_PREV_STATE,
+  SET_CURRENT_PERSON,
   SET_IS_AUTHORIZED,
   SWITCH_GAME_SOUND,
   SET_AUDIOCHALLENGE_SETTINGS,
@@ -9,8 +9,11 @@ import {
   SET_WORDCONSTRUCTOR_SETTINGS,
 } from '../actionTypes/control';
 
-export const doSmth = (value) => ({ type: DO_SMTH, payload: value });
 export const setPrevState = (prevState) => ({ type: SET_PREV_STATE, prevState });
+export const setCurrentPerson = (person) => ({
+  type: SET_CURRENT_PERSON,
+  payload: person,
+});
 export const setIsAuthorized = (isAuthorized) => ({
   type: SET_IS_AUTHORIZED,
   payload: isAuthorized,
