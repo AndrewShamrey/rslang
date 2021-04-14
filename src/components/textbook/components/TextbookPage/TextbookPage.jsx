@@ -26,6 +26,21 @@ const TextbookPage = ({ page, toggleSettings, isSettings }) => {
     setCurrentWord(word);
   };
 
+  const showNextWord = () => {
+    const wordIndex = words.findIndex((el) => el.word === currentWord.word);
+    setCurrentWord(words[(wordIndex + 1) % words.length]);
+    console.log(wordIndex);
+  };
+
+  const showPrevWord = () => {
+    const wordIndex = words.findIndex((el) => el.word === currentWord.word);
+    setCurrentWord(
+      wordIndex === 0
+        ? words[words.length - 1]
+        : words[(wordIndex - 1) % words.length],
+    );
+  };
+
   async function fetchData() {
     await setIsLoading(true);
     const data = await fetch(`${BACK_URL}/words?page=${currentPage}&group=${currentGroup}`).then((d) => d.json());
@@ -75,8 +90,8 @@ const TextbookPage = ({ page, toggleSettings, isSettings }) => {
       {isWordCardOpen && (
       <WordCard
         wordData={currentWord}
-        showNext={() => {}}
-        showPreviouse={() => {}}
+        showNext={() => showNextWord()}
+        showPreviouse={() => showPrevWord()}
         deleteWord={() => {}}
         moveToDifficult={() => {}}
         close={toggleWordCard}
