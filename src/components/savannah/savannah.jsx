@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { FullScreen, useFullScreenHandle } from 'react-full-screen';
 import StartPage from '../startPage/startPage';
 import SavannahGamePage from './savannahGamePage/savannahGamePage';
 import GameSoundButton from '../gameSoundButton/gameSoundButton';
@@ -17,6 +18,20 @@ const Savannah = () => {
   const [page, setPage] = useState(null);
   const [gameResult, setGameResult] = useState({});
   const [backgroundPosition, setBackgroundPosition] = useState(100);
+
+  const handle = useFullScreenHandle();
+
+  const screenButton = handle.active ? (
+    <i className="fa fa-compress" />) : (<i className="fa fa-expand" />
+  );
+
+  const handleFullScreen = () => {
+    if (handle.active) {
+      handle.exit();
+    } else {
+      handle.enter();
+    }
+  };
 
   const startGame = () => {
     const randomPage = getRandomNumber(AMOUNT_OF_PAGES);
@@ -47,44 +62,49 @@ const Savannah = () => {
   };
 
   return (
-    <main className="savannah" style={{ backgroundPositionY: `${backgroundPosition}%` }}>
-      <GameSoundButton game={GAMES.savannah} />
-      {isStartPage && (
-        <>
-          <button
-            className="settings-btn"
-            type="button"
-            onClick={toggleSettings}
-          >
-            <i className="fas fa-cog" />
-          </button>
-          {isSettings && <GameSettings close={toggleSettings} />}
-          <StartPage
+    <FullScreen handle={handle}>
+      <main className="savannah" style={{ backgroundPositionY: `${backgroundPosition}%` }}>
+        <GameSoundButton game={GAMES.savannah} />
+        {isStartPage && (
+          <>
+            <button
+              className="settings-btn"
+              type="button"
+              onClick={toggleSettings}
+            >
+              <i className="fas fa-cog" />
+            </button>
+            {isSettings && <GameSettings close={toggleSettings} />}
+            <StartPage
+              game={GAMES.savannah}
+              startGame={startGame}
+              changeLevel={changeLevel}
+            />
+          </>
+        )}
+        {isStatisticsPage && (
+          <StatisticsPage
             game={GAMES.savannah}
-            startGame={startGame}
-            changeLevel={changeLevel}
+            gameResult={gameResult}
+            showStartPage={showStartPage}
           />
-        </>
-      )}
-      {isStatisticsPage && (
-        <StatisticsPage
-          game={GAMES.savannah}
-          gameResult={gameResult}
-          showStartPage={showStartPage}
-        />
-      )}
-      {!isStartPage && !isStatisticsPage && (
-        <>
-          <SavannahGamePage
-            level={level}
-            page={page}
-            showStatistics={showStatistics}
-            closeGame={closeGame}
-            setBackgroundPosition={setBackgroundPosition}
-          />
-        </>
-      )}
-    </main>
+        )}
+        {!isStartPage && !isStatisticsPage && (
+          <>
+            <SavannahGamePage
+              level={level}
+              page={page}
+              showStatistics={showStatistics}
+              closeGame={closeGame}
+              setBackgroundPosition={setBackgroundPosition}
+            />
+          </>
+        )}
+        <button type="button" className="savannah__fullscreen" onClick={handleFullScreen}>
+          {screenButton}
+        </button>
+      </main>
+    </FullScreen>
   );
 };
 

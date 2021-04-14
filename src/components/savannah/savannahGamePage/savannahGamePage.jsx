@@ -14,7 +14,6 @@ import getRandomNumber from '../../../utils/getRandomNumber';
 import error from '../../../assets/audio/error.mp3';
 import correct from '../../../assets/audio/correct.mp3';
 import { BACK_URL, AMOUNT_OF_PAGES } from '../../../utils/constants';
-// import { SAVANNAH_GAME_PAGE } from '../../../utils/content';
 
 import './savannahGamePage.scss';
 
@@ -299,8 +298,8 @@ const SavannahGamePage = ({
             answerId={answerId}
           />
         )}
+        <HelperBlock currentWord={currentWord} />
       </div>
-      <HelperBlock currentWord={currentWord} />
     </>
   );
 };

@@ -73,6 +73,21 @@
       text-transform: uppercase;
     }
   }
+
+  
+  &__fullscreen {
+    position: absolute;
+    left: 15px;
+    bottom: 30px;
+    @include styled__btn_outlined($themeBlue, $white, $white);
+
+    @media screen and (max-width: $size-sm) {
+      position: relative;
+      margin: 10px 0;
+      left: 0;
+      bottom: 0;
+    }
+  }
 }
 
 .settings-btn {
