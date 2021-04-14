@@ -29,7 +29,7 @@ const GameStart = () => {
       <Link
         className="WordConstructor__start-button"
         to={{
-          pathname: '/wordConstructor/game',
+          pathname: '/wordconstructor/game',
           aboutProps: {
             level,
           },

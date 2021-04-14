@@ -1,4 +1,5 @@
 import React from 'react';
+// eslint-disable-next-line import/no-unresolved
 import { Line } from 'react-chartjs-2';
 import './lineChart.scss';
 
