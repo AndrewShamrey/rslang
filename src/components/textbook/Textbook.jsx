@@ -7,11 +7,6 @@ import './Textbook.scss';
 
 const Textbook = (props) => {
   const { match: { params: { section } } } = props;
-  // location, location: { page },
-  // console.log('location ', location);
-  // console.log('page ', page);
-  // console.log('section ', section);
-
   const [page, setPage] = useState(section);
   const [isSettings, setIsSettings] = useState(false);
 
