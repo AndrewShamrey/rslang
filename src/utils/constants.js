@@ -5,7 +5,7 @@ export const AMOUNT_OF_GROUPS = 6;
 
 export const MAX_IMAGE_SIZE = 4000000;
 export const DEFAULT_PHOTO = DefaultPhoto;
-export const BACK_URL = 'https://react-learnwords-113.herokuapp.com/';
+export const BACK_URL = 'https://react-learnwords-113.herokuapp.com';
 export const MEDIA_URI = 'https://react-learnwords-example.herokuapp.com/';
 export const HTML_TAGS_REGEXP = /(<b>|<\/b>|<i>|<\/i>)/g;
 export const GAMES = {
@@ -74,3 +74,18 @@ export const LETTERS = [
   'y',
   'z',
 ];
+
+export const AUTHORIZATION_INFO = {
+  login: 'Вход',
+  signup: 'Регистрация',
+  signout: 'Выход',
+  name: 'Имя',
+  loginName: 'Email',
+  passName: 'Пароль',
+  defaultWarning: 'Неверный email или пароль!',
+  passwordWarning: 'Длина пароля должна быть хотя бы 8 символов.',
+  nickNameWarning: 'Этот email уже существует.',
+  imageSizeWarning: 'Максимальный размер изображения - 4МБ.',
+  serverError: 'Ошибка севера. Попробуйте позже.',
+  uploadPhoto: 'Загрузите свое фото',
+};
