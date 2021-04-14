@@ -7,7 +7,7 @@ import GamesList from '../GamesList/GamesList';
 import WordList from '../WordList/WordList';
 import SettingsButton from '../SettingsButton/SettingsButton';
 import WordCard from '../../../wordCard/wordCard';
-import { BACK_URL } from '../../../../utils/constants';
+import { BACK_URL, RSLANG_DATA_URL } from '../../../../utils/constants';
 import './TextbookPage.scss';
 
 const TextbookPage = ({ page }) => {
@@ -18,7 +18,8 @@ const TextbookPage = ({ page }) => {
   const [words, setWords] = useState([]);
 
   async function fetchData() {
-    const data = await fetch(`${BACK_URL}words?page=${currentPage}&group=${currentGroup}`).then((d) => d.json());
+    await setIsLoading(true);
+    const data = await fetch(`${BACK_URL}/words?page=${currentPage}&group=${currentGroup}`).then((d) => d.json());
     await setWords(data);
     await setIsLoading(false);
   }
@@ -32,7 +33,7 @@ const TextbookPage = ({ page }) => {
   }, [words]);
 
   useEffect(() => {
-    setIsLoading(true);
+    // setIsLoading(true);
     fetchData();
   }, [page]);
 

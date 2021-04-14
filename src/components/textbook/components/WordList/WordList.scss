@@ -56,6 +56,12 @@
     }
   }
 
+  &__wordTranslate {
+    .word-card__word-translate {
+      font-size: 18px;
+      margin: 0;
+    }
+  }
   &__transcription {
     width: 120px;
   }
