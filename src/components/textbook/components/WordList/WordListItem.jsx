@@ -1,6 +1,6 @@
 import React from 'react';
 
-const WorldListItem = ({ word, statistic }) => (
+const WordListItem = ({ word, statistic }) => (
   <>
     <div className="WorldListItem__image" />
     <span className="WorldListItem__word">{word.word}</span>
@@ -15,4 +15,4 @@ const WorldListItem = ({ word, statistic }) => (
   </>
 );
 
-export default WorldListItem;
+export default WordListItem;

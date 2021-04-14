@@ -1,15 +1,15 @@
 import React from 'react';
-import WorldListItem from './WorldListItem';
-import './WorldList.scss';
+import WordListItem from './WordListItem';
+import './WordList.scss';
 
-const WorldList = ({ words }) => (
+const WordList = ({ words }) => (
   <ul className="WorldList">
     {words.map((el, index) => (
       <li className="WorldList__item" key={index}>
-        <WorldListItem word={el} />
+        <WordListItem word={el} />
       </li>
     ))}
   </ul>
 );
 
-export default WorldList;
+export default WordList;
