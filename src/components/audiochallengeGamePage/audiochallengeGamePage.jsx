@@ -153,7 +153,7 @@ const AudiochallengeGamePage = ({ level, page, showStatistics }) => {
     }));
     setIsQuestion(true);
     setIsPreloader(false);
-    playSound(`${BACK_URL}${newCurrentWord.audio}`);
+    playSound(`${BACK_URL}/${newCurrentWord.audio}`);
   }, [gameData, showStatistics, generateWrongAnswersArray]);
 
   const getAnswer = ({ target }) => {
@@ -225,7 +225,7 @@ const AudiochallengeGamePage = ({ level, page, showStatistics }) => {
         answerId: undefined,
       }));
       setIsPreloader(false);
-      playSound(`${BACK_URL}${newCurrentWord.audio}`);
+      playSound(`${BACK_URL}/${newCurrentWord.audio}`);
     };
 
     startGame();

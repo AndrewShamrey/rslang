@@ -145,7 +145,7 @@ const SavannahGamePage = ({
     setIsQuestion(true);
     setIsPreloader(false);
     if (wordAudio) {
-      playSound(`${BACK_URL}${newCurrentWord.audio}`);
+      playSound(`${BACK_URL}/${newCurrentWord.audio}`);
     }
   }, [gameData, generateWrongAnswersArray, wordAudio, timeoutId, showStatistics]);
 
@@ -258,7 +258,7 @@ const SavannahGamePage = ({
       setIsPreloader(false);
 
       if (wordAudio) {
-        playSound(`${BACK_URL}${newCurrentWord.audio}`);
+        playSound(`${BACK_URL}/${newCurrentWord.audio}`);
       }
     };
 
