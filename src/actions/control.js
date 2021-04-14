@@ -7,6 +7,7 @@ import {
   SET_SPRINT_SETTINGS,
   SET_VOCABLUARY_SETTINGS,
   SET_WORDCONSTRUCTOR_SETTINGS,
+  SET_SAVANNAH_SETTINGS,
 } from '../actionTypes/control';
 
 export const doSmth = (value) => ({ type: DO_SMTH, payload: value });
@@ -29,5 +30,9 @@ export const setVocabluarySettings = (settings) => ({
 });
 export const setWordConstructorSettings = (settings) => ({
   type: SET_WORDCONSTRUCTOR_SETTINGS,
+  payload: settings,
+});
+export const setSavannahSettings = (settings) => ({
+  type: SET_SAVANNAH_SETTINGS,
   payload: settings,
 });

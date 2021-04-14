@@ -37,14 +37,9 @@ const initialState = {
   savannah: {
     isSound: true,
     amountOfAnswers: 5,
-    transcriptionQuestion: false,
+    wordAudio: false,
     meaningQuestion: false,
     exampleQuestion: false,
-    transcriptionAnswer: false,
-    meaningAnswer: false,
-    meaningTranslateAnswer: false,
-    exampleAnswer: false,
-    exampleTranslateAnswer: false,
   },
 };
 
@@ -79,6 +74,11 @@ const controlReducer = (state = initialState, action) => {
     case ACTION_TYPES.SET_WORDCONSTRUCTOR_SETTINGS:
       return produce(state, (draft) => {
         draft.wordConstructor.settings = action.payload;
+      });
+    case ACTION_TYPES.SET_SAVANNAH_SETTINGS:
+      return produce(state, (draft) => {
+        const { savannah } = draft;
+        draft.savannah = { ...savannah, ...action.payload };
       });
     default:
       return state;

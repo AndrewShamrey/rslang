@@ -7,6 +7,7 @@ import Preloader from '../../preloader/preloader';
 import StarsList from '../starsList/starsList';
 import playSound from '../../../utils/playSound';
 import CloseIconButton from '../../closeIconButton/closeIconButton';
+import HelperBlock from '../helperBlock/helperBlock';
 import shuffleArray from '../../../utils/shuffleArray';
 import WordsAPI from '../../../utils/wordsAPI';
 import getRandomNumber from '../../../utils/getRandomNumber';
@@ -22,6 +23,7 @@ const SavannahGamePage = ({
 }) => {
   const isSound = useSelector((state) => state.control.audiochallenge.isSound);
   const amountOfAnswers = useSelector((state) => state.control.audiochallenge.amountOfAnswers);
+  const wordAudio = useSelector((state) => state.control.audiochallenge.wordAudio);
 
   const amountOfStars = 5;
 
@@ -143,8 +145,10 @@ const SavannahGamePage = ({
     }));
     setIsQuestion(true);
     setIsPreloader(false);
-    // playSound(`${BACK_URL}${newCurrentWord.audio}`);
-  }, [gameData, generateWrongAnswersArray, timeoutId, showStatistics]);
+    if (wordAudio) {
+      playSound(`${BACK_URL}${newCurrentWord.audio}`);
+    }
+  }, [gameData, generateWrongAnswersArray, wordAudio, timeoutId, showStatistics]);
 
   const getCorrectAnswer = useCallback((id, answer) => {
     const [currentSeries, longestSeries] = getAnswersSeries();
@@ -253,11 +257,14 @@ const SavannahGamePage = ({
       }));
       setBgStep(Math.floor(100 / words.length));
       setIsPreloader(false);
-      // playSound(`${BACK_URL}${newCurrentWord.audio}`); // can be optional
+
+      if (wordAudio) {
+        playSound(`${BACK_URL}${newCurrentWord.audio}`);
+      }
     };
 
     startGame();
-  }, [generateWrongAnswersArray, getWrongAnswersData, level, page, wordsAPI]);
+  }, [generateWrongAnswersArray, getWrongAnswersData, level, page, wordAudio, wordsAPI]);
 
   useEffect(() => {
     document.addEventListener('keydown', keyboardEvents);
@@ -293,6 +300,7 @@ const SavannahGamePage = ({
           />
         )}
       </div>
+      <HelperBlock currentWord={currentWord} />
     </>
   );
 };
