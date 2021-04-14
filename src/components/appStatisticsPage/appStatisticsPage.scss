@@ -151,7 +151,7 @@
       border: 1px solid $purple-blend;
       margin-bottom: 1rem;
       min-height: 80px;
-      
+
       > h2 {
         color: $blue;
         padding: 10px;
@@ -177,5 +177,8 @@
     &_graph2 {
       background-color: $purple-blend;
     }
+  }
+  &__login-message {
+    margin-top: 50px;
   }
 }

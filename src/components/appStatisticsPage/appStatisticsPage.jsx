@@ -1,8 +1,11 @@
+import { useDispatch, useSelector } from 'react-redux';
 import { STATISTICS_PAGE } from '../../utils/content';
 import './appStatisticsPage.scss';
 import LineChart from './modules/LineChart';
 
 const AppStatisticsPage = () => {
+  const isAuthorized = useSelector((rootState) => rootState.control.isAuthorized);
+
   const wordsOnDay = 78;
   const successOnDay = 70;
   const wordsAll = 3000;
@@ -90,17 +93,9 @@ const AppStatisticsPage = () => {
           ))}
         </div>
       </div>
-      <div className="app-stats-page__long">
-        <div className="app-stats-page__long_heading">
-          <h2>
-            {STATISTICS_PAGE.longHeader}
-          </h2>
-          <div className="app-stats-page__long_heading_brief">
-            {`${STATISTICS_PAGE.wordsWholeTime}: ${wordsAll}`}
-          </div>
-        </div>
-        <LineChart />
-      </div>
+      {isAuthorized
+        ? <LineChart />
+        : <h2 className="app-stats-page__login-message">Войдите для получения долгосрочной статистики</h2>}
     </main>
   );
 };
