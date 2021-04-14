@@ -2,7 +2,7 @@
 
 .DeveloperCard {
   width: 400px;
-  min-height: 300px;
+  min-height: 200px;
   padding: 20px;
   display: flex;
   align-items: center;
@@ -10,7 +10,6 @@
   border-radius: 6px;
   box-shadow: 4px 6px 10px -3px $shadowGrey;
   position: relative;
-  cursor: pointer;
 
   &:hover {
     box-shadow: 4px 6px 10px 5px $shadowGrey;
@@ -32,6 +31,7 @@
   &__title {
     font-size: 20px;
     text-align: center;
+    color: $blue;
   }
 
   &__text {
