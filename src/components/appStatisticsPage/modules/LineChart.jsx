@@ -1,10 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Line } from 'react-chartjs-2';
-import { useDispatch, useSelector } from 'react-redux';
-import Preloader from '../../wordConstructor/Game/components/Preloader';
-import { BACK_URL } from '../../../utils/constants';
-import { STATISTICS_PAGE } from '../../../utils/content';
-import FetchData from '../../../utils/fetchData';
 import './lineChart.scss';
 
 const options = {

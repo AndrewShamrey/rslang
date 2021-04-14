@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { FullScreen, useFullScreenHandle } from 'react-full-screen';
 import StartPage from '../startPage/startPage';
 import AudiochallengeGamePage from '../audiochallengeGamePage/audiochallengeGamePage';
 import GameSoundButton from '../gameSoundButton/gameSoundButton';
@@ -17,6 +18,20 @@ const Audiochallenge = () => {
   const [level, setLevel] = useState(0);
   const [page, setPage] = useState(null);
   const [gameResult, setGameResult] = useState({});
+
+  const handle = useFullScreenHandle();
+
+  const screenButton = handle.active ? (
+    <i className="fa fa-compress" />) : (<i className="fa fa-expand" />
+  );
+
+  const handleFullScreen = () => {
+    if (handle.active) {
+      handle.exit();
+    } else {
+      handle.enter();
+    }
+  };
 
   const startGame = () => {
     const randomPage = getRandomNumber(AMOUNT_OF_PAGES);
@@ -47,9 +62,10 @@ const Audiochallenge = () => {
   };
 
   return (
-    <main className="audiochallenge">
-      <GameSoundButton game="audiochallenge" />
-      {isStartPage && (
+    <FullScreen handle={handle}>
+      <main className="audiochallenge">
+        <GameSoundButton game="audiochallenge" />
+        {isStartPage && (
         <>
           <button
             className="settings-btn"
@@ -65,15 +81,15 @@ const Audiochallenge = () => {
             changeLevel={changeLevel}
           />
         </>
-      )}
-      {isStatisticsPage && (
+        )}
+        {isStatisticsPage && (
         <StatisticsPage
           game={GAMES.audiochallenge}
           gameResult={gameResult}
           showStartPage={showStartPage}
         />
-      )}
-      {!isStartPage && !isStatisticsPage && (
+        )}
+        {!isStartPage && !isStatisticsPage && (
         <>
           <CloseIconButton
             additionalClassName="audiochallenge__close-btn"
@@ -85,8 +101,12 @@ const Audiochallenge = () => {
             showStatistics={showStatistics}
           />
         </>
-      )}
-    </main>
+        )}
+        <button type="button" className="audiochallenge__fullscreen" onClick={handleFullScreen}>
+          {screenButton}
+        </button>
+      </main>
+    </FullScreen>
   );
 };
 

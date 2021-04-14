@@ -12,6 +12,7 @@ export const GAMES = {
   audiochallenge: 'audiochallenge',
   sprint: 'sprint',
   wordConstructor: 'wordConstructor',
+  savanna: 'savanna',
 };
 
 export const VIDEO_URL = 'https://media.w3.org/2010/05/sintel/trailer_hd.mp4';
@@ -41,7 +42,8 @@ export const MAIN_PAGE_TEXT = {
     Andrey: 'Тимлид на полставки. Работа с бэкэндом. Страницы регистрации и входа.',
     Eugenia: 'Массовик-затейник на полставки. Мини-игра "Спринт". Верстка страницы статистики.',
     Inna: 'Дизайн приложения. Долговременная статистика, работа с графиками.',
-    Julia: 'Авторизация. Мини-игра "Аудиовызов". Сохранение кратковременой статистики. Страница  результатов мини-игр.',
+    Julia:
+      'Авторизация. Мини-игра "Аудиовызов". Сохранение кратковременой статистики. Страница  результатов мини-игр.',
     Samvel: 'Главная страница. Мини-игра "Конструктор слов". Учебник.',
   },
 };
@@ -73,6 +75,24 @@ export const LETTERS = [
   'y',
   'z',
 ];
+export const GAME_NAMES = [
+  {
+    name: 'Аудиовызов',
+    path: '/audiochallenge',
+  },
+  {
+    name: 'Конструктор слов',
+    path: '/wordconstructor',
+  },
+  {
+    name: 'Саванна',
+    path: '/savannah',
+  },
+  {
+    name: 'Спринт',
+    path: '/sprint',
+  },
+];
 
 export const AUTHORIZATION_INFO = {
   login: 'Вход',
@@ -88,3 +108,13 @@ export const AUTHORIZATION_INFO = {
   serverError: 'Ошибка севера. Попробуйте позже.',
   uploadPhoto: 'Загрузите свое фото',
 };
+
+export const DIFFICULTY_COUNT_AND_COLORS = [
+  [1, '#9bff00'],
+  [2, '#00cf01'],
+  [3, '#ffe600'],
+  [4, '#ffaa32'],
+  [5, '#ff1e5a'],
+  [6, '#c40050'],
+];
+export const GAMES_BG_COLORS = ['#fcecdf', '#c2d1d3', '#c6d3cf', '#eec8da'];

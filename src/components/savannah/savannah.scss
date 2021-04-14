@@ -1,0 +1,110 @@
+@import '../../sass/colors.scss';
+@import '../../sass/breakpoints.scss';
+@import '../../sass/defaultComponentsStyles.scss';
+
+.savannah {
+  padding: 45px 0; 
+  width: 100%;
+  min-height: 100%;
+  height: fit-content;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.5s linear;
+  background: url(../../assets//images/savannah-bg.svg);  
+  background-repeat: no-repeat;
+  background-position-y: 100%;
+  background-position-x: center;
+  position: relative;
+  transition: all 1s ease;
+
+  * {    
+    outline-color: $lightBlue;
+    outline-offset: 2px;
+  }
+
+  &__close-btn {
+    font-size: 30px;
+    color: $white;
+    line-height: 1;
+    position: absolute;  
+    top: 30px;
+    right: 60px;
+
+    @media (max-width: $size-lg) {
+      top: 10px;
+      right: 30px;
+    }
+  }
+
+  .start-page {
+    &__about {
+      margin: 0 auto;
+      max-width: 768px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+  
+    &__select {
+      @include styled__btn_outlined($themeGreen, $white, $white);
+      margin-bottom: 30px;
+      padding: 0.4rem 1rem;
+      width: 150px;  
+      font-size: 14px;
+      font-weight: 900;
+      text-transform: uppercase;
+  
+      &:hover {
+        transform: none;
+      }
+    }
+  
+    &__description {
+      margin: 0 10px 50px;
+    }
+    
+    &__start {
+      @include styled__btn_outlined($themeGreen, $white, $white);
+      width: 150px;
+      font-size: 17px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+  }
+
+  
+  &__fullscreen {
+    position: absolute;
+    left: 15px;
+    bottom: 30px;
+    @include styled__btn_outlined($themeBlue, $white, $white);
+
+    @media screen and (max-width: $size-sm) {
+      position: relative;
+      margin: 10px 0;
+      left: 0;
+      bottom: 0;
+    }
+  }
+}
+
+.settings-btn {
+  width: 30px;
+  height: 30px;
+  font-size: 30px;
+  color: $white;
+  text-align: center;
+  border: none;
+  background-color: transparent;
+  position: absolute;
+  top: 30px;
+  right: 60px;
+  cursor: pointer;
+
+  @media (max-width: $size-lg) {
+    top: 10px;
+    right: 30px;
+  }
+}

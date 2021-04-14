@@ -9,12 +9,14 @@ import { WORD_CARD } from '../../utils/content';
 import './wordCard.scss';
 
 const WordCard = ({
-  wordData,
+  wordData = {},
   showNext = () => {},
   showPreviouse = () => {},
   deleteWord = () => {},
   moveToDifficult = () => {},
   close = () => {},
+  gameStats = true,
+  controls = true,
 }) => {
   const displayTranslations = useSelector((state) => (
     state.control.vocabluary.settings.displayTranslations
@@ -39,7 +41,7 @@ const WordCard = ({
     let i = 0;
 
     const playAudioSet = () => {
-      const audiofile = playSound(`${BACK_URL}${audioSrcSet[i]}`);
+      const audiofile = playSound(`${BACK_URL}/${audioSrcSet[i]}`);
       i += 1;
 
       if (i < audioSrcSet.length) {
@@ -59,7 +61,7 @@ const WordCard = ({
         />
         <img
           className="word-card__img"
-          src={`${BACK_URL}${image}`}
+          src={`${BACK_URL}/${image}`}
           alt={word}
         />
         <div className="word-card__word-block">
@@ -82,28 +84,32 @@ const WordCard = ({
             <p className="word-card__example-translate">{textExampleTranslate}</p>
           )}
         </div>
-        <WordCardTable
-          deleteWord={deleteWord}
-          moveToDifficult={moveToDifficult}
-        />
-        <div className="word-card__controls">
-          <button
-            className="word-card__control"
-            type="button"
-            onClick={showPreviouse}
-          >
-            <i className="fas fa-chevron-left" />
-            {` ${WORD_CARD.previoseWord}`}
-          </button>
-          <button
-            className="word-card__control"
-            type="button"
-            onClick={showNext}
-          >
-            {`${WORD_CARD.nextWord} `}
-            <i className="fas fa-chevron-right" />
-          </button>
-        </div>
+        {gameStats && (
+          <WordCardTable
+            deleteWord={deleteWord}
+            moveToDifficult={moveToDifficult}
+          />
+        )}
+        {controls && (
+          <div className="word-card__controls">
+            <button
+              className="word-card__control"
+              type="button"
+              onClick={showPreviouse}
+            >
+              <i className="fas fa-chevron-left" />
+              {` ${WORD_CARD.previoseWord}`}
+            </button>
+            <button
+              className="word-card__control"
+              type="button"
+              onClick={showNext}
+            >
+              {`${WORD_CARD.nextWord} `}
+              <i className="fas fa-chevron-right" />
+            </button>
+          </div>
+        )}
       </div>
     </Backdrop>
   );

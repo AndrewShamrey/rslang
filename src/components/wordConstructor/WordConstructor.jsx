@@ -10,10 +10,10 @@ const WordConstructor = () => (
   <Router>
     <div className="WordConstructor">
       <Switch>
-        <Route path="/wordConstructor/start" render={() => <GameStart />} />
-        <Route path="/wordConstructor/game" component={GamePlay} />
+        <Route path="/wordconstructor/start" render={() => <GameStart />} />
+        <Route path="/wordconstructor/game" component={GamePlay} />
       </Switch>
-      <Redirect to="/wordConstructor/start" />
+      <Redirect to="/wordconstructor/start" />
     </div>
   </Router>
 

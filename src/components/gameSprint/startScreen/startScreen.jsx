@@ -6,19 +6,14 @@ import './startScreen.scss';
 const StartScreen = ({
   setGameStarted, setAllWords, page, setWordsCount, level, isNoSelect,
 }) => {
-  // console.log(page, level, isNoSelect);
   const [selectValue, setSelectValue] = useState(level);
   const { sprint } = START_PAGE;
-
-  // console.log('level: ', selectValue);
 
   const submitHandler = (e) => {
     e.preventDefault();
     const pagesForGame = getPagesURLs(selectValue, page, isNoSelect);
     const { pages, pagesCount } = pagesForGame;
     if (pagesCount) setWordsCount(pagesCount);
-
-    // console.log('pagesForGame ', pagesForGame);
 
     getWords(pages)
       .then((data) => setAllWords(data))
