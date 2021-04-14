@@ -9,17 +9,11 @@ export default class FetchData {
     return this._defaultMethod('POST', 'signin', null, null, body);
   }
 
-  postNewPerson(body) {
-    return this._defaultMethod('POST', 'users', null, null, body);
-  }
+  postNewPerson = (body) => this._defaultMethod('POST', 'users', null, null, body);
 
-  getWords(page = 0, group = 0) {
-    return this._defaultMethod('GET', `words?page=${page}&group=${group}`);
-  }
+  getWords = (page = 0, group = 0) => this._defaultMethod('GET', `words?page=${page}&group=${group}`);
 
-  getUsersWords(userId, token) {
-    return this._defaultMethod('GET', 'users', userId, 'words', null, null, token);
-  }
+  getUsersWords = (userId, token) => this._defaultMethod('GET', 'users', userId, 'words', null, null, token);
 
   _defaultMethod(method, path = '', name = '', pass = '', body = '', id = '', token = '') {
     const paths = [this.baseUrl, path, name, pass, id];
@@ -39,26 +33,5 @@ export default class FetchData {
     }
 
     return fetch(fetchUrl, fetchObj).then((response) => response.json());
-
-    //   if (method === 'GET') {
-    //     return fetch(`${this.baseUrl}/${path}/${name}/${pass}`, {
-    //       method,
-    //       headers,
-    //     }).then((response) => response.json());
-    //   }
-
-    //   if (!id) {
-    //     return fetch(`${this.baseUrl}/${path}`, {
-    //       method,
-    //       body,
-    //       headers,
-    //     }).then((resp) => resp.json());
-    //   }
-
-    //   return fetch(`${this.baseUrl}/${path}/${id}`, {
-    //     method,
-    //     body,
-    //     headers,
-    //   });
   }
 }
