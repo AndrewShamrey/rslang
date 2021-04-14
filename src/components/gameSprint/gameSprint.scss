@@ -1,0 +1,59 @@
+@import './helpers/sprintColors.scss';
+@import '../../sass/breakpoints.scss';
+@import '../../sass/colors.scss';
+@import '../../sass/defaultComponentsStyles.scss';
+
+.game-sprint {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-image: url('../../assets/images/sprint/intro.jpg');
+  background-position: center;
+  background-size: cover;
+
+  .timer {
+    position: absolute;
+    left: 15px;
+    top: 10px;
+    font-family: 'Courier New', Courier, monospace;
+    border-radius: 50%;
+    border: 2px dashed $themeGreen;
+    color: $themeGreen;
+    background-color: transparent;
+    width: 35px;
+    height: 35px;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &.red {
+      border-color: $themeRed;
+      color: $themeRed;
+    }
+
+    @media screen and (max-width: $size-sm) {
+      position: relative;
+      margin-bottom: 10px;
+      left: 0;
+      bottom: 0;
+    }
+  }
+  &__fullscreen {
+    position: absolute;
+    left: 15px;
+    bottom: 30px;
+    @include styled__btn_outlined($darkgreen, $purpleTransparent, $purple);
+
+    @media screen and (max-width: $size-sm) {
+      position: relative;
+      margin: 10px 0;
+      left: 0;
+      bottom: 0;
+    }
+  }
+}

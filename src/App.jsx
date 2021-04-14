@@ -9,6 +9,7 @@ import Header from './components/header/Header';
 import Footer from './components/footer/footer';
 import MainPage from './components/mainPage/MainPage';
 import ErrorPage from './components/errorPage/errorPage';
+import GameSprint from './components/gameSprint/gameSprint';
 import WordConstructor from './components/wordConstructor/WordConstructor';
 import Audiochallenge from './components/audiochallenge/audiochallenge';
 import AppStatisticsPage from './components/appStatisticsPage/appStatisticsPage';
@@ -110,7 +111,7 @@ function App() {
             <Audiochallenge />
           </Route>
           <Route exact path="/sprint">
-            <h1>Спринт</h1>
+            <GameSprint />
           </Route>
           <Route exact path="/wordconstructor">
             <WordConstructor />

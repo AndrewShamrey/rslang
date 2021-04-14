@@ -5,6 +5,13 @@ export const START_PAGE = {
   },
   level: 'Уровень',
   start: 'Начать',
+  sprint: {
+    title: 'Спринт',
+    descrLine1: 'Истинная гонка на проверку знаний!',
+    descrLine2: 'Укажите, верный ли перевод слова.',
+    selectLabel: 'Выберите уровень сложности:',
+    start: 'Начать игру',
+  },
 };
 
 export const RESULT_PAGE = {
@@ -42,4 +49,24 @@ export const WORD_CARD_TABLE = {
   wordConstructor: 'Конструктор слов',
   difficult: 'Сложные',
   delete: 'Удалить',
+};
+
+export const STATISTICS_PAGE = {
+  title: 'Статистика',
+  shortHeader: 'За сегодня',
+  wordsLearned: 'Изучено слов',
+  rightsPercent: 'Правильных ответов',
+  longestSeries: 'Самая длинная серия',
+  savannaName: 'Саванна',
+  audioName: 'Аудиовызов',
+  constructorName: 'Конструктор слов',
+  sprintName: 'Спринт',
+  longHeader: 'За все время',
+  wordsWholeTime: 'Всего изучено слов',
+};
+
+export const SPRINT_GAME = {
+  points: 'баллов',
+  right: 'Верно',
+  wrong: 'Неверно',
 };
