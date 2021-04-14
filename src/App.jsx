@@ -1,17 +1,19 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  BrowserRouter as Router, Switch, Route, Redirect,
+  BrowserRouter as Router, Switch, Route,
 } from 'react-router-dom';
-import { setPrevState, doSmth } from './actions/control';
+import { setPrevState } from './actions/control';
 import ScrollToTop from './components/scrollToTop/scrollToTop';
 import Header from './components/header/Header';
 import Footer from './components/footer/footer';
 import MainPage from './components/mainPage/MainPage';
 import ErrorPage from './components/errorPage/errorPage';
+import GameSprint from './components/gameSprint/gameSprint';
 import WordConstructor from './components/wordConstructor/WordConstructor';
 import Audiochallenge from './components/audiochallenge/audiochallenge';
 import Textbook from './components/textbook/Textbook';
+import AppStatisticsPage from './components/appStatisticsPage/appStatisticsPage';
 import './App.scss';
 
 function App() {
@@ -27,10 +29,6 @@ function App() {
     if (prevState) {
       dispatch(setPrevState(prevState));
     }
-  };
-
-  const handleSmth = () => {
-    dispatch(doSmth(2));
   };
 
   useEffect(() => {
@@ -59,11 +57,11 @@ function App() {
             <Audiochallenge />
           </Route>
           <Route exact path="/sprint">
-            <h1>Спринт</h1>
+            <GameSprint />
           </Route>
           <Route exact path="/wordConstructor" component={WordConstructor} />
           <Route exact path="/statistics">
-            <h1>Статистика</h1>
+            <AppStatisticsPage />
           </Route>
           <Route path="/authorization">
             <h1>Авторизация</h1>

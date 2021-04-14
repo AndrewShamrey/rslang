@@ -1,0 +1,103 @@
+@import '../../../sass/transitions.scss';
+@import '../../../sass/colors.scss';
+@import '../../../sass/defaultComponentsStyles.scss';
+@import '../helpers/sprintColors.scss';
+
+.game-controls {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 400px;
+  position: relative;
+  height: 30px;
+  > .sound {
+    top: 0;
+    left: 0;
+    position: relative;
+    display: flex;
+    &__off:after {
+      background-color: $darkgreen;
+    }
+    > i {
+      color: $darkgreen;
+    }
+  }
+  &__score {
+    font-size: 16px;
+    font-family: 'Courier New', Courier, monospace;
+    color: $darkgreen;
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding: 5px;
+    width: 100px;
+    border-radius: 4px;
+    background-color: $purpleTransparent;
+    text-align: center;
+  }
+  &__close-btn {
+    display: flex;
+    margin: 0;
+  }
+}
+.game-play {
+  margin: 10px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+  border-radius: 4px;
+  width: 400px;
+  height: 400px;
+  background-color: $purpleTransparent;
+  box-shadow: 0 0 5px 2px #3e2c41;
+
+  &__upper {
+    height: 30px;
+    padding: 10px;
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+
+    &_text {
+      text-align: center;
+    }
+  }
+  
+  &__word, &__translation {
+    font-size: 20px;
+    align-self: center;
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: space-around;
+
+    &_block {
+      display: flex;
+      flex-direction: column;
+
+      .answer-button {
+        cursor: pointer;
+        border-radius: 4px;
+        width: 150px;
+        transition: $color-transition;
+  
+        &.right {
+          @include styled__btn_solid($lightGreen, $darkgreen);
+        }
+        &.wrong {
+          @include styled__btn_solid($lightRed, $darkgreen);
+        }
+      }
+      > i {
+        font-size: 1.3rem;
+        color: $darkgreen;
+        text-align: center;
+        margin-top: 10px;
+        opacity: 0.8;
+      }
+    }
+  }
+}

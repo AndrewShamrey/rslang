@@ -1,0 +1,181 @@
+@import '../../sass/colors.scss';
+@import '../../sass/breakpoints.scss';
+
+.app-stats-page {
+  width: 100%;
+  color: $text-dark;
+  background: $bgLightGrey;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  >h1 {
+    margin-bottom: 2rem;
+    color: $blue;
+  }
+
+  @media screen and (max-width: $size-md) {
+    padding: 10px;
+  }
+
+  &__short {
+    width: 100%;
+    margin: 10px 0;
+    max-width: $size-xxl;
+
+    &_heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 4px;
+      border: 1px solid $purple-blend;
+      margin-bottom: 1rem;
+      
+      > h2 {
+        color: $blue;
+        padding: 10px;
+      }
+
+      &_brief {
+        display: flex;
+        flex-direction: column;
+        border-left: 1px solid $purple-blend;
+        color: $themepurple;
+        border-radius: 4px;
+        padding: 10px 30px;
+
+        > .words, .percent {
+          margin: 5px 0;
+        }
+      }
+    }
+    &_games {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+
+      > .game-container {
+        display: grid;
+        grid-template-areas: 
+          "title title title"
+          "subhead-seria subhead-words subhead-percent"
+          "data-seria data-words data-percent";
+        grid-auto-rows: minmax(50px, 1fr);
+        grid-auto-columns: minmax(200px, 1fr);
+        gap: 5px;
+        border-radius: 4px;
+        padding: 5px;
+        margin: 10px;
+        align-items: center;
+        box-shadow: 0 0 5px 2px $secondary;
+
+        @media screen and (max-width: $size-md) {
+          grid-auto-columns: minmax(150px, 1fr);
+        }
+
+        > .item {
+          border-radius: 4px;
+          border: 1px solid $secondary;
+          width: 100%;
+          height: 100%;
+          text-align: center;
+          padding-top: 1rem;
+          background-color: $grey-transparent;
+
+          @media screen and (max-width: $size-md) {
+            padding-top: 0.5rem;
+          }
+        }
+
+        .game-title {
+          grid-area: title;
+          text-align: center;
+          color: inherit;
+        }
+        .game-seria {
+          grid-area: subhead-seria;
+        }
+        .game-word {
+          grid-area: subhead-words;
+        }
+        .game-percent {
+          grid-area: subhead-percent;
+        }
+        .data-seria {
+          grid-area: data-seria;
+        }
+        .data-word {
+          grid-area: data-words;
+        }
+        .data-percent {
+          grid-area: data-percent;
+        }
+
+        &.savanna {
+          background-color: $teal-blend;
+          > .game-title {
+            color: $themegreen;
+          }
+        }
+        &.audio-game {
+          background-color: $orange-blend;
+          > .game-title {
+            color: $themeorange;
+          }
+        }
+        &.constructor {
+          background-color: $cyan-blend;
+          > .game-title {
+            color: $primary;
+          }
+        }
+        &.sprint {
+          background-color: $pink-blend;
+          > .game-title {
+            color: $themepink;
+          }
+        }
+      }
+    }
+  }
+  &__long {
+    width: 100%;
+    margin: 10px 0;
+    max-width: $size-xxl;
+
+    &_heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 4px;
+      border: 1px solid $purple-blend;
+      margin-bottom: 1rem;
+      min-height: 80px;
+      
+      > h2 {
+        color: $blue;
+        padding: 10px;
+      }
+      &_brief {
+        border-left: 1px solid $purple-blend;
+        color: $themepurple;
+        border-radius: 4px;
+        padding: 30px;
+      }
+    }
+    &_graph1, &_graph2 {
+      justify-content: center;
+      min-height: 200px;
+      padding: 10px;
+      margin: 20px;
+      border-radius: 4px;
+      box-shadow: 0 0 5px 2px $secondary;
+    }
+    &_graph1 {
+      background-color: $yellow-blend;
+    }
+    &_graph2 {
+      background-color: $purple-blend;
+    }
+  }
+}
