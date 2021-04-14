@@ -11,9 +11,8 @@ const StarsList = ({ amount, starsLeft }) => {
     }
   }
 
-  // console.log(starsArr);
   return (
-    <div>
+    <div className="stars-block">
       {starsArr}
     </div>
   );

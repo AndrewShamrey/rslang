@@ -1,0 +1,18 @@
+@import '../../../sass/colors.scss';
+@import '../../../sass/breakpoints.scss';
+
+.stars-block {
+  font-size: 20px;
+  position: absolute;
+  top: 30px;
+  color: $orange;
+
+  @media (max-width: $size-md) {
+    top: 10px;
+  }
+
+  i {
+    font-size: inherit;
+    color: inherit
+  }
+}

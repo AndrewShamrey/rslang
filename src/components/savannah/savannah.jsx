@@ -1,15 +1,13 @@
 import { useState } from 'react';
 import StartPage from '../startPage/startPage';
-// import AudiochallengeGamePage from '../audiochallengeGamePage/audiochallengeGamePage';
 import SavannahGamePage from './savannahGamePage/savannahGamePage';
 import GameSoundButton from '../gameSoundButton/gameSoundButton';
-import CloseIconButton from '../closeIconButton/closeIconButton';
 import StatisticsPage from '../statisticPage/statisticsPage';
-import GameSettings from '../gameSettings/gameSettings';
+import GameSettings from './gameSettings/gameSettings';
 import getRandomNumber from '../../utils/getRandomNumber';
 import { AMOUNT_OF_PAGES, GAMES } from '../../utils/constants';
 
-// import './audiochallenge.scss';
+import './savannah.scss';
 
 const Savannah = () => {
   const [isStartPage, setIsStartPage] = useState(true);
@@ -18,6 +16,7 @@ const Savannah = () => {
   const [level, setLevel] = useState(0);
   const [page, setPage] = useState(null);
   const [gameResult, setGameResult] = useState({});
+  const [backgroundPosition, setBackgroundPosition] = useState(100);
 
   const startGame = () => {
     const randomPage = getRandomNumber(AMOUNT_OF_PAGES);
@@ -48,7 +47,7 @@ const Savannah = () => {
   };
 
   return (
-    <main className="audiochallenge">
+    <main className="savannah" style={{ backgroundPositionY: `${backgroundPosition}%` }}>
       <GameSoundButton game={GAMES.savannah} />
       {isStartPage && (
         <>
@@ -76,14 +75,12 @@ const Savannah = () => {
       )}
       {!isStartPage && !isStatisticsPage && (
         <>
-          <CloseIconButton
-            additionalClassName="audiochallenge__close-btn"
-            onClick={closeGame}
-          />
           <SavannahGamePage
             level={level}
             page={page}
             showStatistics={showStatistics}
+            closeGame={closeGame}
+            setBackgroundPosition={setBackgroundPosition}
           />
         </>
       )}

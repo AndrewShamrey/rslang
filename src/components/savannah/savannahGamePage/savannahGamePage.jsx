@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import {
   useState, useEffect, useCallback, useMemo,
 } from 'react';
@@ -6,20 +5,21 @@ import { useSelector } from 'react-redux';
 import WordList from '../../wordList/wordList';
 import Preloader from '../../preloader/preloader';
 import StarsList from '../starsList/starsList';
-// import QuestionBlock from '../questionBlock/questionBlock';
 import playSound from '../../../utils/playSound';
+import CloseIconButton from '../../closeIconButton/closeIconButton';
 import shuffleArray from '../../../utils/shuffleArray';
-import WordsAPI from '../../../assets/services/wordsAPI';
+import WordsAPI from '../../../utils/wordsAPI';
 import getRandomNumber from '../../../utils/getRandomNumber';
 import error from '../../../assets/audio/error.mp3';
 import correct from '../../../assets/audio/correct.mp3';
-import { MEDIA_URI, AMOUNT_OF_PAGES } from '../../../utils/constants';
-import { AUDIOCHALLENGE_GAME_PAGE } from '../../../utils/content';
+import { BACK_URL, AMOUNT_OF_PAGES } from '../../../utils/constants';
+// import { SAVANNAH_GAME_PAGE } from '../../../utils/content';
 
-// import '../../au./audiochallengeGamePage.scss';
 import './savannahGamePage.scss';
 
-const Savannah = ({ level, page, showStatistics }) => {
+const SavannahGamePage = ({
+  level, page, showStatistics, closeGame, setBackgroundPosition,
+}) => {
   const isSound = useSelector((state) => state.control.audiochallenge.isSound);
   const amountOfAnswers = useSelector((state) => state.control.audiochallenge.amountOfAnswers);
 
@@ -40,10 +40,17 @@ const Savannah = ({ level, page, showStatistics }) => {
     answerId: null,
   });
   const [starsLeft, setStarsLeft] = useState(amountOfStars);
+  const [timeoutId, setTimeoutId] = useState(null);
+  const [bgStep, setBgStep] = useState(0);
 
   const wordsAPI = useMemo(() => new WordsAPI(), []);
 
   const { answers, answerId, currentWord } = gameData;
+
+  const close = () => {
+    clearTimeout(timeoutId);
+    closeGame();
+  };
 
   const playGameSound = useCallback((sound) => {
     if (isSound) {
@@ -100,24 +107,33 @@ const Savannah = ({ level, page, showStatistics }) => {
     return answersArr;
   }, [amountOfAnswers]);
 
-  const nextWord = useCallback((e) => {
-    e?.target?.blur();
+  useEffect(() => {
+    const {
+      correctAnswers, incorrectAnswers, longestSeries,
+    } = gameData;
+
+    if (!starsLeft) {
+      clearTimeout(timeoutId);
+      showStatistics(correctAnswers, incorrectAnswers, longestSeries);
+    }
+  }, [gameData, showStatistics, starsLeft, timeoutId]);
+
+  const nextWord = useCallback(() => {
     setIsPreloader(true);
 
     const {
       words, wrongAnswersData, correctAnswers, incorrectAnswers, longestSeries,
     } = gameData;
     const newCurrentWord = words[0];
-    // await starsLeft;S
-    console.log(starsLeft, 'left');
-    if (!newCurrentWord || !starsLeft) {
+
+    if (!newCurrentWord) {
+      clearTimeout(timeoutId);
       showStatistics(correctAnswers, incorrectAnswers, longestSeries);
       return;
     }
 
     const wrongAnswersArr = generateWrongAnswersArray(wrongAnswersData);
-    const answersArr = [...wrongAnswersArr, newCurrentWord];
-    shuffleArray(answersArr);
+    const answersArr = shuffleArray([...wrongAnswersArr, newCurrentWord]);
 
     setGameData((state) => ({
       ...state,
@@ -127,11 +143,15 @@ const Savannah = ({ level, page, showStatistics }) => {
     }));
     setIsQuestion(true);
     setIsPreloader(false);
-    playSound(`${MEDIA_URI}${newCurrentWord.audio}`);
-  }, [gameData, showStatistics, generateWrongAnswersArray]);
+    // playSound(`${BACK_URL}${newCurrentWord.audio}`);
+  }, [gameData, generateWrongAnswersArray, timeoutId, showStatistics]);
 
   const getCorrectAnswer = useCallback((id, answer) => {
     const [currentSeries, longestSeries] = getAnswersSeries();
+
+    playGameSound(correct);
+    setIsQuestion(false);
+    setIsCorrectAnswer(answer);
 
     setGameData((state) => ({
       ...state,
@@ -140,13 +160,15 @@ const Savannah = ({ level, page, showStatistics }) => {
       currentSeries,
       longestSeries,
     }));
+    setBackgroundPosition((state) => state - bgStep);
+    setTimeout(() => nextWord(), 1000);
+  }, [getAnswersSeries, playGameSound, setBackgroundPosition, bgStep, nextWord]);
 
-    playGameSound(correct);
+  const getIncorrectAnswer = useCallback(async (id, answer) => {
+    playGameSound(error);
     setIsQuestion(false);
     setIsCorrectAnswer(answer);
-  }, [playGameSound, getAnswersSeries]);
 
-  const getIncorrectAnswer = useCallback((id, answer) => {
     setGameData((state) => ({
       ...state,
       incorrectAnswers: [...state.incorrectAnswers, state.currentWord],
@@ -158,15 +180,8 @@ const Savannah = ({ level, page, showStatistics }) => {
       setStarsLeft((state) => state - 1);
     }
 
-    playGameSound(error);
-    setIsQuestion(false);
-    setIsCorrectAnswer(answer);
-  }, [playGameSound, starsLeft]);
-
-  // const pass = useCallback((e) => {
-  //   e?.target?.blur();
-  //   getIncorrectAnswer(null, false);
-  // }, [getIncorrectAnswer]);
+    setTimeout(() => nextWord(), 1000);
+  }, [nextWord, playGameSound, starsLeft]);
 
   const getAnswer = ({ target }) => {
     if (!isQuestion) return;
@@ -176,12 +191,10 @@ const Savannah = ({ level, page, showStatistics }) => {
 
     if (answer) {
       getCorrectAnswer(id, answer);
-      setTimeout(() => nextWord(), 1000);
       return;
     }
 
     getIncorrectAnswer(id, answer);
-    setTimeout(() => nextWord(), 1000);
   };
 
   const getAnswerByKeyboard = useCallback(({ key }) => {
@@ -193,30 +206,27 @@ const Savannah = ({ level, page, showStatistics }) => {
 
     if (answer) {
       getCorrectAnswer(id, answer);
-      setTimeout(() => nextWord(), 1000);
       return;
     }
 
     getIncorrectAnswer(id, answer);
-    setTimeout(() => nextWord(), 1000);
-  }, [getCorrectAnswer, getIncorrectAnswer, isQuestion, gameData]);
+  }, [isQuestion, gameData, getIncorrectAnswer, getCorrectAnswer]);
 
   const keyboardEvents = useCallback((event) => {
     const controls = ['1', '2', '3', '4', '5'];
     const { key } = event;
 
-    // if (key === 'Enter' && !isQuestion) {
-    //   nextWord();
-    // }
-
-    // if (key === 'Enter' && isQuestion) {
-    //   pass();
-    // }
-
     if (controls.includes(key)) {
       getAnswerByKeyboard(event);
     }
-  }, [isQuestion, getAnswerByKeyboard, nextWord]);
+  }, [getAnswerByKeyboard]);
+
+  useEffect(() => {
+    clearTimeout(timeoutId);
+    const newTimeoutId = setTimeout(() => getIncorrectAnswer(null, false), 5000);
+    setTimeoutId(newTimeoutId);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentWord]);
 
   useEffect(() => {
     const startGame = async () => {
@@ -241,8 +251,9 @@ const Savannah = ({ level, page, showStatistics }) => {
         currentSeries: 0,
         answerId: undefined,
       }));
+      setBgStep(Math.floor(100 / words.length));
       setIsPreloader(false);
-      playSound(`${MEDIA_URI}${newCurrentWord.audio}`); // can be optional
+      // playSound(`${BACK_URL}${newCurrentWord.audio}`); // can be optional
     };
 
     startGame();
@@ -261,17 +272,16 @@ const Savannah = ({ level, page, showStatistics }) => {
 
   return (
     <>
-      <div className="game-wrapper">
+      <CloseIconButton
+        additionalClassName="audiochallenge__close-btn"
+        onClick={close}
+      />
+      <div className="savannah__game-wrapper game-wrapper">
         <StarsList
           amount={amountOfStars}
           starsLeft={starsLeft}
         />
-        <p>{gameData.currentWord.word}</p>
-        {/* <QuestionBlock
-          currentWord={currentWord}
-          isQuestion={isQuestion}
-        /> */}
-
+        {isQuestion && <p className="savannah__current-word">{currentWord?.word}</p>}
         {currentWord && (
           <WordList
             words={answers}
@@ -282,17 +292,9 @@ const Savannah = ({ level, page, showStatistics }) => {
             answerId={answerId}
           />
         )}
-
-        {/* <button
-          className={isQuestion ? 'pass' : 'next'}
-          onClick={isQuestion ? pass : nextWord}
-          type="button"
-        >
-          {isQuestion ? AUDIOCHALLENGE_GAME_PAGE.pass : AUDIOCHALLENGE_GAME_PAGE.nextWord }
-        </button> */}
       </div>
     </>
   );
 };
 
-export default Savannah;
+export default SavannahGamePage;
