@@ -1,6 +1,7 @@
 import { STATISTICS_PAGE } from '../../utils/content';
 import dispatchShortTermStats from './dispatchShortTermStats';
 import './appStatisticsPage.scss';
+import LineChart from './modules/LineChart';
 
 const AppStatisticsPage = () => {
   const wordsAll = 3000;
@@ -68,12 +69,7 @@ const AppStatisticsPage = () => {
             {`${STATISTICS_PAGE.wordsWholeTime}: ${wordsAll}`}
           </div>
         </div>
-        <div className="app-stats-page__long_graph1">
-          1st picture
-        </div>
-        <div className="app-stats-page__long_graph2">
-          2nd picture
-        </div>
+        <LineChart />
       </div>
     </main>
   );
