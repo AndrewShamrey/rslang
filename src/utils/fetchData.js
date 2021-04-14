@@ -22,32 +22,43 @@ export default class FetchData {
   }
 
   _defaultMethod(method, path = '', name = '', pass = '', body = '', id = '', token = '') {
+    const paths = [this.baseUrl, path, name, pass, id];
+    const fetchUrl = paths.filter((el) => el).join('/');
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    };
+    const fetchObj = { method, body, headers };
+
     if (method === 'GET') {
-      return fetch(`${this.baseUrl}/${path}/${name}/${pass}`, {
-        method,
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-      }).then((response) => response.json());
+      delete fetchObj.body;
     }
 
-    if (!id) {
-      return fetch(`${this.baseUrl}/${path}`, {
-        method,
-        body,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }).then((resp) => resp.json());
+    if (path === 'signin') {
+      delete headers.Authorization;
     }
 
-    return fetch(`${this.baseUrl}/${path}/${id}`, {
-      method,
-      body,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    return fetch(fetchUrl, fetchObj).then((response) => response.json());
+
+    //   if (method === 'GET') {
+    //     return fetch(`${this.baseUrl}/${path}/${name}/${pass}`, {
+    //       method,
+    //       headers,
+    //     }).then((response) => response.json());
+    //   }
+
+    //   if (!id) {
+    //     return fetch(`${this.baseUrl}/${path}`, {
+    //       method,
+    //       body,
+    //       headers,
+    //     }).then((resp) => resp.json());
+    //   }
+
+    //   return fetch(`${this.baseUrl}/${path}/${id}`, {
+    //     method,
+    //     body,
+    //     headers,
+    //   });
   }
 }

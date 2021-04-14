@@ -120,7 +120,6 @@ const SignInPage = () => {
           })
           .catch((err) => {
             const message = err.message === 'Failed to fetch' ? 'serverError' : 'defaultWarning';
-
             setMessage(message);
             setWarning(true);
             setActiveSubmit(true);

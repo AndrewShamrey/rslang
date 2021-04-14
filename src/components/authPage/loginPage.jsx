@@ -54,11 +54,6 @@ const LogInPage = () => {
         dispatch(setIsAuthorized(true));
         return person;
       })
-      .then((person) => {
-        fetchClass.getUsersWords(person.userId, person.token)
-          .then((words) => console.log(words))
-          .catch((er) => console.log(er.type, er.message));
-      })
       .catch(() => {
         setWarning(true);
         setActiveSubmit(true);
