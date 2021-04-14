@@ -1,0 +1,18 @@
+@import '../../../sass/colors.scss';
+@import '../../../sass/breakpoints.scss';
+
+.line-chart {
+  &s__wrapper {
+    padding: 16px 0;
+  }
+  &__wrapper {
+    padding: 36px 0;
+    h3 {
+      text-align: center;
+      margin: 12px 0 16px;
+    }
+  }
+}
+
+
+

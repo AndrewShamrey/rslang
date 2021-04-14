@@ -67,7 +67,6 @@ const MainPage = () => {
           <li className="Main-page__about-item">
             <DeveloperCard
               name="Евгения"
-              // img={}
               info={about.Eugenia}
             />
           </li>
@@ -88,7 +87,6 @@ const MainPage = () => {
           <li className="Main-page__about-item">
             <DeveloperCard
               name="Юлия"
-              // img={}
               info={about.Julia}
             />
           </li>

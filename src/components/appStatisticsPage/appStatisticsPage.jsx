@@ -1,45 +1,15 @@
 import { STATISTICS_PAGE } from '../../utils/content';
+import dispatchShortTermStats from './dispatchShortTermStats';
 import './appStatisticsPage.scss';
+import LineChart from './modules/LineChart';
 
 const AppStatisticsPage = () => {
-  console.log('stats');
-  const wordsOnDay = 78;
-  const successOnDay = 70;
   const wordsAll = 3000;
 
-  const gameData = [{
-    id: 1,
-    css: 'savanna',
-    title: STATISTICS_PAGE.savannaName,
-    series: 4,
-    words: 30,
-    right: 15,
-  },
-  {
-    id: 2,
-    css: 'audio-game',
-    title: STATISTICS_PAGE.audioName,
-    series: 4,
-    words: 30,
-    right: 15,
-  },
-  {
-    id: 3,
-    css: 'constructor',
-    title: STATISTICS_PAGE.constructorName,
-    series: 4,
-    words: 30,
-    right: 15,
-  },
-  {
-    id: 4,
-    css: 'sprint',
-    title: STATISTICS_PAGE.sprintName,
-    series: 4,
-    words: 30,
-    right: 15,
-  },
-  ];
+  const getData = dispatchShortTermStats();
+  const { gamesData: gameData, shortStats } = getData;
+  const wordsOnDay = shortStats.wordsLearned;
+  const successOnDay = shortStats.wordsSuccessful;
 
   return (
     <main className="app-stats-page">
@@ -84,7 +54,7 @@ const AppStatisticsPage = () => {
                 {game.words}
               </div>
               <div className="data-percent item">
-                {`${(game.right / game.words) * 100}%`}
+                {`${game.right}%`}
               </div>
             </div>
           ))}
@@ -99,12 +69,7 @@ const AppStatisticsPage = () => {
             {`${STATISTICS_PAGE.wordsWholeTime}: ${wordsAll}`}
           </div>
         </div>
-        <div className="app-stats-page__long_graph1">
-          1st picture
-        </div>
-        <div className="app-stats-page__long_graph2">
-          2nd picture
-        </div>
+        <LineChart />
       </div>
     </main>
   );

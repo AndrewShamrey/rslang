@@ -28,7 +28,7 @@ const getPagesURLs = (group = 0, page, isPagesNumRestricted) => {
     pagesArr.push(page, page + 1, page + 2);
   }
 
-  const pages = pagesArr.reduce((acc, item) => acc.concat(`${BACK_URL}words?page=${item}&group=${group}`), []);
+  const pages = pagesArr.reduce((acc, item) => acc.concat(`${BACK_URL}/words?page=${item}&group=${group}`), []);
   return { pages, pagesCount };
 };
 

@@ -74,3 +74,33 @@ export const SPRINT_GAME = {
   right: 'Верно',
   wrong: 'Неверно',
 };
+
+export const EMPTY_STATS = {
+  series: 0,
+  words: 0,
+  correct: 0,
+  right: 0,
+};
+
+export const GAMES_STATS_COMMON = {
+  savanna: {
+    id: 1,
+    css: 'savanna',
+    title: STATISTICS_PAGE.savannaName,
+  },
+  audiochallenge: {
+    id: 2,
+    css: 'audio-game',
+    title: STATISTICS_PAGE.audioName,
+  },
+  wordConstructor: {
+    id: 3,
+    css: 'constructor',
+    title: STATISTICS_PAGE.constructorName,
+  },
+  sprint: {
+    id: 4,
+    css: 'sprint',
+    title: STATISTICS_PAGE.sprintName,
+  },
+};
