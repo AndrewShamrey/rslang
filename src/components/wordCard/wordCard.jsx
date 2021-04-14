@@ -41,7 +41,7 @@ const WordCard = ({
     let i = 0;
 
     const playAudioSet = () => {
-      const audiofile = playSound(`${BACK_URL}${audioSrcSet[i]}`);
+      const audiofile = playSound(`${BACK_URL}/${audioSrcSet[i]}`);
       i += 1;
 
       if (i < audioSrcSet.length) {

@@ -108,3 +108,13 @@ export const AUTHORIZATION_INFO = {
   serverError: 'Ошибка севера. Попробуйте позже.',
   uploadPhoto: 'Загрузите свое фото',
 };
+
+export const DIFFICULTY_COUNT_AND_COLORS = [
+  [1, '#9bff00'],
+  [2, '#00cf01'],
+  [3, '#ffe600'],
+  [4, '#ffaa32'],
+  [5, '#ff1e5a'],
+  [6, '#c40050'],
+];
+export const GAMES_BG_COLORS = ['#fcecdf', '#c2d1d3', '#c6d3cf', '#eec8da'];

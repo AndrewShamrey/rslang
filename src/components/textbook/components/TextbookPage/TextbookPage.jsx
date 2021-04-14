@@ -7,7 +7,7 @@ import WordList from '../WordList/WordList';
 import SettingsButton from '../SettingsButton/SettingsButton';
 import WordCard from '../../../wordCard/wordCard';
 import VocabluarySettings from '../../../vocabluarySettings/vocabluarySettings';
-import { BACK_URL } from '../../../../utils/constants';
+import { BACK_URL, DIFFICULTY_COUNT_AND_COLORS } from '../../../../utils/constants';
 import './TextbookPage.scss';
 
 const TextbookPage = ({ page, toggleSettings, isSettings }) => {
@@ -16,9 +16,28 @@ const TextbookPage = ({ page, toggleSettings, isSettings }) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [currentGroup, setCurrentGroup] = useState(page);
   const [words, setWords] = useState([]);
+  const [currentWord, setCurrentWord] = useState(null);
 
   const toggleWordCard = () => {
     setIsWordCardOpen(!isWordCardOpen);
+  };
+
+  const changeCurrentWorld = (word) => {
+    setCurrentWord(word);
+  };
+
+  const showNextWord = () => {
+    const wordIndex = words.findIndex((el) => el.word === currentWord.word);
+    setCurrentWord(words[(wordIndex + 1) % words.length]);
+  };
+
+  const showPrevWord = () => {
+    const wordIndex = words.findIndex((el) => el.word === currentWord.word);
+    setCurrentWord(
+      wordIndex === 0
+        ? words[words.length - 1]
+        : words[(wordIndex - 1) % words.length],
+    );
   };
 
   async function fetchData() {
@@ -45,9 +64,13 @@ const TextbookPage = ({ page, toggleSettings, isSettings }) => {
   return (
     <main className="TextbookPage">
       <SettingsButton onClick={() => toggleSettings()} />
-      <h2 className="Textbook__title">{`Раздел ${page}`}</h2>
+      <h2 className="Textbook__title" style={{ color: DIFFICULTY_COUNT_AND_COLORS[page - 1][1] }}>{`Раздел ${page}`}</h2>
       <GamesList />
-      <WordList words={words} />
+      <WordList
+        words={words}
+        toggleWordCard={() => toggleWordCard()}
+        changeCurrentWorld={changeCurrentWorld}
+      />
 
       <ReactPaginate
         previousLabel={<i className="fa fa-arrow-left" aria-hidden="true" />}
@@ -65,9 +88,9 @@ const TextbookPage = ({ page, toggleSettings, isSettings }) => {
 
       {isWordCardOpen && (
       <WordCard
-        wordData={words[0]}
-        showNext={() => {}}
-        showPreviouse={() => {}}
+        wordData={currentWord}
+        showNext={() => showNextWord()}
+        showPreviouse={() => showPrevWord()}
         deleteWord={() => {}}
         moveToDifficult={() => {}}
         close={toggleWordCard}

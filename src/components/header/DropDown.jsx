@@ -6,9 +6,7 @@ import { useLocation, NavLink } from 'react-router-dom';
 
 const DropDown = () => {
   const [isOpen, setIsOpen] = useState(false);
-  // const isAuthorized = true;
   const isAuthorized = useSelector((rootState) => rootState.control.isAuthorized);
-  // console.log('isAuthorized ', isAuthorized);
 
   const handleOnClick = (e) => {
     e.stopPropagation();
