@@ -7,7 +7,7 @@ import WordList from '../WordList/WordList';
 import SettingsButton from '../SettingsButton/SettingsButton';
 import WordCard from '../../../wordCard/wordCard';
 import VocabluarySettings from '../../../vocabluarySettings/vocabluarySettings';
-import { BACK_URL } from '../../../../utils/constants';
+import { BACK_URL, DIFFICULTY_COUNT_AND_COLORS } from '../../../../utils/constants';
 import './TextbookPage.scss';
 
 const TextbookPage = ({ page, toggleSettings, isSettings }) => {
@@ -45,7 +45,7 @@ const TextbookPage = ({ page, toggleSettings, isSettings }) => {
   return (
     <main className="TextbookPage">
       <SettingsButton onClick={() => toggleSettings()} />
-      <h2 className="Textbook__title">{`Раздел ${page}`}</h2>
+      <h2 className="Textbook__title" style={{ color: DIFFICULTY_COUNT_AND_COLORS[page - 1][1] }}>{`Раздел ${page}`}</h2>
       <GamesList />
       <WordList words={words} />
 
