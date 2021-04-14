@@ -35,7 +35,6 @@ const GamePlay = ({
 
   useEffect(() => {
     if (maxStringOfRights < stringOfRights) {
-      // console.log('increase long series +1');
       setMaxStringOfRights((strike) => strike + 1);
     }
   }, [stringOfRights, maxStringOfRights, setMaxStringOfRights]);
@@ -52,7 +51,6 @@ const GamePlay = ({
   }, [isSound, setAddTime, stringOfRights]);
 
   const rightAnswerHandler = useCallback(() => {
-    // console.log('answered right');
     setGameScore((points) => points + answerPoints);
     setStringOfRights((answer) => answer + 1);
     if (isSound) playSound(correct);
@@ -64,7 +62,6 @@ const GamePlay = ({
   }, [setGameScore, isSound, setGameResult, answerPoints, workingWords]);
 
   const wrongAnswerHandler = useCallback(() => {
-    // console.log('answered wrong');
     if (isSound) playSound(error);
     setStringOfRights(0);
     setAnswerPoints(BASE_POINTS);
@@ -76,8 +73,6 @@ const GamePlay = ({
 
   useEffect(() => {
     if (allWords.length) {
-      // console.log('making words');
-
       const newWords = allWords.map((item, ind) => {
         let playWord;
         if (ind < (allWords.length / 2)) {
@@ -97,8 +92,6 @@ const GamePlay = ({
       });
 
       setWorkingWords(shuffleArray(newWords));
-      // console.log('words collected', workingWords);
-      // если игра не первая - обнулить эти параметры, чтобы не путали
       setStringOfRights(0);
       setAnswerPoints(BASE_POINTS);
     }
@@ -106,8 +99,6 @@ const GamePlay = ({
 
   const handleAnswer = useCallback(({ target }) => {
     const { value } = target;
-    // console.log(value);
-    // console.log(workingWords[0].isTrue);
     if (value === workingWords[0].isTrue) {
       rightAnswerHandler();
     } else {

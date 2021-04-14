@@ -29,7 +29,6 @@ const TextbookPage = ({ page, toggleSettings, isSettings }) => {
   const showNextWord = () => {
     const wordIndex = words.findIndex((el) => el.word === currentWord.word);
     setCurrentWord(words[(wordIndex + 1) % words.length]);
-    console.log(wordIndex);
   };
 
   const showPrevWord = () => {
