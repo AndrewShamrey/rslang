@@ -13,12 +13,21 @@ export default class FetchData {
     return this._defaultMethod('POST', 'users', null, null, body);
   }
 
-  _defaultMethod(method, path = '', name = '', pass = '', body = '', id = '') {
+  getWords(page = 0, group = 0) {
+    return this._defaultMethod('GET', `words?page=${page}&group=${group}`);
+  }
+
+  getUsersWords(userId, token) {
+    return this._defaultMethod('GET', 'users', userId, 'words', null, null, token);
+  }
+
+  _defaultMethod(method, path = '', name = '', pass = '', body = '', id = '', token = '') {
     if (method === 'GET') {
       return fetch(`${this.baseUrl}/${path}/${name}/${pass}`, {
         method,
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
         },
       }).then((response) => response.json());
     }
