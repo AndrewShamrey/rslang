@@ -1,0 +1,52 @@
+@import '../../../sass/colors.scss';
+
+.helper-board {
+  margin-bottom: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;  
+  align-items: center; 
+
+  & > * {
+    margin-bottom: 10px;
+  }
+
+  &__img {
+    margin-bottom: 28px;
+    width: 150px;
+    height: 150px;
+    min-height: 150px;
+    border-radius: 50%;
+  }
+}
+
+.translation {
+  margin-left: 20px;
+  font-weight: 700;
+  color: $white;
+  text-transform: lowercase;
+}
+
+.help {
+  margin-left: 20px;
+  font-weight: 700;
+  color: $white;
+  text-align: center;
+  text-transform: lowercase;  
+
+  & > p::first-letter {
+    text-transform: uppercase;
+  }
+}
+
+.word-data {
+  font-size: 30px;
+  color: $white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &__question {
+    font-size: 120px;
+  }
+}

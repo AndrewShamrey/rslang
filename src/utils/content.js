@@ -12,6 +12,10 @@ export const START_PAGE = {
     selectLabel: 'Выберите уровень сложности:',
     start: 'Начать игру',
   },
+  savanna: {
+    title: 'Саванна',
+    description: 'Тренировка саванна поможет вам пополнить свой словарный запас. Чем больше слов вы знаете, тем больше очков опыта вы получите.',
+  },
 };
 
 export const RESULT_PAGE = {
@@ -69,4 +73,34 @@ export const SPRINT_GAME = {
   points: 'баллов',
   right: 'Верно',
   wrong: 'Неверно',
+};
+
+export const EMPTY_STATS = {
+  series: 0,
+  words: 0,
+  correct: 0,
+  right: 0,
+};
+
+export const GAMES_STATS_COMMON = {
+  savanna: {
+    id: 1,
+    css: 'savanna',
+    title: STATISTICS_PAGE.savannaName,
+  },
+  audiochallenge: {
+    id: 2,
+    css: 'audio-game',
+    title: STATISTICS_PAGE.audioName,
+  },
+  wordConstructor: {
+    id: 3,
+    css: 'constructor',
+    title: STATISTICS_PAGE.constructorName,
+  },
+  sprint: {
+    id: 4,
+    css: 'sprint',
+    title: STATISTICS_PAGE.sprintName,
+  },
 };

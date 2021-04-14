@@ -33,6 +33,13 @@ const initialState = {
       winLevelWordCount: 6,
     },
   },
+  savanna: {
+    isSound: true,
+    amountOfAnswers: 5,
+    wordAudio: false,
+    meaningQuestion: false,
+    exampleQuestion: false,
+  },
   isAuthorized: false,
   currentPerson: null,
 };
@@ -65,6 +72,11 @@ const controlReducer = (state = initialState, action) => {
     case ACTION_TYPES.SET_WORDCONSTRUCTOR_SETTINGS:
       return produce(state, (draft) => {
         draft.wordConstructor.settings = action.payload;
+      });
+    case ACTION_TYPES.SET_SAVANNAH_SETTINGS:
+      return produce(state, (draft) => {
+        const { savanna } = draft;
+        draft.savanna = { ...savanna, ...action.payload };
       });
     case ACTION_TYPES.SET_IS_AUTHORIZED:
       return produce(state, (draft) => {

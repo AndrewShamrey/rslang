@@ -1,23 +1,23 @@
 import { useState } from 'react';
 import { FullScreen, useFullScreenHandle } from 'react-full-screen';
 import StartPage from '../startPage/startPage';
-import AudiochallengeGamePage from '../audiochallengeGamePage/audiochallengeGamePage';
+import SavannahGamePage from './savannahGamePage/savannahGamePage';
 import GameSoundButton from '../gameSoundButton/gameSoundButton';
-import CloseIconButton from '../closeIconButton/closeIconButton';
 import StatisticsPage from '../statisticPage/statisticsPage';
-import GameSettings from '../gameSettings/gameSettings';
+import GameSettings from './gameSettings/gameSettings';
 import getRandomNumber from '../../utils/getRandomNumber';
 import { AMOUNT_OF_PAGES, GAMES } from '../../utils/constants';
 
-import './audiochallenge.scss';
+import './savannah.scss';
 
-const Audiochallenge = () => {
+const Savannah = () => {
   const [isStartPage, setIsStartPage] = useState(true);
   const [isStatisticsPage, setIsStatisticsPage] = useState(false);
   const [isSettings, setIsSettings] = useState(false);
   const [level, setLevel] = useState(0);
   const [page, setPage] = useState(null);
   const [gameResult, setGameResult] = useState({});
+  const [backgroundPosition, setBackgroundPosition] = useState(100);
 
   const handle = useFullScreenHandle();
 
@@ -63,46 +63,44 @@ const Audiochallenge = () => {
 
   return (
     <FullScreen handle={handle}>
-      <main className="audiochallenge">
-        <GameSoundButton game="audiochallenge" />
+      <main className="savannah" style={{ backgroundPositionY: `${backgroundPosition}%` }}>
+        <GameSoundButton game={GAMES.savanna} />
         {isStartPage && (
-        <>
-          <button
-            className="settings-btn"
-            type="button"
-            onClick={toggleSettings}
-          >
-            <i className="fas fa-cog" />
-          </button>
-          {isSettings && <GameSettings close={toggleSettings} />}
-          <StartPage
-            game={GAMES.audiochallenge}
-            startGame={startGame}
-            changeLevel={changeLevel}
-          />
-        </>
+          <>
+            <button
+              className="settings-btn"
+              type="button"
+              onClick={toggleSettings}
+            >
+              <i className="fas fa-cog" />
+            </button>
+            {isSettings && <GameSettings close={toggleSettings} />}
+            <StartPage
+              game={GAMES.savanna}
+              startGame={startGame}
+              changeLevel={changeLevel}
+            />
+          </>
         )}
         {isStatisticsPage && (
-        <StatisticsPage
-          game={GAMES.audiochallenge}
-          gameResult={gameResult}
-          showStartPage={showStartPage}
-        />
+          <StatisticsPage
+            game={GAMES.savanna}
+            gameResult={gameResult}
+            showStartPage={showStartPage}
+          />
         )}
         {!isStartPage && !isStatisticsPage && (
-        <>
-          <CloseIconButton
-            additionalClassName="audiochallenge__close-btn"
-            onClick={closeGame}
-          />
-          <AudiochallengeGamePage
-            level={level}
-            page={page}
-            showStatistics={showStatistics}
-          />
-        </>
+          <>
+            <SavannahGamePage
+              level={level}
+              page={page}
+              showStatistics={showStatistics}
+              closeGame={closeGame}
+              setBackgroundPosition={setBackgroundPosition}
+            />
+          </>
         )}
-        <button type="button" className="audiochallenge__fullscreen" onClick={handleFullScreen}>
+        <button type="button" className="savannah__fullscreen" onClick={handleFullScreen}>
           {screenButton}
         </button>
       </main>
@@ -110,4 +108,4 @@ const Audiochallenge = () => {
   );
 };
 
-export default Audiochallenge;
+export default Savannah;
