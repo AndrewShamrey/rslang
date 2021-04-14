@@ -12,6 +12,7 @@ export const GAMES = {
   audiochallenge: 'audiochallenge',
   sprint: 'sprint',
   wordConstructor: 'wordConstructor',
+  savanna: 'savanna',
 };
 
 export const VIDEO_URL = 'https://media.w3.org/2010/05/sintel/trailer_hd.mp4';
