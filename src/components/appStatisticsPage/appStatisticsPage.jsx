@@ -1,5 +1,6 @@
 import { STATISTICS_PAGE } from '../../utils/content';
 import './appStatisticsPage.scss';
+import LineChart from './modules/LineChart';
 
 const AppStatisticsPage = () => {
   console.log('stats');
@@ -99,12 +100,7 @@ const AppStatisticsPage = () => {
             {`${STATISTICS_PAGE.wordsWholeTime}: ${wordsAll}`}
           </div>
         </div>
-        <div className="app-stats-page__long_graph1">
-          1st picture
-        </div>
-        <div className="app-stats-page__long_graph2">
-          2nd picture
-        </div>
+        <LineChart />
       </div>
     </main>
   );
