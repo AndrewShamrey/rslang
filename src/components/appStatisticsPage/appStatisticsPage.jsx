@@ -7,10 +7,6 @@ import LineChart from './modules/LineChart';
 const AppStatisticsPage = () => {
   const isAuthorized = useSelector((rootState) => rootState.control.isAuthorized);
 
-  // const wordsOnDay = 78;
-  // const successOnDay = 70;
-  const wordsAll = 3000;
-
   const getData = dispatchShortTermStats();
   const { gamesData: gameData, shortStats } = getData;
   const wordsOnDay = shortStats.wordsLearned;
@@ -67,7 +63,7 @@ const AppStatisticsPage = () => {
       </div>
       {isAuthorized
         ? <LineChart />
-        : <h2 className="app-stats-page__login-message">Войдите для получения долгосрочной статистики</h2>}
+        : <h2 className="app-stats-page__login-message">Для получения долгосрочной статистики войдите или зарегистрируйтесь.</h2>}
     </main>
   );
 };
