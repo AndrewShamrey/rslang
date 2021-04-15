@@ -7,6 +7,7 @@
   transition: transform linear 0.2s;
   outline-color: #5183e7;
   outline-offset: 3px;
+  cursor: pointer;
 
   &:hover {
     transform: scale(1.2);

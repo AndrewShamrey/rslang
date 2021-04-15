@@ -1,6 +1,6 @@
-/* eslint-disable object-curly-newline */
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import WordCard from '../wordCard/wordCard';
 import saveShortTermStatistics from '../../utils/saveShortTermStatistics';
 import { RESULT_PAGE } from '../../utils/content';
 import StatisticsList from '../statisticsList/statisticsList';
@@ -8,8 +8,15 @@ import StatisticsList from '../statisticsList/statisticsList';
 import './statisticsPage.scss';
 import '../../sass/defaultComponentsStyles.scss';
 
-const StatisticsPage = ({ gameResult, showStartPage, game, score }) => {
+const StatisticsPage = ({
+  gameResult, showStartPage, game, score,
+}) => {
+  const [word, setWord] = useState(null);
   const { correctAnswers, incorrectAnswers, longestSeries } = gameResult;
+
+  const setWordData = (wordData) => {
+    setWord(wordData);
+  };
 
   useEffect(() => {
     saveShortTermStatistics(game, gameResult);
@@ -33,14 +40,14 @@ const StatisticsPage = ({ gameResult, showStartPage, game, score }) => {
           <p className="statistics-page__answers-title">
             {`${RESULT_PAGE.correct}: ${correctAnswers.length}`}
           </p>
-          <StatisticsList words={correctAnswers} />
+          <StatisticsList words={correctAnswers} onItemClick={setWordData} />
         </div>
 
         <div className="statistics-page__answersBlock">
           <p className="statistics-page__answers-title">
             {`${RESULT_PAGE.incorrect}: ${incorrectAnswers.length}`}
           </p>
-          <StatisticsList words={incorrectAnswers} />
+          <StatisticsList words={incorrectAnswers} onItemClick={setWordData} />
         </div>
       </div>
 
@@ -56,6 +63,14 @@ const StatisticsPage = ({ gameResult, showStartPage, game, score }) => {
           {RESULT_PAGE.return}
         </Link>
       </div>
+      {word && (
+        <WordCard
+          wordData={word}
+          close={() => setWordData(null)}
+          gameStats={false}
+          controls={false}
+        />
+      )}
     </div>
   );
 };

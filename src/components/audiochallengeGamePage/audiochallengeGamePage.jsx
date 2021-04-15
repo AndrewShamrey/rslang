@@ -7,11 +7,11 @@ import Preloader from '../preloader/preloader';
 import QuestionBlock from '../questionBlock/questionBlock';
 import playSound from '../../utils/playSound';
 import shuffleArray from '../../utils/shuffleArray';
-import WordsAPI from '../../assets/services/wordsAPI';
+import WordsAPI from '../../utils/wordsAPI';
 import getRandomNumber from '../../utils/getRandomNumber';
 import error from '../../assets/audio/error.mp3';
 import correct from '../../assets/audio/correct.mp3';
-import { MEDIA_URI, AMOUNT_OF_PAGES } from '../../utils/constants';
+import { BACK_URL, AMOUNT_OF_PAGES } from '../../utils/constants';
 import { AUDIOCHALLENGE_GAME_PAGE } from '../../utils/content';
 
 import './audiochallengeGamePage.scss';
@@ -143,8 +143,7 @@ const AudiochallengeGamePage = ({ level, page, showStatistics }) => {
     }
 
     const wrongAnswersArr = generateWrongAnswersArray(wrongAnswersData);
-    const answersArr = [...wrongAnswersArr, newCurrentWord];
-    shuffleArray(answersArr);
+    const answersArr = shuffleArray([...wrongAnswersArr, newCurrentWord]);
 
     setGameData((state) => ({
       ...state,
@@ -154,7 +153,7 @@ const AudiochallengeGamePage = ({ level, page, showStatistics }) => {
     }));
     setIsQuestion(true);
     setIsPreloader(false);
-    playSound(`${MEDIA_URI}${newCurrentWord.audio}`);
+    playSound(`${BACK_URL}/${newCurrentWord.audio}`);
   }, [gameData, showStatistics, generateWrongAnswersArray]);
 
   const getAnswer = ({ target }) => {
@@ -205,15 +204,14 @@ const AudiochallengeGamePage = ({ level, page, showStatistics }) => {
 
   useEffect(() => {
     const startGame = async () => {
-      const words = await wordsAPI.getCollectionWords(level, page);
-      shuffleArray(words);
+      let words = await wordsAPI.getCollectionWords(level, page);
+      words = shuffleArray(words);
 
       const newCurrentWord = words[0];
 
       const wrongAnswersData = await getWrongAnswersData();
       const wrongAnswersArr = generateWrongAnswersArray(wrongAnswersData);
-      const answersData = [...wrongAnswersArr, newCurrentWord];
-      shuffleArray(answersData);
+      const answersData = shuffleArray([...wrongAnswersArr, newCurrentWord]);
 
       setGameData(() => ({
         words: words.slice(1),
@@ -227,7 +225,7 @@ const AudiochallengeGamePage = ({ level, page, showStatistics }) => {
         answerId: undefined,
       }));
       setIsPreloader(false);
-      playSound(`${MEDIA_URI}${newCurrentWord.audio}`);
+      playSound(`${BACK_URL}/${newCurrentWord.audio}`);
     };
 
     startGame();
