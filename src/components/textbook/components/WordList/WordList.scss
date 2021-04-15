@@ -52,12 +52,16 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    cursor: pointer;
 
     img {
       width: 40px;
       height: 40px;
       border-radius: 50%;
+    }
+  }
+  &__word {
+    .word-card__word {
+      cursor: pointer;
     }
   }
 
