@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from 'react';
+
+import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import Preloader from './components/Preloader';
 import Header from './components/Header';
@@ -15,7 +16,7 @@ import finishSong from '../../../assets/audio/finish.mp3';
 import tikTakSong from '../../../assets/audio/tikTak.mp3';
 import errorSong from '../../../assets/audio/error.mp3';
 import goodSong from '../../../assets/audio/piu.mp3';
-import { MEDIA_URI, RSLANG_DATA_URL } from '../../../utils/constants';
+import { MEDIA_URI, RSLANG_DATA_URL, LETTERS } from '../../../utils/constants';
 
 const GamePlay = (props) => {
   const isSound = useSelector((state) => state.control.wordConstructor.isSound);
@@ -122,40 +123,52 @@ const GamePlay = (props) => {
     const index = wordLetters.findIndex((el) => el.a === letter);
     const wordLettersCopy = [...wordLetters];
 
-    if (wordLetters[index].n === 1) {
-      wordLettersCopy.splice(index, 1);
-      setWordLetters(wordLettersCopy);
-    } else if (wordLetters[index].n > 1) {
-      const newElement = wordLetters.find((el) => el.a === letter);
-      newElement.n -= 1;
-      wordLettersCopy.splice(index, 1, newElement);
-      setWordLetters(wordLettersCopy);
+    if (wordLetters[index]) {
+      if (wordLetters[index].n === 1) {
+        wordLettersCopy.splice(index, 1);
+        setWordLetters(wordLettersCopy);
+      } else if (wordLetters[index].n > 1) {
+        const newElement = wordLetters.find((el) => el.a === letter);
+        newElement.n -= 1;
+        wordLettersCopy.splice(index, 1, newElement);
+        setWordLetters(wordLettersCopy);
+      }
     }
   };
 
-  const checkWord = (letter) => {
+  const checkWord = useCallback((letter) => {
     const id = wordId;
 
-    if (letter === currentWord[guessWordIndex]) {
-      const guessLettersArray = guessLetters.map((el, i) => {
-        if (i === guessWordIndex) return letter;
-        return el;
-      });
-      setGuessLetters(guessLettersArray);
-      setAndRemoveAnswerClass();
-      setGuessWordIndex(guessWordIndex + 1);
-      changeScore(id);
-      checkLetter(letter);
-    } else {
-      setLives(lives - 1);
-      setBadWords([...badWords, words[wordId]]);
-      setWordErrors(wordErrors + 1);
-      setAndRemoveAnswerClass(false);
-      setSessionErrorWords(Array.from(new Set([...sessionErrorWords, currentWord])));
-      setIsSeriesError(true);
-      setSessionLongestSeries(0);
+    if (currentWord) {
+      if (letter === currentWord[guessWordIndex]) {
+        if (guessLetters) {
+          const guessLettersArray = guessLetters.map((el, i) => {
+            if (i === guessWordIndex) return letter;
+            return el;
+          });
+          setGuessLetters(guessLettersArray);
+        }
+        setAndRemoveAnswerClass();
+        setGuessWordIndex(guessWordIndex + 1);
+        changeScore(id);
+        checkLetter(letter);
+      } else {
+        setLives(lives - 1);
+        setBadWords([...badWords, words[wordId]]);
+        setWordErrors(wordErrors + 1);
+        setAndRemoveAnswerClass(false);
+        setSessionErrorWords(Array.from(new Set([...sessionErrorWords, currentWord])));
+        setIsSeriesError(true);
+        setSessionLongestSeries(0);
+      }
     }
-  };
+  }, [
+    badWords,
+    changeScore,
+    checkLetter,
+    currentWord,
+    guessLetters,
+    guessWordIndex, lives, sessionErrorWords, setAndRemoveAnswerClass, wordErrors, wordId, words]);
 
   const newGame = () => {
     intervals.forEach(clearTimeout);
@@ -197,9 +210,24 @@ const GamePlay = (props) => {
     fetchData();
   }, []);
 
+  const keydownHandler = useCallback((e) => {
+    if (lives > 0) {
+      if (LETTERS.includes(String(e.key).toLowerCase()) || e.key === ' ') {
+        checkWord(e.key);
+      }
+    }
+  }, [checkWord, lives]);
+
+  useEffect(() => {
+    document.addEventListener('keydown', keydownHandler);
+    return (() => {
+      document.removeEventListener('keydown', keydownHandler);
+    });
+  }, [currentWord, keydownHandler]);
+
   useEffect(() => {
     if (sessionLongestSeries > longestSeries) setLongestSeries(sessionLongestSeries);
-  }, [sessionLongestSeries]);
+  }, [longestSeries, sessionLongestSeries]);
 
   useEffect(() => {
     if (words.length > 0) {
@@ -243,13 +271,13 @@ const GamePlay = (props) => {
       );
       intervals.push(intervalID);
     }
-  }, [timer]);
+  }, [intervals, isFinish, tick, timer]);
 
   useEffect(() => {
     if (lives < 1) {
       stopGame();
     }
-  }, [lives]);
+  }, [lives, stopGame]);
 
   if (isLoading) return <Preloader />;
 
