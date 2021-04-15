@@ -15,6 +15,8 @@ export default class FetchData {
 
   getUsersWords = (userId, token) => this._defaultMethod('GET', 'users', userId, 'words', null, null, token);
 
+  getUsersStats = (userId, token) => this._defaultMethod('GET', 'users', userId, 'statistics', null, null, token);
+
   _defaultMethod(method, path = '', name = '', pass = '', body = '', id = '', token = '') {
     const paths = [this.baseUrl, path, name, pass, id];
     const fetchUrl = paths.filter((el) => el).join('/');
