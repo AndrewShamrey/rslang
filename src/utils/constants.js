@@ -15,7 +15,7 @@ export const GAMES = {
   savanna: 'savanna',
 };
 
-export const VIDEO_URL = 'https://media.w3.org/2010/05/sintel/trailer_hd.mp4';
+export const VIDEO_URL = 'https://youtu.be/88zaHpE5QxI';
 export const RSLANG_DATA_URL = 'https://raw.githubusercontent.com/irinainina/rslang-data/master/';
 export const MAIN_PAGE_TEXT = {
   capability: {
