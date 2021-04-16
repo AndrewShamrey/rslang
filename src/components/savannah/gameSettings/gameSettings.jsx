@@ -10,7 +10,7 @@ const GameSettings = ({ close }) => {
     wordAudio,
     meaningQuestion,
     exampleQuestion,
-  } = useSelector((state) => state.control.savannah);
+  } = useSelector((state) => state.control.savanna);
 
   const dispatch = useDispatch();
 
