@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import ReactPaginate from 'react-paginate';
 import Preloader from '../../../wordConstructor/Game/components/Preloader';
 import GamesList from '../GamesList/GamesList';
@@ -11,6 +12,7 @@ import { BACK_URL, DIFFICULTY_COUNT_AND_COLORS } from '../../../../utils/constan
 import './TextbookPage.scss';
 
 const TextbookPage = ({ page, toggleSettings, isSettings }) => {
+  const isAuthorized = useSelector((rootState) => rootState.control.isAuthorized);
   const [isLoading, setIsLoading] = useState(true);
   const [isWordCardOpen, setIsWordCardOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
@@ -65,7 +67,7 @@ const TextbookPage = ({ page, toggleSettings, isSettings }) => {
     <main className="TextbookPage">
       <SettingsButton onClick={() => toggleSettings()} />
       <h2 className="Textbook__title" style={{ color: DIFFICULTY_COUNT_AND_COLORS[page - 1][1] }}>{`Раздел ${page}`}</h2>
-      <GamesList />
+      {isAuthorized ? <GamesList /> : null}
       <WordList
         words={words}
         toggleWordCard={() => toggleWordCard()}
