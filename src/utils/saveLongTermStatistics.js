@@ -15,6 +15,7 @@ const saveLongTermStatistics = (userId, token, result) => {
   fetch.getUsersStats(userId, token)
     .then((statsData) => {
       const body = getNewLongStatBody(statsData, wholeData, currentDay);
+      console.log(body);
 
       fetch.putUsersStats(userId, JSON.stringify(body), token)
         .then((r) => console.log(r))
