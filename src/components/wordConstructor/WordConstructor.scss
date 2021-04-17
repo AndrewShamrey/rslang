@@ -3,6 +3,7 @@
 @import '../../sass/defaultComponentsStyles.scss';
 
 .WordConstructor {
+  height: 100%;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -397,6 +398,20 @@
       span {
         max-width: 50%;
       }
+    }
+  }
+
+  &__fullscreen {
+    position: absolute;
+    left: 15px;
+    bottom: 30px;
+    @include styled__btn_outlined($blue, #b69fb9a4, $white);
+
+    @media screen and (max-width: $size-sm) {
+      position: relative;
+      margin: 10px 0;
+      left: 0;
+      bottom: 0;
     }
   }
 }

@@ -8,8 +8,8 @@ const LevelSelector = (props) => (
       props.setLevel(e.target.value);
     }}
   >
-    {[1, 2, 3, 4, 5, 6].map((el) => (
-      <option value={el}>{`Уровень ${el}`}</option>
+    {[1, 2, 3, 4, 5, 6].map((el, i) => (
+      <option value={el} key={i}>{`Уровень ${el}`}</option>
     ))}
   </select>
 );

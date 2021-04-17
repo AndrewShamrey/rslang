@@ -14,15 +14,22 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    overflow: hidden;
     width: 100%;
     min-height: 50px;
     height: max-content;
     border-bottom: 1px solid $grey2;
 
     &_head {
+      color: $grey4;
       background-color: $bgGrey;
       border: none;
+
+      .WorldListItem__audiochallenge,
+      .WorldListItem__wordconstructor,
+      .WorldListItem__savannah,
+      .WorldListItem__sprint {
+        color: $grey4;
+      }
     }
   }
 }
@@ -50,6 +57,64 @@
       width: 40px;
       height: 40px;
       border-radius: 50%;
+    }
+  }
+  &__word {
+    .word-card__word {
+      cursor: pointer;
+    }
+  }
+
+  &__audiochallenge,
+  &__wordconstructor,
+  &__savannah,
+  &__sprint {
+    .fa-info {
+      position: relative;
+      &::after {
+        display: none;
+        color: $grey4;
+        background: $white;
+        content: 'Доступно авторизированным пользователям';
+        position: absolute;
+        padding: 5px;
+        top: -50px;
+        left: 10px;
+        font-size: 12px;
+        border: 1px solid $grey2;
+        border-radius: 3px;
+      }
+
+      &:hover::after {
+        display: block;
+        z-index: 100;
+      }
+    }
+  }
+
+  &__audiochallenge {
+    color: #f7a35f;
+
+    .fa-info {
+      color: #f7a35f;
+    }
+  }
+  &__wordconstructor {
+    color: #24bace;
+    .fa-info {
+      color: #24bace;
+    }
+  }
+  &__savannah {
+    color: #5bceab;
+    .fa-info {
+      color: #5bceab;
+    }
+  }
+  &__sprint {
+    color: #e963a2;
+    .fa-info {
+      color: #e963a2;
     }
   }
 

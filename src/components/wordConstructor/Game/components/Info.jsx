@@ -11,6 +11,7 @@ const Info = (props) => {
         <li className="WordConstructor__infoItem">Кликайте по буквам в нужном порядке, чтобы собрать оригинальное слово.</li>
         <li className="WordConstructor__infoItem">Если выпало 2 слова, то знак пробела также нужно кликнуть.</li>
         <li className="WordConstructor__infoItem">Если количество буквы больше одного, то в верхнем правом углу указано актуальное количество.</li>
+        <li className="WordConstructor__infoItem">Доступно управление с клавиатуры. Просто нажмите соответствующую букву.</li>
       </ol>
     </div>
   ) : null;

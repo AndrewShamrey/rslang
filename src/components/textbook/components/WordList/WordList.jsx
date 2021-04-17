@@ -3,12 +3,16 @@ import WordListHeadItem from './WordListHeadItem';
 import WordListItem from './WordListItem';
 import './WordList.scss';
 
-const WordList = ({ words }) => (
+const WordList = ({ words, toggleWordCard, changeCurrentWorld }) => (
   <ul className="WorldList">
     <WordListHeadItem />
     {words.map((el, index) => (
       <li className="WorldList__item" key={index + 1}>
-        <WordListItem word={el} />
+        <WordListItem
+          word={el}
+          toggleWordCard={() => toggleWordCard()}
+          changeCurrentWorld={changeCurrentWorld}
+        />
       </li>
     ))}
   </ul>

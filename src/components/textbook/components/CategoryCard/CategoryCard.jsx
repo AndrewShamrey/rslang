@@ -10,9 +10,9 @@ import difficulty6 from '../../assets/img/difficulty-6.png';
 const images = [difficulty1, difficulty2, difficulty3, difficulty4, difficulty5, difficulty6];
 
 const CategoryCard = ({ number, color }) => (
-  <article className="CategoryCard" style={{ backgroundColor: `rgba($color: ${color}, $alpha: 0.1)` }}>
+  <article className="CategoryCard">
     <img className="CategoryCard__image" src={images[number - 1]} alt="Category" />
-    <span className="CategoryCard__text">{`Раздел ${number}`}</span>
+    <span className="CategoryCard__text" style={{ backgroundColor: color }}>{`Раздел ${number}`}</span>
   </article>
 );
 
