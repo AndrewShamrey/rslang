@@ -7,7 +7,9 @@ const GamesList = () => (
   <ul className="GamesList">
     {GAME_NAMES.map((el, index) => (
       <li className="GamesList__item" key={index} style={{ backgroundColor: GAMES_BG_COLORS[index] }}>
-        <Link to={{ pathname: `${el.path}` }}>{el.name}</Link>
+        <Link to={{ pathname: `${el.path}` }}>
+          {el.name}
+        </Link>
       </li>
     ))}
   </ul>

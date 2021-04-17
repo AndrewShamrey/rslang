@@ -36,6 +36,14 @@ export default class FetchData {
       delete headers.Authorization;
     }
 
-    return fetch(fetchUrl, fetchObj).then((response) => response.json());
+    return fetch(fetchUrl, fetchObj)
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(res.status);
+        }
+        return res;
+      })
+      .then((response) => response.json())
+      .catch((error) => console.log(error));
   }
 }

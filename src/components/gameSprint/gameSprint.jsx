@@ -46,7 +46,7 @@ const GameSprint = ({ page, level }) => {
       setGameLevel(level);
       setIsNoSelect(true);
     }
-  }, [level, page]);
+  }, [isNoSelect, level, page]);
 
   const showStartScreen = () => {
     setGameStarted(false);

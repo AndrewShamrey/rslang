@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import WordCard from '../wordCard/wordCard';
 import saveShortTermStatistics from '../../utils/saveShortTermStatistics';
+import saveLongTermStatistics from '../../utils/saveLongTermStatistics';
 import { RESULT_PAGE } from '../../utils/content';
 import StatisticsList from '../statisticsList/statisticsList';
 
@@ -13,10 +15,19 @@ const StatisticsPage = ({
 }) => {
   const [word, setWord] = useState(null);
   const { correctAnswers, incorrectAnswers, longestSeries } = gameResult;
+  const isAuthorized = useSelector((rootState) => rootState.control.isAuthorized);
+  const currentUser = useSelector((rootState) => rootState.control.currentPerson);
 
   const setWordData = (wordData) => {
     setWord(wordData);
   };
+
+  useEffect(() => {
+    if (isAuthorized) {
+      const { userId, token } = currentUser;
+      saveLongTermStatistics(userId, token, gameResult);
+    }
+  }, [currentUser, gameResult, isAuthorized]);
 
   useEffect(() => {
     saveShortTermStatistics(game, gameResult);
