@@ -20,7 +20,18 @@ const saveLongTermStatistics = (userId, token, result) => {
         .then((r) => console.log(r))
         .catch((error) => console.log(error));
     })
-    .catch((error) => console.log(error));
+    .catch((error) => {
+      // не получается
+      fetch._defaultMethod('PUT', 'users', userId, 'statistics', null, null, token)
+        .then((statsData) => {
+          const body = getNewLongStatBody(statsData, wholeData, currentDay);
+
+          fetch.putUsersStats(userId, JSON.stringify(body), token)
+            .then((r) => console.log(r))
+            .catch((err) => console.log(err));
+        })
+        .catch((err) => console.log(err));
+    });
 };
 
 export default saveLongTermStatistics;
