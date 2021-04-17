@@ -65,10 +65,7 @@ const TextbookPage = ({ page, toggleSettings, isSettings }) => {
     <main className="TextbookPage">
       <SettingsButton onClick={() => toggleSettings()} />
       <h2 className="Textbook__title" style={{ color: DIFFICULTY_COUNT_AND_COLORS[page - 1][1] }}>{`Раздел ${page}`}</h2>
-      <GamesList
-        gamePage={currentPage}
-        level={page - 1}
-      />
+      <GamesList />
       <WordList
         words={words}
         toggleWordCard={() => toggleWordCard()}

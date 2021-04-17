@@ -41,9 +41,7 @@ const GameSprint = ({ page, level }) => {
   const screenButton = handle.active ? (<i className="fa fa-compress" />) : (<i className="fa fa-expand" />);
 
   useEffect(() => {
-    console.log('here', page, level);
     if (page && level) {
-      console.log('setting setIsNoSelect', isNoSelect);
       setGamePage(page);
       setGameLevel(level);
       setIsNoSelect(true);

@@ -8,7 +8,6 @@ const StartScreen = ({
 }) => {
   const [selectValue, setSelectValue] = useState(level);
   const { sprint } = START_PAGE;
-  console.log(page, level, isNoSelect);
 
   const submitHandler = (e) => {
     e.preventDefault();

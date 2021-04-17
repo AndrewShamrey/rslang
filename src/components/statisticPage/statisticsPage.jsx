@@ -25,7 +25,6 @@ const StatisticsPage = ({
   useEffect(() => {
     if (isAuthorized) {
       const { userId, token } = currentUser;
-      console.log(gameResult, isAuthorized, token, userId);
       saveLongTermStatistics(userId, token, gameResult);
     }
   }, [currentUser, gameResult, isAuthorized]);
