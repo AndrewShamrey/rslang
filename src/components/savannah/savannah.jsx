@@ -46,6 +46,7 @@ const Savannah = () => {
 
   const showStartPage = () => {
     setIsStartPage(true);
+    setBackgroundPosition(100);
     setIsStatisticsPage(false);
   };
 
