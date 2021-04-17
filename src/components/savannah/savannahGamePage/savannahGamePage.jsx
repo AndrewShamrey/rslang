@@ -108,30 +108,11 @@ const SavannahGamePage = ({
     return answersArr;
   }, [amountOfAnswers]);
 
-  useEffect(() => {
-    const {
-      correctAnswers, incorrectAnswers, longestSeries,
-    } = gameData;
-
-    if (!starsLeft) {
-      clearTimeout(timeoutId);
-      showStatistics(correctAnswers, incorrectAnswers, longestSeries);
-    }
-  }, [gameData, showStatistics, starsLeft, timeoutId]);
-
   const nextWord = useCallback(() => {
     setIsPreloader(true);
 
-    const {
-      words, wrongAnswersData, correctAnswers, incorrectAnswers, longestSeries,
-    } = gameData;
+    const { words, wrongAnswersData } = gameData;
     const newCurrentWord = words[0];
-
-    if (!newCurrentWord) {
-      clearTimeout(timeoutId);
-      showStatistics(correctAnswers, incorrectAnswers, longestSeries);
-      return;
-    }
 
     const wrongAnswersArr = generateWrongAnswersArray(wrongAnswersData);
     const answersArr = shuffleArray([...wrongAnswersArr, newCurrentWord]);
@@ -144,10 +125,10 @@ const SavannahGamePage = ({
     }));
     setIsQuestion(true);
     setIsPreloader(false);
-    if (wordAudio) {
+    if (wordAudio && newCurrentWord) {
       playSound(`${BACK_URL}/${newCurrentWord.audio}`);
     }
-  }, [gameData, generateWrongAnswersArray, wordAudio, timeoutId, showStatistics]);
+  }, [gameData, generateWrongAnswersArray, wordAudio]);
 
   const getCorrectAnswer = useCallback((id, answer) => {
     const [currentSeries, longestSeries] = getAnswersSeries();
@@ -189,6 +170,8 @@ const SavannahGamePage = ({
   const getAnswer = ({ target }) => {
     if (!isQuestion) return;
 
+    clearTimeout(timeoutId);
+
     const { id } = target;
     const answer = id === gameData.currentWord.id;
 
@@ -203,6 +186,8 @@ const SavannahGamePage = ({
   const getAnswerByKeyboard = useCallback(({ key }) => {
     if (!isQuestion) return;
 
+    clearTimeout(timeoutId);
+
     const { answers: answersData } = gameData;
     const { id } = answersData[+key - 1];
     const answer = id === gameData.currentWord.id;
@@ -213,7 +198,7 @@ const SavannahGamePage = ({
     }
 
     getIncorrectAnswer(id, answer);
-  }, [isQuestion, gameData, getIncorrectAnswer, getCorrectAnswer]);
+  }, [isQuestion, timeoutId, gameData, getIncorrectAnswer, getCorrectAnswer]);
 
   const keyboardEvents = useCallback((event) => {
     const controls = ['1', '2', '3', '4', '5'];
@@ -226,10 +211,32 @@ const SavannahGamePage = ({
 
   useEffect(() => {
     clearTimeout(timeoutId);
-    const newTimeoutId = setTimeout(() => getIncorrectAnswer(null, false), 5000);
-    setTimeoutId(newTimeoutId);
+
+    if (currentWord) {
+      const newTimeoutId = setTimeout(() => getIncorrectAnswer(null, false), 5000);
+      setTimeoutId(newTimeoutId);
+    }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentWord]);
+
+  useEffect(() => {
+    const {
+      correctAnswers,
+      incorrectAnswers,
+      longestSeries,
+      currentWord: word,
+      words,
+      turn,
+    } = gameData;
+
+    if ((!word && !words.length && turn !== 0) || !starsLeft) {
+      clearTimeout(timeoutId);
+      setTimeout(
+        () => showStatistics(correctAnswers, incorrectAnswers, longestSeries),
+        1000,
+      );
+    }
+  }, [gameData, showStatistics, starsLeft, timeoutId]);
 
   useEffect(() => {
     const startGame = async () => {
@@ -272,7 +279,7 @@ const SavannahGamePage = ({
     });
   }, [gameData, isQuestion, keyboardEvents]);
 
-  if (isPreloader) {
+  if (isPreloader || !currentWord) {
     return <Preloader />;
   }
 
@@ -298,7 +305,7 @@ const SavannahGamePage = ({
             answerId={answerId}
           />
         )}
-        <HelperBlock currentWord={currentWord} />
+        {currentWord && <HelperBlock currentWord={currentWord} />}
       </div>
     </>
   );
