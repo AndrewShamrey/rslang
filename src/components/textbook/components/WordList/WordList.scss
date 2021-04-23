@@ -1,0 +1,150 @@
+@import '../../../../sass/colors.scss';
+
+.WorldList {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  max-width: 1200px;
+  width: 100%;
+  font-size: 16px;
+  background-color: $white;
+  color: $grey4;
+
+  &__item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    min-height: 50px;
+    height: max-content;
+    border-bottom: 1px solid $grey2;
+
+    &_head {
+      color: $grey4;
+      background-color: $bgGrey;
+      border: none;
+
+      .WorldListItem__audiochallenge,
+      .WorldListItem__wordconstructor,
+      .WorldListItem__savannah,
+      .WorldListItem__sprint {
+        color: $grey4;
+      }
+    }
+  }
+}
+
+.WorldListItem {
+  &__image,
+  &__transcription,
+  &__word,
+  &__wordTranslate,
+  &__audiochallenge,
+  &__wordconstructor,
+  &__savannah,
+  &__sprint,
+  &__difficult-words,
+  &__delete-words {
+    min-width: 100px;
+    width: 100px;
+    min-height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
+  }
+  &__word {
+    .word-card__word {
+      cursor: pointer;
+    }
+  }
+
+  &__audiochallenge,
+  &__wordconstructor,
+  &__savannah,
+  &__sprint {
+    .fa-info {
+      position: relative;
+      &::after {
+        display: none;
+        color: $grey4;
+        background: $white;
+        content: 'Доступно авторизированным пользователям';
+        position: absolute;
+        padding: 5px;
+        top: -50px;
+        left: 10px;
+        font-size: 12px;
+        border: 1px solid $grey2;
+        border-radius: 3px;
+      }
+
+      &:hover::after {
+        display: block;
+        z-index: 100;
+      }
+    }
+  }
+
+  &__audiochallenge {
+    color: #f7a35f;
+
+    .fa-info {
+      color: #f7a35f;
+    }
+  }
+  &__wordconstructor {
+    color: #24bace;
+    .fa-info {
+      color: #24bace;
+    }
+  }
+  &__savannah {
+    color: #5bceab;
+    .fa-info {
+      color: #5bceab;
+    }
+  }
+  &__sprint {
+    color: #e963a2;
+    .fa-info {
+      color: #e963a2;
+    }
+  }
+
+  &__wordTranslate {
+    .word-card__word-translate {
+      font-size: 18px;
+      margin: 0;
+    }
+  }
+  &__transcription {
+    width: 120px;
+  }
+
+  &__difficult-words,
+  &__delete-words {
+    button {
+      background: none;
+    }
+  }
+
+  &__word {
+    position: relative;
+    padding-left: 40px;
+    width: 150px;
+    color: $grey;
+
+    .word-sound-btn {
+      position: absolute;
+      text-align: start;
+      left: 10px;
+    }
+  }
+}

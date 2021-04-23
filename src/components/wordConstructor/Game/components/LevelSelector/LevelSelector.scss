@@ -1,0 +1,16 @@
+@import '../../../../../sass/defaultComponentsStyles.scss';
+
+.WordConstructor__start-select {
+  @include styled__btn_outlined($blue, $white, $white);
+  margin-top: 50px;
+  margin-bottom: 30px;
+  padding: 0.4rem 1rem;
+  width: 150px;
+  font-size: 14px;
+  font-weight: 900;
+  text-transform: uppercase;
+
+  &:hover {
+    transform: none;
+  }
+}

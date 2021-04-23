@@ -1,0 +1,57 @@
+@import '../../sass/colors.scss';
+@import '../../sass/defaultComponentsStyles.scss';
+
+.vocabluary-settings {  
+  padding: 55px 20px 20px;
+  font-size: 14px;
+  width: 420px;
+  pointer-events: auto;
+  background-color: $white;
+  background-clip: padding-box;
+  border: 1px solid #00000033;
+  border-radius: .3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+
+  &__close-btn {
+    font-size: 22px;
+    color: $grey3;
+    position: absolute;
+    top: 15px;
+    right: 20px;
+  }
+
+  &__list {
+    margin-bottom: 20px;
+    padding: 0 20px;
+  }
+
+  &__list-item {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: flex-start;
+
+    p {
+      margin-left: 15px;
+    }
+  }
+
+  &__button {
+    margin-left: 5px;
+
+    &_cancel {
+      @include styled__btn_text($themeRed, $white);
+    }
+
+    &_save {      
+      @include styled__btn_text($blue, $white);
+    }
+  }
+}

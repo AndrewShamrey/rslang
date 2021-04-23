@@ -1,0 +1,9 @@
+@import "./../../sass/colors.scss";
+
+.error-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $red;
+  font-size: 30px;
+}

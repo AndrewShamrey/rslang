@@ -1,0 +1,75 @@
+@import '../../sass/colors.scss';
+@import '../../sass/breakpoints.scss';
+
+.Main-page {
+  &__capability {
+    min-height: 275px;
+    background-color: $bgLightGrey;
+    padding: 20px;
+
+    &-title {
+      font-size: 22px;
+      letter-spacing: 1px;
+      font-weight: 400;
+      width: max-content;
+      margin: 20px auto 0;
+
+      .name-style {
+        font-family: 'Jockey One', sans-serif;
+      }
+    }
+
+    &-list {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin: 30px auto;
+    }
+
+    &-item {
+      margin: 20px 20px 0;
+      box-shadow: 4px 6px 10px -3px $shadowGrey;
+
+      &:hover {
+        box-shadow: 4px 6px 10px 5px $shadowGrey;
+      }
+    }
+  }
+
+  &__video {
+    min-height: 275px;
+    background-color: $white;
+    padding: 20px 20px 30px;
+
+    @media screen and (max-width: $size-sm) {
+      padding: 20px 5px 30px;
+    }
+  }
+
+  &__about {
+    background-color: $bgLightGrey;
+    padding: 20px 20px 30px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
+    &-title {
+      font-size: 22px;
+      font-weight: 400;
+      letter-spacing: 1px;
+      text-align: center;
+    }
+
+    &-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      max-width: $size-xxxl;
+      margin: 0 auto;
+    }
+
+    &-item {
+      margin: 30px 20px 0;
+    }
+  }
+}

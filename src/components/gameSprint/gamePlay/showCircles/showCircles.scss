@@ -1,0 +1,18 @@
+@import '../../helpers/sprintColors.scss';
+
+.game-play__upper_circles {
+  justify-content: center;
+  width: 100%;
+  .circles-line {
+    display: flex;
+    margin-bottom: 15px;
+    justify-content: center;
+  }
+  .circle {
+    color: $signGreen;
+    width: 30px;
+    height: 30px;
+    font-size: 2rem;
+    margin: 0 5px;
+  }
+}

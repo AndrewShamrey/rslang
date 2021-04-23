@@ -1,0 +1,56 @@
+@import '../../sass/colors.scss';
+
+.game-wrapper {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1280px;
+  height: fit-content;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.pass {
+  margin-bottom: 20px;
+  padding: 5px 10px;
+  min-width: 180px;
+  font-size: 18px;
+  font-weight: 700;
+  color: $white;
+  text-transform: uppercase;
+  background-color: transparent;
+  border: 2px solid $coralTransparent;
+  outline-color: $lightBlue;
+  outline-offset: 2px;
+}
+
+.pass:hover {
+  color: $white;
+  background-color: $coral;
+}
+
+.next {
+  margin-bottom: 20px;
+  padding: 5px 10px;
+  min-width: 180px;
+  font-size: 18px;
+  font-weight: 700;
+  color: $white;  
+  text-transform: uppercase;
+  background-color: $transparentWhite;
+  border: 2px solid $blueTransparent;
+  cursor: pointer;
+  outline-color: $lightBlue;
+  outline-offset: 2px;
+}
+
+.next:hover {
+  color: $blue;
+  background-color: $white;
+}
+
+.hidden {
+  display: none;
+}

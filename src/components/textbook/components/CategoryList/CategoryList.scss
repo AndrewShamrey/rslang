@@ -1,0 +1,26 @@
+@import '../../../../sass/colors.scss';
+
+.Textbook__list {
+  max-width: 1280px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 0;
+}
+
+.Textbook__item {
+  position: relative;
+  background: $white;
+  border: 1px solid $grey2;
+  margin: 20px;
+  border-radius: 4px;
+  box-shadow: 4px 6px 10px -3px $shadowGrey;
+  cursor: pointer;
+  color: $grey4;
+
+  &:hover {
+    box-shadow: 4px 6px 10px 5px $shadowGrey;
+  }
+}

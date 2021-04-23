@@ -1,0 +1,70 @@
+@import '../../../sass/colors.scss';
+@import '../../../sass/breakpoints.scss';
+
+.line-chart {
+  &s__wrapper {
+    padding: 16px 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 50px;
+    @media screen and (max-width: 992px) {
+      flex-wrap: wrap;
+    }
+  }
+  &__wrapper {
+    width: 60%;
+    @media screen and (max-width: 992px) {
+      width: 80%;
+    }
+    padding: 36px 0;
+    h3 {
+      text-align: center;
+      margin: 12px 0 16px;
+    }
+  }
+}
+
+app-stats-page__long {
+  width: 100%;
+  margin: 10px 0;
+  max-width: $size-xxl;
+
+  &_heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 4px;
+    border: 1px solid $purple-blend;
+    margin-bottom: 1rem;
+    min-height: 80px;
+
+    > h2 {
+      color: $blue;
+      padding: 10px;
+    }
+    &_brief {
+      border-left: 1px solid $purple-blend;
+      color: $themepurple;
+      border-radius: 4px;
+      padding: 30px;
+    }
+  }
+  &_graph1, &_graph2 {
+    justify-content: center;
+    min-height: 200px;
+    padding: 10px;
+    margin: 20px;
+    border-radius: 4px;
+    box-shadow: 0 0 5px 2px $secondary;
+  }
+  &_graph1 {
+    background-color: $yellow-blend;
+  }
+  &_graph2 {
+    background-color: $purple-blend;
+  }
+}
+
+
+

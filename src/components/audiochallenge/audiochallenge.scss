@@ -1,0 +1,73 @@
+@import '../../sass/colors.scss';
+@import '../../sass/breakpoints.scss';
+@import '../../sass/defaultComponentsStyles.scss';
+
+.audiochallenge {
+  padding: 45px 0; 
+  width: 100%;
+  min-height: 100%;
+  height: fit-content;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.5s linear;
+  background-color: $lightBlue;
+  position: relative;
+
+  
+  @media (max-width: $size-md) {
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  * {    
+    outline-color: $lightBlue;
+    outline-offset: 2px;
+  }
+
+  &__close-btn {
+    font-size: 30px;
+    color: $white;
+    line-height: 1;
+    position: absolute;  
+    top: 30px;
+    right: 60px;
+
+    @media (max-width: $size-lg) {
+      top: 10px;
+      right: 30px;
+    }
+  }
+
+  &__fullscreen {
+    position: absolute;
+    left: 15px;
+    bottom: 30px;
+    @include styled__btn_outlined($themeBlue, $white, $white);
+
+    @media screen and (max-width: $size-sm) {
+      position: relative;
+      margin: 10px 0;
+      left: 0;
+      bottom: 0;
+    }
+  }
+}
+
+.settings-btn {
+  width: 30px;
+  height: 30px;
+  font-size: 30px;
+  color: $white;
+  text-align: center;
+  border: none;
+  background-color: transparent;
+  position: absolute;
+  top: 30px;
+  right: 60px;
+  cursor: pointer;
+
+  @media (max-width: $size-lg) {
+    top: 10px;
+    right: 30px;
+  }
+}

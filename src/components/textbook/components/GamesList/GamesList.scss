@@ -1,0 +1,33 @@
+@import '../../../../sass/colors.scss';
+
+.GamesList {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 50px;
+
+  &__item {
+    width: 370px;
+    height: 115px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    background: $white;
+    border: 1px solid $grey2;
+    margin: 20px;
+    border-radius: 4px;
+    box-shadow: 4px 6px 10px -3px $shadowGrey;
+    cursor: pointer;
+    color: $grey4;
+    font-size: 20px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+
+    &:hover {
+      box-shadow: 4px 6px 10px 5px $shadowGrey;
+    }
+  }
+}
